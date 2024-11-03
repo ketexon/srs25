@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://boyrogrop3ngb"
+path="res://.godot/imported/Stock.obj-f8145650e168b3bef3dd60f5ff604278.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Stock.obj-f8145650e168b3bef3dd60f5ff604278.mesh"]
+
+source_file="res://guns/OBJ/Accessories/Stock.obj"
+dest_files=["res://.godot/imported/Stock.obj-f8145650e168b3bef3dd60f5ff604278.mesh", "res://.godot/imported/Stock.obj-f8145650e168b3bef3dd60f5ff604278.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

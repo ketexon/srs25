@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://ys3tbf677prf"
+path="res://.godot/imported/Scope_2.obj-20db9b9bc8f133c0ead7d174724f5307.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Scope_2.obj-20db9b9bc8f133c0ead7d174724f5307.mesh"]
+
+source_file="res://guns/OBJ/Accessories/Scope_2.obj"
+dest_files=["res://.godot/imported/Scope_2.obj-20db9b9bc8f133c0ead7d174724f5307.mesh", "res://.godot/imported/Scope_2.obj-20db9b9bc8f133c0ead7d174724f5307.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
