@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Look",
+                    "type": "Value",
+                    "id": "65125d50-720c-426d-baad-14997d2842e7",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Click",
                     "type": "Value",
                     "id": "ca050b02-130e-463c-9e7c-bab1615a412c",
@@ -37,7 +46,7 @@
                 {
                     "name": "",
                     "id": "5fab814e-9ba1-49c3-90f8-500204693d7c",
-                    "path": "<VirtualMouse>/position",
+                    "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -108,6 +117,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "abcb3096-2b44-4042-aa0f-a73b6e79fa35",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

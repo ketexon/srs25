@@ -5,22 +5,22 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class HumanIK : MonoBehaviour
 {
-    Animator animator;
+    [SerializeField] Animator animator;
 
     [SerializeField] Transform leftHandTarget;
     [SerializeField] Transform rightHandTarget;
     [SerializeField] Transform leftFootTarget;
     [SerializeField] Transform rightFootTarget;
 
-    void Start() {
-        animator = GetComponent<Animator>();
-    }
-
     void Update(){
         animator.Update(0);
     }
 
     void OnAnimatorIK(int layerIndex) {
+        if(!(leftHandTarget && rightHandTarget && leftFootTarget && rightFootTarget))
+        {
+            return;
+        }
         animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1);
         animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
         animator.SetIKPositionWeight(AvatarIKGoal.LeftFoot, 1);
