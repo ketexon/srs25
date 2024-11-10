@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94c114af01f96a42a55d2bacd347226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityLayerMask:
+  BulletHitboxLayerMask:
     serializedVersion: 2
     m_Bits: 64

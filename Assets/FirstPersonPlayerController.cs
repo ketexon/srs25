@@ -1,7 +1,6 @@
 ﻿using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class FirstPersonPlayerController : PlayerController
 {
@@ -11,16 +10,34 @@ public class FirstPersonPlayerController : PlayerController
 
         movement.LookAt(Vector3.forward);
         camera.transform.rotation = Quaternion.identity;
+        gun.BulletCaster = new RayBulletCaster();
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void OnLook(InputValue inputValue)
     {
         if (!enabled) return;
+        if(Cursor.lockState != CursorLockMode.Locked) return;
 
         Vector2 delta = inputValue.Get<Vector2>();
         movement.LookDelta(delta * Settings.Sensitivity);
         gun.SetRotation(movement.Pitch);
-        Debug.Log(movement.Pitch);
+    }
+
+    public void OnClick(){
+        if(!enabled) return;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void OnUnlockCursor(){
+        if(!enabled) return;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void OnMove(InputValue inputValue)
@@ -29,7 +46,7 @@ public class FirstPersonPlayerController : PlayerController
 
         var inputDir = inputValue.Get<Vector2>();
         movement.MoveDir = (
-            transform.right * inputDir.x 
+            transform.right * inputDir.x
             + transform.forward * inputDir.y
         ).normalized;
     }

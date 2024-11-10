@@ -9,8 +9,9 @@ public enum BodyPart
     Leg,
 }
 
-public class EntityHitBox : MonoBehaviour
+public class EntityHitBox : BulletHitBox
 {
+    [SerializeField] public HumanModel Model;
     [SerializeField] public BodyPart BodyPart;
 
     void Reset()
@@ -25,5 +26,12 @@ public class EntityHitBox : MonoBehaviour
             ? BodyPart.Leg
             : BodyPart.Head
         );
+
+        Model = GetComponentInParent<HumanModel>();
+    }
+
+    public override void OnHit(float damage)
+    {
+        Debug.Log($"ONHIT: {gameObject.name}");
     }
 }

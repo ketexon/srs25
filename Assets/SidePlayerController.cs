@@ -5,11 +5,16 @@ using UnityEngine.UIElements;
 
 public class SidePlayerController : PlayerController
 {
+    BoxBulletCaster bulletCaster = new() {
+        HalfExtents = new(5, 0.01f, 0.01f),
+    };
+
     protected override void OnEnable()
     {
         base.OnEnable();
 
         movement.LookAt(Vector3.forward);
+        gun.BulletCaster = bulletCaster;
     }
 
     public void OnPoint(InputValue inputValue)
@@ -34,6 +39,7 @@ public class SidePlayerController : PlayerController
                 movement.LookDir(-transform.forward);
             }
             gun.PointAt(worldPoint);
+            bulletCaster.Orientation = gun.transform.rotation;
         }
     }
 
