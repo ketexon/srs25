@@ -15,8 +15,7 @@ public class RayBulletCaster : IBulletCaster
             bullet.transform.position,
             bullet.transform.forward,
             float.PositiveInfinity,
-            bullet.BulletHitboxLayerMask,
-            QueryTriggerInteraction.Collide
+            bullet.BulletHitboxLayerMask
         ));
         return Physics.RaycastNonAlloc(
             bullet.transform.position,
@@ -106,6 +105,6 @@ public class Bullet : MonoBehaviour
     }
 
     void OnDrawGizmos() {
-        Caster.DebugDraw(this);
+        Caster?.DebugDraw(this);
     }
 }
