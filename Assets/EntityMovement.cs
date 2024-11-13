@@ -3,10 +3,13 @@ using UnityEngine;
 
 public class EntityMovement : MonoBehaviour
 {
+    const float ROTATE_SPEED = 8;
+
     [SerializeField] float movementSpeed;
-    [SerializeField] CinemachineCamera firstPersonCamera;
     [SerializeField] float minPitch = -60;
     [SerializeField] float maxPitch = 80;
+
+    [System.NonSerialized] public Transform TargetTransform;
 
     Vector3 moveDir;
 
@@ -17,7 +20,10 @@ public class EntityMovement : MonoBehaviour
         protected set
         {
             _yaw = value;
-            transform.rotation = Quaternion.AngleAxis(Yaw, Vector3.up);
+            if (TargetTransform)
+            {
+                TargetTransform.rotation = Quaternion.AngleAxis(Yaw, Vector3.up);
+            }
         }
     }
 
@@ -28,13 +34,6 @@ public class EntityMovement : MonoBehaviour
         protected set
         {
             _pitch = Mathf.Clamp(value, minPitch, maxPitch);
-            if (firstPersonCamera)
-            {
-                firstPersonCamera.transform.localRotation = Quaternion.AngleAxis(
-                    Pitch,
-                    Vector3.right
-                );
-            }
         }
     }
 
@@ -46,6 +45,13 @@ public class EntityMovement : MonoBehaviour
             moveDir = value;
             moveDir.y = 0;
         }
+    }
+
+    virtual protected void Awake()
+    {
+        var targetTransformGO = new GameObject($"{gameObject.name} Target Transform");
+        TargetTransform = targetTransformGO.transform;
+        Yaw = transform.rotation.eulerAngles.y;
     }
 
     public void LookDelta(float deltaYaw)
@@ -83,5 +89,10 @@ public class EntityMovement : MonoBehaviour
     void Update()
     {
         transform.position += movementSpeed * Time.deltaTime * moveDir;
+        transform.rotation = Quaternion.Lerp(
+            transform.rotation,
+            TargetTransform.rotation,
+            Time.deltaTime * ROTATE_SPEED
+        );
     }
 }

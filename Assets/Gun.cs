@@ -11,14 +11,15 @@ public class Gun : MonoBehaviour
 
     [Header("Gun Stats")]
     [SerializeField] float shotInterval = 1.0f;
-    [SerializeField] float muzzleVelocity = 10;
+    [SerializeField] float muzzleVelocity = 900;
     /// <summary>
     /// This field represents a multiplier for how
     /// much energy should be lost when colliding with an object
     /// The higher it is, the more energy lost, which represents
     /// a larger bullet
     /// </summary>
-    [SerializeField] float energyPenaltyMult = 30;
+    [SerializeField] float energyPenaltyMult = 300000;
+    [SerializeField] float damage = 30;
 
     [System.NonSerialized] public bool Shooting = false;
     [System.NonSerialized] public IBulletCaster BulletCaster = new RayBulletCaster();
@@ -70,6 +71,7 @@ public class Gun : MonoBehaviour
             bullet.RaycastHits = raycastHits;
             bullet.Velocity = muzzleVelocity;
             bullet.EnergyPenaltyMult = energyPenaltyMult;
+            bullet.Damage = damage;
         }
     }
 }

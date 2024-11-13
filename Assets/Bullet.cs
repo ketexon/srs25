@@ -11,12 +11,6 @@ public class RayBulletCaster : IBulletCaster
 {
     public int Cast(Bullet bullet, RaycastHit[] hitResults)
     {
-        Debug.Log(Physics.Raycast(
-            bullet.transform.position,
-            bullet.transform.forward,
-            float.PositiveInfinity,
-            bullet.BulletHitboxLayerMask
-        ));
         return Physics.RaycastNonAlloc(
             bullet.transform.position,
             bullet.transform.forward,
@@ -62,10 +56,12 @@ public class BoxBulletCaster : IBulletCaster
 public class Bullet : MonoBehaviour
 {
     [SerializeField] public LayerMask BulletHitboxLayerMask;
+    [SerializeField] GameObject tracerPrefab;
 
     [System.NonSerialized] public IBulletCaster Caster;
     [System.NonSerialized] public float Velocity;
     [System.NonSerialized] public float EnergyPenaltyMult;
+    [System.NonSerialized] public float Damage;
 
     [System.NonSerialized] public RaycastHit[] RaycastHits;
 
@@ -73,13 +69,21 @@ public class Bullet : MonoBehaviour
     {
         var nHits = Caster.Cast(this, RaycastHits);
         float remainingVel = Velocity;
-        Debug.Log(nHits);
-        for(int i = 0; i < nHits && remainingVel > 0; ++i){
+        var startPoint = transform.position;
+        var endPoint = startPoint;
+        var endNormal = Vector3.zero;
+        for (int i = 0; i < nHits && remainingVel > 0; ++i){
             var hit = RaycastHits[i];
-            var collider = hit.collider;
-            var hitBox = collider.GetComponent<BulletHitBox>();
+
+            endPoint = hit.point;
+            endNormal = hit.normal;
+
+            var hitBox = hit.collider.GetComponent<BulletHitBox>();
+            // if it doesn't have a hitbox, it is
+            // a static object
             if(!hitBox){
-                continue;
+                remainingVel = 0;
+                break;
             }
             if(
                 hitBox is EntityHitBox entityHitBox
@@ -98,10 +102,21 @@ public class Bullet : MonoBehaviour
                 startVel * startVel
                 - hitBox.EnergyPenalty * EnergyPenaltyMult
             );
-            var dVel = startVel - Mathf.Max(0, remainingVel);
-            hitBox.OnHit(dVel);
-            Debug.Log(remainingVel);
+            hitBox.OnHit(Damage);
         }
+
+        // the bullet never stopped
+        if(remainingVel > 0)
+        {
+            endPoint += transform.forward * 100;
+        }
+
+        var tracerGO = Instantiate(tracerPrefab, startPoint, transform.rotation);
+        var tracer = tracerGO.GetComponent<Tracer>();
+        tracer.Hit = remainingVel <= 0;
+        tracer.EndPoint = endPoint;
+        tracer.EndNormal = endNormal;
+        Destroy(gameObject);
     }
 
     void OnDrawGizmos() {

@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class FirstPersonPlayerController : PlayerController
 {
+    Vector2 inputDir = Vector2.zero;
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -28,6 +30,7 @@ public class FirstPersonPlayerController : PlayerController
         Vector2 delta = inputValue.Get<Vector2>();
         movement.LookDelta(delta * Settings.Sensitivity);
         gun.SetRotation(movement.Pitch);
+        UpdateMovementDir();
     }
 
     public void OnClick(){
@@ -44,10 +47,15 @@ public class FirstPersonPlayerController : PlayerController
     {
         if (!enabled) return;
 
-        var inputDir = inputValue.Get<Vector2>();
+        inputDir = inputValue.Get<Vector2>();
+        UpdateMovementDir();
+    }
+
+    void UpdateMovementDir()
+    {
         movement.MoveDir = (
-            transform.right * inputDir.x
-            + transform.forward * inputDir.y
+            movement.TargetTransform.right * inputDir.x
+            + movement.TargetTransform.forward * inputDir.y
         ).normalized;
     }
 }
