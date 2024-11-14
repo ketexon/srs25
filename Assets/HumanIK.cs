@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class HumanIK : MonoBehaviour
 {
     [SerializeField] Animator animator;
@@ -11,10 +10,6 @@ public class HumanIK : MonoBehaviour
     [SerializeField] Transform rightHandTarget;
     [SerializeField] Transform leftFootTarget;
     [SerializeField] Transform rightFootTarget;
-
-    void Update(){
-        animator.Update(0);
-    }
 
     void OnAnimatorIK(int layerIndex) {
         if(!(leftHandTarget && rightHandTarget && leftFootTarget && rightFootTarget))

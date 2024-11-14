@@ -11,7 +11,7 @@ public class RayBulletCaster : IBulletCaster
 {
     public int Cast(Bullet bullet, RaycastHit[] hitResults)
     {
-        return Physics.RaycastNonAlloc(
+        return Kutie.PhysicsUtil.RaycastNonAllocSorted(
             bullet.transform.position,
             bullet.transform.forward,
             hitResults,
@@ -31,12 +31,12 @@ public class BoxBulletCaster : IBulletCaster
     public Vector3 HalfExtents;
     public Quaternion Orientation = Quaternion.identity;
 
-    HashSet<BodyPart> _ignoreBodyParts = new() { BodyPart.Arm };
+    HashSet<BodyPart> _ignoreBodyParts = new() { BodyPart.LeftArm };
     public HashSet<BodyPart> IgnoreBodyParts => _ignoreBodyParts;
 
     public int Cast(Bullet bullet, RaycastHit[] hitResults)
     {
-        return Physics.BoxCastNonAlloc(
+        return Kutie.PhysicsUtil.BoxCastNonAllocSorted(
             bullet.transform.position,
             HalfExtents,
             bullet.transform.forward,
@@ -57,6 +57,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] public LayerMask BulletHitboxLayerMask;
     [SerializeField] GameObject tracerPrefab;
+    [SerializeField] GameObject bloodSplatterPrefab;
 
     [System.NonSerialized] public IBulletCaster Caster;
     [System.NonSerialized] public float Velocity;
@@ -68,6 +69,7 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         var nHits = Caster.Cast(this, RaycastHits);
+
         float remainingVel = Velocity;
         var startPoint = transform.position;
         var endPoint = startPoint;
@@ -82,6 +84,7 @@ public class Bullet : MonoBehaviour
             // if it doesn't have a hitbox, it is
             // a static object
             if(!hitBox){
+                Debug.Log(hit.collider);
                 remainingVel = 0;
                 break;
             }
@@ -103,6 +106,11 @@ public class Bullet : MonoBehaviour
                 - hitBox.EnergyPenalty * EnergyPenaltyMult
             );
             hitBox.OnHit(Damage);
+            Instantiate(
+                bloodSplatterPrefab,
+                hit.point,
+                Quaternion.LookRotation(hit.normal)
+            );
         }
 
         // the bullet never stopped

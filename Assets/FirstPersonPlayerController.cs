@@ -10,7 +10,6 @@ public class FirstPersonPlayerController : PlayerController
     {
         base.OnEnable();
 
-        movement.LookAt(Vector3.forward);
         camera.transform.rotation = Quaternion.identity;
         gun.BulletCaster = new RayBulletCaster();
     }

@@ -3,6 +3,8 @@ using UnityEngine.UIElements;
 
 public class Gun : MonoBehaviour
 {
+    [SerializeField] new Rigidbody rigidbody;
+    [SerializeField] new Collider collider;
     [SerializeField] Entity entity;
     [SerializeField] float minAngle = -60;
     [SerializeField] float maxAngle = 80;
@@ -73,5 +75,11 @@ public class Gun : MonoBehaviour
             bullet.EnergyPenaltyMult = energyPenaltyMult;
             bullet.Damage = damage;
         }
+    }
+
+    public void Drop()
+    {
+        rigidbody.isKinematic = false;
+        collider.enabled = true;
     }
 }
