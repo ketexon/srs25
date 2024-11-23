@@ -4,3 +4,6 @@
 [submodule "Assets/VolumetricTracer"]
 	path = Assets/VolumetricTracer
 	url = https://github.com/Fewes/VolumetricTracer
+[submodule "Packages/com.ketexon.kutie"]
+	path = Packages/com.ketexon.kutie
+	url = https://github.com/ketexon/kutie
