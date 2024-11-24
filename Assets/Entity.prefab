@@ -81,6 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HumanModel: {fileID: 6462221439849673701}
   Gun: {fileID: 2052216015964699689}
+  Team: {fileID: 0}
 --- !u!114 &5015012108194661265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -645,6 +646,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.02519258
       objectReference: {fileID: 0}
+    - target: {fileID: 4014147044230123662, guid: 526e7f8c896c4c4498ee15635cdfde22,
+        type: 3}
+      propertyPath: Entity
+      value: 
+      objectReference: {fileID: 6806978343244172374}
     - target: {fileID: 4634769308892855479, guid: 526e7f8c896c4c4498ee15635cdfde22,
         type: 3}
       propertyPath: m_LocalPosition.x
