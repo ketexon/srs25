@@ -39,6 +39,6 @@ public class TopDownPlayerController : PlayerController
     {
         base.OnEnable();
 
-        gun.SetRotation(0);
+        gun.Rotation = 0;
     }
 }

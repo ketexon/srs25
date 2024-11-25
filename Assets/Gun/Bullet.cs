@@ -1,6 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Performs a cast for a bullet
+/// See <see cref="RayBulletCaster"/> and <see cref="BoxBulletCaster"/>.
+/// Used primarily by SideView and TopDown player controllers
+/// </summary>
 public interface IBulletCaster {
     int Cast(Bullet bullet, RaycastHit[] hitResults);
     HashSet<BodyPart> IgnoreBodyParts => null;

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EnemyVision : MonoBehaviour
+public class EnemyVisionCone : MonoBehaviour
 {
     [SerializeField] HumanModel model;
     [SerializeField] float fov = 45.0f;

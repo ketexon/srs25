@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
         gun = FindAnyObjectByType<Gun>();
         movement = GetComponent<EntityMovement>();
         entity = GetComponent<Entity>();
+
+        entity.HumanModel.DeathEvent.AddListener(OnDeath);
     }
 
     virtual protected void OnEnable()
@@ -25,5 +27,9 @@ public class PlayerController : MonoBehaviour
     {
         camera.Priority.Enabled = false;
         movement.MoveDir = Vector2.zero;
+    }
+
+    virtual protected void OnDeath(){
+        enabled = false;
     }
 }

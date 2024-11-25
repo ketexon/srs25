@@ -99,6 +99,8 @@ public class HumanHealth
         BodyPart.RightLeg,
     };
 
+    public bool Invincible = false;
+
     public float Head = 15;
     public float Chest = 100;
     public float LeftArm = 15;
@@ -153,6 +155,7 @@ public class HumanHealth
 
     public void Damage(BodyPart part, float damage)
     {
+        if(Invincible) return;
         if (IsPartDead(part)) {
             DamageNonDead(damage);
         }
@@ -196,6 +199,7 @@ public class HumanModel : MonoBehaviour
 
     [System.NonSerialized] public Animator Animator;
     [System.NonSerialized] public HumanIK HumanIK;
+
 
     void Reset()
     {
@@ -241,6 +245,5 @@ public class HumanModel : MonoBehaviour
             Ragdoll();
             DeathEvent.Invoke();
         }
-        Debug.Log(Health);
     }
 }

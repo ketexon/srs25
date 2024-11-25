@@ -8,6 +8,7 @@ public class EntityMovement : MonoBehaviour
     [SerializeField] float movementSpeed;
     [SerializeField] float minPitch = -60;
     [SerializeField] float maxPitch = 80;
+    [SerializeField] public Transform Eyes;
 
     [System.NonSerialized] public Transform TargetTransform;
 
@@ -52,6 +53,7 @@ public class EntityMovement : MonoBehaviour
         var targetTransformGO = new GameObject($"{gameObject.name} Target Transform");
         TargetTransform = targetTransformGO.transform;
         Yaw = transform.rotation.eulerAngles.y;
+        Pitch = Eyes.rotation.eulerAngles.x;
     }
 
     public void LookDelta(float deltaYaw)
@@ -65,10 +67,10 @@ public class EntityMovement : MonoBehaviour
         Pitch -= delta.y;
     }
 
-    public void LookAt(Vector3 point)
+    public void LookAt(Vector3 worldPoint)
     {
-        Vector3 delta = point - transform.position;
-        LookDir(delta);
+        Vector3 delta = worldPoint - Eyes.transform.position;
+        LookDir(delta.normalized);
     }
 
     public void LookDir(Vector3 dir)
@@ -81,7 +83,7 @@ public class EntityMovement : MonoBehaviour
 
         Pitch = Vector3.SignedAngle(
             Vector3.forward,
-            dir,
+            Quaternion.AngleAxis(-Yaw, Vector3.up) * dir,
             Vector3.right
         );
     }
@@ -94,5 +96,6 @@ public class EntityMovement : MonoBehaviour
             TargetTransform.rotation,
             Time.deltaTime * ROTATE_SPEED
         );
+        Eyes.localRotation = Quaternion.AngleAxis(Pitch, Vector3.right);
     }
 }

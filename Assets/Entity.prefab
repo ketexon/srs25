@@ -64,6 +64,7 @@ Transform:
   m_Children:
   - {fileID: 3838719042799325064}
   - {fileID: 2240338447839955813}
+  - {fileID: 5545661372892488183}
   - {fileID: 3202370146618983544}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -82,6 +83,7 @@ MonoBehaviour:
   HumanModel: {fileID: 6462221439849673701}
   Gun: {fileID: 2052216015964699689}
   Team: {fileID: 0}
+  Movement: {fileID: 5015012108194661265}
 --- !u!114 &5015012108194661265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,6 +99,7 @@ MonoBehaviour:
   movementSpeed: 1
   minPitch: -60
   maxPitch: 80
+  Eyes: {fileID: 5545661372892488183}
 --- !u!1 &4896855972202622736
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,6 +130,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5715105446968732622}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4933963664057253099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5545661372892488183}
+  m_Layer: 0
+  m_Name: Eyes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5545661372892488183
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4933963664057253099}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.46, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5721974112483066513}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4943620636480938304
 GameObject:
