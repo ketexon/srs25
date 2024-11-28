@@ -22,7 +22,7 @@ public class RayBulletCaster : IBulletCaster
             hitResults,
             float.PositiveInfinity,
             bullet.BulletHitboxLayerMask,
-            QueryTriggerInteraction.Collide
+            QueryTriggerInteraction.Ignore
         );
     }
 
@@ -49,7 +49,7 @@ public class BoxBulletCaster : IBulletCaster
             Quaternion.identity,
             float.PositiveInfinity,
             bullet.BulletHitboxLayerMask,
-            QueryTriggerInteraction.Collide
+            QueryTriggerInteraction.Ignore
         );
     }
 
@@ -89,7 +89,6 @@ public class Bullet : MonoBehaviour
             // if it doesn't have a hitbox, it is
             // a static object
             if(!hitBox){
-                Debug.Log(hit.collider);
                 remainingVel = 0;
                 break;
             }

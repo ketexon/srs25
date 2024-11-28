@@ -8,6 +8,7 @@ public class EnemyVisionCone : MonoBehaviour
     [SerializeField] float fov = 45.0f;
     [SerializeField] float range = 10.0f;
     [SerializeField] LayerMask entityLayerMask;
+    [SerializeField] LayerMask collisionLayerMask;
 
     [SerializeField] public UnityEvent<EntityHitBox> NewHitBoxVisibleEvent;
     [SerializeField] public UnityEvent<EntityHitBox> HitBoxInvisibleEvent;
@@ -69,9 +70,9 @@ public class EnemyVisionCone : MonoBehaviour
                     dir,
                     out var hit,
                     float.PositiveInfinity,
-                    entityLayerMask
+                    collisionLayerMask
                 );
-                if(result && hit.collider.gameObject != hitBox.gameObject)
+                if(!result || hit.collider.gameObject != hitBox.gameObject)
                 {
                     visible = false;
                 }

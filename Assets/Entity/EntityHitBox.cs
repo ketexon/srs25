@@ -1,6 +1,8 @@
+using Unity.Behavior;
 using UnityEngine;
 
 [System.Serializable]
+[BlackboardEnum]
 public enum BodyPart
 {
     Head = 0,
@@ -34,7 +36,7 @@ public class EntityHitBox : BulletHitBox
 
         switch(BodyPart)
         {
-            case BodyPart.Head: 
+            case BodyPart.Head:
                 EnergyPenalty = 2;
                 damageMult = 1.5f;
                 break;
@@ -42,7 +44,7 @@ public class EntityHitBox : BulletHitBox
                 EnergyPenalty = 4;
                 damageMult = 1.0f;
                 break;
-            case (BodyPart.LeftArm or BodyPart.RightArm): 
+            case (BodyPart.LeftArm or BodyPart.RightArm):
                 EnergyPenalty = 1;
                 damageMult = 0.3f;
                 break;

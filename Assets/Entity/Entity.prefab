@@ -96,10 +96,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31af9ee789dcd3f47a9eb0253c0f2e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 1
+  MovementSpeed: 2
   minPitch: -60
   maxPitch: 80
   Eyes: {fileID: 5545661372892488183}
+  Mode: 0
+  rb: {fileID: 0}
 --- !u!1 &4896855972202622736
 GameObject:
   m_ObjectHideFlags: 0

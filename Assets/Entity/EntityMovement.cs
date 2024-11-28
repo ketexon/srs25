@@ -1,15 +1,25 @@
-﻿using Unity.Cinemachine;
+﻿using Kutie.Extensions;
+using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Serialization;
+
+[System.Serializable]
+public enum EntityMovementMove {
+    Transform,
+    Rigidbody
+}
 
 public class EntityMovement : MonoBehaviour
 {
     const float ROTATE_SPEED = 8;
 
-    [SerializeField] float movementSpeed;
+    [SerializeField, FormerlySerializedAs("movementSpeed")]
+    public float MovementSpeed;
     [SerializeField] float minPitch = -60;
     [SerializeField] float maxPitch = 80;
     [SerializeField] public Transform Eyes;
-
+    [SerializeField] public EntityMovementMove Mode = EntityMovementMove.Transform;
+    [SerializeField] Rigidbody rb;
     [System.NonSerialized] public Transform TargetTransform;
 
     Vector3 moveDir;
@@ -48,12 +58,17 @@ public class EntityMovement : MonoBehaviour
         }
     }
 
+
     virtual protected void Awake()
     {
         var targetTransformGO = new GameObject($"{gameObject.name} Target Transform");
         TargetTransform = targetTransformGO.transform;
         Yaw = transform.rotation.eulerAngles.y;
         Pitch = Eyes.rotation.eulerAngles.x;
+
+        if(rb){
+            rb.transform.SetParent(null);
+        }
     }
 
     public void LookDelta(float deltaYaw)
@@ -90,7 +105,19 @@ public class EntityMovement : MonoBehaviour
 
     void Update()
     {
-        transform.position += movementSpeed * Time.deltaTime * moveDir;
+        if(Mode == EntityMovementMove.Transform)
+        {
+            transform.position += MovementSpeed * Time.deltaTime * moveDir;
+        }
+        else {
+            var vel = MovementSpeed * moveDir;
+            rb.linearVelocity = new(
+                vel.x,
+                rb.linearVelocity.y,
+                vel.z
+            );
+            transform.position = rb.transform.position;
+        }
         transform.rotation = Quaternion.Lerp(
             transform.rotation,
             TargetTransform.rotation,

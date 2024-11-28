@@ -1,5 +1,59 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8805126626151608960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8381919744456479792}
+  - component: {fileID: 7057793233753909499}
+  m_Layer: 0
+  m_Name: NavmeshAgent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8381919744456479792
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8805126626151608960}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 351448471356849357}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &7057793233753909499
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8805126626151608960}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 99999
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1.06
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &5442619555826171484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -96,12 +150,24 @@ PrefabInstance:
         type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5721974112483066513, guid: b3b5d88e597f7234b93e5f410268ed07,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8381919744456479792}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3886147962188206277, guid: b3b5d88e597f7234b93e5f410268ed07,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2640702964025022491}
+    - targetCorrespondingSourceObject: {fileID: 3886147962188206277, guid: b3b5d88e597f7234b93e5f410268ed07,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3717915322375907967}
+    - targetCorrespondingSourceObject: {fileID: 3886147962188206277, guid: b3b5d88e597f7234b93e5f410268ed07,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2480839514888217651}
     - targetCorrespondingSourceObject: {fileID: 4933963664057253099, guid: b3b5d88e597f7234b93e5f410268ed07,
         type: 3}
       insertIndex: -1
@@ -147,6 +213,9 @@ MonoBehaviour:
   entityLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  collisionLayerMask:
+    serializedVersion: 2
+    m_Bits: 193
   NewHitBoxVisibleEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -166,7 +235,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 439
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -218,4 +287,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Vision: {fileID: 5279216603495876419}
   Entity: {fileID: 1585037385362862602}
+  AINavigation: {fileID: 3717915322375907967}
   defaultState: {fileID: 0}
+--- !u!114 &3717915322375907967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108054557359533721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e31c5b1ecbe0a5645ae8160e3bf90a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entity: {fileID: 1585037385362862602}
+  agent: {fileID: 7057793233753909499}
+--- !u!114 &2480839514888217651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108054557359533721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Graph: {fileID: 1090911202992284248, guid: 941ec6f909cf23a4f878c5b478408bf8, type: 2}
+  m_BlackboardVariableOverridesList:
+  - rid: 2367309630658052207
+  - rid: 2367309630658052347
+  references:
+    version: 2
+    RefIds:
+    - rid: 2367309630658052207
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]',
+        ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 9108054557359533721}
+    - rid: 2367309630658052347
+      type: {class: 'BlackboardVariable`1[[EnemyVisionCone, Assembly-CSharp]]', ns: Unity.Behavior,
+        asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 17364337344664273025
+          m_Value1: 7100461126887394650
+        Name: Vision Cone
+        m_Value: {fileID: 5279216603495876419}

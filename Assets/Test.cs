@@ -7,6 +7,8 @@ public class Test : MonoBehaviour
     [SerializeField] Kutie.SpringParameters p;
     Kutie.SpringQuaternion v;
 
+    Kutie.PIDFloatController pid;
+
     void Start()
     {
         v = new(transform.rotation, p);

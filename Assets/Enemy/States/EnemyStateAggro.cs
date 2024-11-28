@@ -1,26 +1,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateAggro : EnemyState {
+public class EnemyStateAggro : EnemyAIState {
 	[SerializeField] List<BodyPart> bodyPartPreferences;
+	[SerializeField] float maxRecoil = 1f;
+	[SerializeField] float minRecoil = 0.1f;
 
 	readonly Dictionary<BodyPart, int> bodyPartPreferenceMap = new();
 
 	EntityHitBox target;
 
-	void Awake(){
+	bool recoilCooldown = false;
+
+	override protected void Awake(){
+		base.Awake();
 		for (int i = 0; i < bodyPartPreferences.Count; i++){
 			bodyPartPreferenceMap[bodyPartPreferences[i]] = i;
 		}
 	}
 
-	void Start(){
+	override protected void Start(){
+		base.Start();
 		HumanModel.DeathEvent.AddListener(OnDeath);
 		Gun.ShootStraight = true;
 	}
 
 	override public void Enter(){
 		base.Enter();
+		recoilCooldown = false;
 		Vision.NewHitBoxVisibleEvent.AddListener(OnHitBoxVisible);
 		Vision.HitBoxInvisibleEvent.AddListener(OnHitBoxInvisible);
 		ChooseNewTarget();
@@ -28,6 +35,7 @@ public class EnemyStateAggro : EnemyState {
 
 	override public void Exit(){
 		base.Exit();
+		Gun.Shooting = false;
 		Vision.NewHitBoxVisibleEvent.RemoveListener(OnHitBoxVisible);
 		Vision.HitBoxInvisibleEvent.RemoveListener(OnHitBoxInvisible);
 	}
@@ -56,6 +64,10 @@ public class EnemyStateAggro : EnemyState {
 				target = hb;
 			}
 		}
+
+		if(target == null){
+			Controller.TransitionTo<EnemyStatePatrol>();
+		}
 	}
 
 	void Update(){
@@ -64,14 +76,24 @@ public class EnemyStateAggro : EnemyState {
 			Entity.Gun.TargetRotation = Entity.Movement.Pitch;
 			Vision.transform.localRotation = Quaternion.AngleAxis(Entity.Movement.Pitch, Vector3.right);
 
-			Entity.Gun.Shooting = true;
+			if(recoilCooldown){
+				if(Entity.Gun.CurrentRecoil < minRecoil){
+					Entity.Gun.Shooting = true;
+					recoilCooldown = false;
+				}
+			}
+			else {
+				if(!Entity.Gun.Shooting){
+					Entity.Gun.Shooting = true;
+				}
+				if(Entity.Gun.CurrentRecoil > maxRecoil){
+					Entity.Gun.Shooting = false;
+					recoilCooldown = true;
+				}
+			}
 		}
 		else {
 			Entity.Gun.Shooting = false;
 		}
-	}
-
-	void OnDeath(){
-		enabled = false;
 	}
 }

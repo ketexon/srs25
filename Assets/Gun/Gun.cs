@@ -63,7 +63,9 @@ public class Gun : MonoBehaviour
         }
     }
 
-    public float CombinedRotation => Rotation + recoilSpring.CurrentValue;
+    public float CurrentRecoil => recoilSpring.CurrentValue;
+
+    public float CombinedRotation => Rotation - recoilSpring.CurrentValue;
 
     // this is provided to bullet so that
     // they don't have to alloc
@@ -117,7 +119,7 @@ public class Gun : MonoBehaviour
                 spawnRot = entity.Movement.Eyes.transform.rotation;
                 if(!NoRecoil){
                     spawnRot = Quaternion.AngleAxis(
-                        recoilSpring.CurrentValue,
+                        -recoilSpring.CurrentValue,
                         entity.Movement.Eyes.transform.right
                     ) * spawnRot;
                 }
@@ -135,7 +137,7 @@ public class Gun : MonoBehaviour
             bullet.Damage = damage;
         }
 
-        recoilSpring.Velocity -= recoilAmplitude;
+        recoilSpring.Velocity += recoilAmplitude;
     }
 
     public void Drop()

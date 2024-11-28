@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletHitboxLayerMask:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 193
   tracerPrefab: {fileID: 123640171625993420, guid: 244f91bd3c7f043448215cd11c8c664a,
     type: 3}
   bloodSplatterPrefab: {fileID: 4239423802448183784, guid: 3dafd87704a03c742a653c98dc44bf1b,

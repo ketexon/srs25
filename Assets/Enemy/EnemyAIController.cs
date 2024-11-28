@@ -4,9 +4,10 @@ using UnityEngine;
 public class EnemyAIController : MonoBehaviour {
 	[SerializeField] public EnemyVisionCone Vision;
 	[SerializeField] public Entity Entity;
-	[SerializeField] EnemyState defaultState;
+	[SerializeField] public EnemyAINavigation AINavigation;
+	[SerializeField] EnemyAIState defaultState;
 
-	[System.NonSerialized] public EnemyState ActiveState;
+	[System.NonSerialized] public EnemyAIState ActiveState;
 
 	void Reset(){
 		Vision = GetComponentInChildren<EnemyVisionCone>();
@@ -17,11 +18,11 @@ public class EnemyAIController : MonoBehaviour {
 		TransitionTo(defaultState);
 	}
 
-	public void TransitionTo<T>() where T : EnemyState {
+	public void TransitionTo<T>() where T : EnemyAIState {
 		TransitionTo(GetComponent<T>());
 	}
 
-	public void TransitionTo(EnemyState state){
+	public void TransitionTo(EnemyAIState state){
 		if(ActiveState){
 			ActiveState.Exit();
 		}
@@ -34,5 +35,9 @@ public class EnemyAIController : MonoBehaviour {
 
 	public void Exit(){
 		TransitionTo(defaultState);
+	}
+
+	public void Stop(){
+		TransitionTo(null);
 	}
 }
