@@ -45,7 +45,7 @@ public class LevelGenerator2 : MonoBehaviour {
 		/// step 1: spawn rooms at random locations
 		for(int i = 0; i < roomsToSpawn; i++){
 			var roomPrefab = GetRandomRoomPrefab();
-			var pos = Kutie.Random.Range(bounds.min, bounds.max);
+			var pos = Kutie.KRandom.Range(bounds.min, bounds.max);
 			pos.y = Random.Range(0, layers) * layerHeight;
 
 			AddRoom(roomPrefab, pos);

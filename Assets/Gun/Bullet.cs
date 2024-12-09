@@ -16,7 +16,7 @@ public class RayBulletCaster : IBulletCaster
 {
     public int Cast(Bullet bullet, RaycastHit[] hitResults)
     {
-        return Kutie.Physics.RaycastNonAllocSorted(
+        return Kutie.KPhysics.RaycastNonAllocSorted(
             bullet.transform.position,
             bullet.transform.forward,
             hitResults,
@@ -41,7 +41,7 @@ public class BoxBulletCaster : IBulletCaster
 
     public int Cast(Bullet bullet, RaycastHit[] hitResults)
     {
-        return Kutie.Physics.BoxCastNonAllocSorted(
+        return Kutie.KPhysics.BoxCastNonAllocSorted(
             bullet.transform.position,
             HalfExtents,
             bullet.transform.forward,
