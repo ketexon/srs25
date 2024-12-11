@@ -9,7 +9,7 @@ using UnityEditor;
 
 public class Room : MonoBehaviour
 {
-    [SerializeField] public LevelGridEntry LevelEntry;
+    [SerializeField] public LevelGridEntry2 LevelEntry;
     [SerializeField] public BoxCollider Bounds;
     [SerializeField] public List<Transform> Entrances;
     [SerializeField] public RoomTypeSO Type;
@@ -79,7 +79,7 @@ public class Room : MonoBehaviour
             sizeProp.vector3Value = bounds.size * 0.95f;
             boxColliderSerializedObject.ApplyModifiedProperties();
 
-            LevelEntry.Size = Vector3Int.CeilToInt(bounds.size.Divide(LevelGenerator3.CellSize));
+            LevelEntry.Size = bounds.size;
             LevelEntry.BottomLeftCornerOffset = bounds.min;
             LevelEntry.BottomLeftCornerOffset.y = 0;
         }
@@ -93,20 +93,8 @@ public class Room : MonoBehaviour
 
         LevelEntry.Doors = new();
         foreach(var entrance in Entrances){
-            var relativePos =
-                (entrance.position - LevelEntry.BottomLeftCornerOffset).Divide(LevelGenerator3.CellSize)
-                - Vector3.one * 0.5f;
-            var doorCell = Vector3Int.RoundToInt(relativePos);
-            var doorCellOffset = relativePos - (Vector3) doorCell + Vector3.up * 0.5f;
-            if(
-                doorCellOffset.Abs() != Vector3.forward * 0.5f
-                && doorCellOffset.Abs() != Vector3.right * 0.5f
-            ){
-                Debug.LogWarning($"Entrance {entrance.name} of room {gameObject.name} is not aligned to the grid");
-            }
-            LevelEntry.Doors.Add(new LevelDoor(){
-                Position = doorCell,
-                Face = Vector3Int.RoundToInt(doorCellOffset * 2),
+            LevelEntry.Doors.Add(new LevelDoor2(){
+                Transform = entrance,
                 Required = entrance.name.Contains("Required"),
             });
         }
@@ -118,43 +106,43 @@ public class Room : MonoBehaviour
         UnconnectedEntrances.Remove(entrance);
     }
 
-    void OnDrawGizmos()
-    {
-        // draw level entry
-        if(LevelEntry != null){
-            var bottomLeftOffset = transform.rotation * LevelEntry.BottomLeftCornerOffset
-                + transform.position;
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(
-                bottomLeftOffset
-                + transform.rotation * ((Vector3)LevelEntry.Size).Hammard(LevelGenerator3.CellSize) / 2,
-                transform.rotation * ((Vector3)LevelEntry.Size).Hammard(LevelGenerator3.CellSize)
-            );
+    // void OnDrawGizmos()
+    // {
+    //     // draw level entry
+    //     if(LevelEntry != null){
+    //         var bottomLeftOffset = transform.rotation * LevelEntry.BottomLeftCornerOffset
+    //             + transform.position;
+    //         Gizmos.color = Color.red;
+    //         Gizmos.DrawWireCube(
+    //             bottomLeftOffset
+    //             + transform.rotation * ((Vector3)LevelEntry.Size).Hammard(LevelGenerator3.CellSize) / 2,
+    //             transform.rotation * ((Vector3)LevelEntry.Size).Hammard(LevelGenerator3.CellSize)
+    //         );
 
-            // draw door indicators
-            if(Entrances != null){
-                Gizmos.color = Color.blue;
-                foreach(var door in LevelEntry.Doors){
-                    Gizmos.DrawWireCube(
-                        transform.rotation * (
-                            ((Vector3)door.Position).Hammard(LevelGenerator3.CellSize)
-                             + LevelGenerator3.CellSize / 2
-                        )
-                        + bottomLeftOffset,
-                        transform.rotation * LevelGenerator3.CellSize
-                    );
-                    Gizmos.DrawIcon(
-                        transform.rotation * (
-                            ((Vector3)door.Position).Hammard(LevelGenerator3.CellSize)
-                            + ((Vector3)door.Face).Hammard(LevelGenerator3.CellSize) / 2
-                             + LevelGenerator3.CellSize / 2
-                        )
-                        + bottomLeftOffset,
-                        "door.png",
-                        true
-                    );
-                }
-            }
-        }
-    }
+    //         // draw door indicators
+    //         if(Entrances != null){
+    //             Gizmos.color = Color.blue;
+    //             foreach(var door in LevelEntry.Doors){
+    //                 Gizmos.DrawWireCube(
+    //                     transform.rotation * (
+    //                         ((Vector3)door.Position).Hammard(LevelGenerator3.CellSize)
+    //                          + LevelGenerator3.CellSize / 2
+    //                     )
+    //                     + bottomLeftOffset,
+    //                     transform.rotation * LevelGenerator3.CellSize
+    //                 );
+    //                 Gizmos.DrawIcon(
+    //                     transform.rotation * (
+    //                         ((Vector3)door.Position).Hammard(LevelGenerator3.CellSize)
+    //                         + ((Vector3)door.Face).Hammard(LevelGenerator3.CellSize) / 2
+    //                          + LevelGenerator3.CellSize / 2
+    //                     )
+    //                     + bottomLeftOffset,
+    //                     "door.png",
+    //                     true
+    //                 );
+    //             }
+    //         }
+    //     }
+    // }
 }

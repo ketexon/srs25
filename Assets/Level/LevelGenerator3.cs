@@ -15,15 +15,15 @@ using UnityEditor.UIElements;
 
 [System.Serializable]
 public class LevelDoor {
-	public Vector3Int Position;
-	public Vector3Int Face;
+	public Vector2 Position;
+	public Vector2 Face;
 	public bool Required;
 }
 
 [System.Serializable]
 public class LevelGridEntry {
-	public Vector3Int Size;
-	public Vector3 BottomLeftCornerOffset;
+	public Vector2 Size;
+	public Vector2 BottomLeftCornerOffset;
 	public List<LevelDoor> Doors;
 }
 
@@ -343,22 +343,22 @@ public class LevelGenerator3 : MonoBehaviour {
 				for(int x = 0; x < rotatedSize.x; x++){
 					for(int y = 0; y < rotatedSize.y; y++){
 						for(int z = 0; z < rotatedSize.z; z++){
-							GridSet(
-								bottomLeftCell + new Vector3Int(x, y, z),
-								CellType.Room
-							);
+							// GridSet(
+							// 	bottomLeftCell + new Vector3Int(x, y, z),
+							// 	CellType.Room
+							// );
 						}
 					}
 				}
 				// add door cells as targets
 				foreach(var door in room.LevelEntry.Doors){
-					var doorCell = Vector3Int.RoundToInt(
-						rotationQuat * (door.Position + door.Face)
-						+ bottomLeftCell
-					);
-					if(InBounds(doorCell)){
-						doorCells.Add(doorCell);
-					}
+					// var doorCell = Vector3Int.RoundToInt(
+					// 	rotationQuat * (door.Position + door.Face)
+					// 	+ bottomLeftCell
+					// );
+					// if(InBounds(doorCell)){
+					// 	doorCells.Add(doorCell);
+					// }
 				}
 			}
 		}
