@@ -12,6 +12,7 @@ public enum EntityMovementMove {
 public class EntityMovement : MonoBehaviour
 {
     const float ROTATE_SPEED = 8;
+    [SerializeField] float baseOffset = 1.06f;
 
     [SerializeField, FormerlySerializedAs("movementSpeed")]
     public float MovementSpeed;
@@ -124,5 +125,11 @@ public class EntityMovement : MonoBehaviour
             Time.deltaTime * ROTATE_SPEED
         );
         Eyes.localRotation = Quaternion.AngleAxis(Pitch, Vector3.right);
+    }
+
+    public void Teleport(Vector3 location){
+		location.y += baseOffset;
+        rb.position = location;
+        transform.position = location;
     }
 }

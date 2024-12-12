@@ -352,6 +352,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5051732910074546565, guid: 9e25af0c4164e6a45a08c896b34ba0d5,
         type: 3}
+      propertyPath: LevelEntry.Doors.Array.data[0].Required
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5051732910074546565, guid: 9e25af0c4164e6a45a08c896b34ba0d5,
+        type: 3}
+      propertyPath: LevelEntry.Doors.Array.data[1].Required
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5051732910074546565, guid: 9e25af0c4164e6a45a08c896b34ba0d5,
+        type: 3}
+      propertyPath: LevelEntry.Doors.Array.data[2].Required
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5051732910074546565, guid: 9e25af0c4164e6a45a08c896b34ba0d5,
+        type: 3}
+      propertyPath: LevelEntry.Doors.Array.data[3].Required
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5051732910074546565, guid: 9e25af0c4164e6a45a08c896b34ba0d5,
+        type: 3}
       propertyPath: LevelEntry.Doors.Array.data[0].Transform
       value: 
       objectReference: {fileID: 5479391472618243338}

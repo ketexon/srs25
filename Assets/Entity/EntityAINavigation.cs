@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAINavigation : MonoBehaviour {
+public class EntityAINavigation : MonoBehaviour {
 	[SerializeField] Entity entity;
 	[SerializeField] NavMeshAgent agent;
 

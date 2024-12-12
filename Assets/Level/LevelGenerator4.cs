@@ -2,9 +2,12 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using Kutie.Extensions;
-using System.Linq;
+using Kutie.Collections;
 using Delauney.Utils.Triangulation;
-
+using Kutie;
+using UnityEngine.Serialization;
+using Unity.AI.Navigation;
+using Unity.AI.Navigation.Editor;
 
 
 
@@ -35,6 +38,12 @@ public class LevelGenerator4Editor : Editor {
     {
         var root = new VisualElement();
 		var generator = target as LevelGenerator4;
+		var grid = generator.Grid;
+
+		SerializedObject gridSerializedObject = null;
+		if(grid){
+			gridSerializedObject = new SerializedObject(grid);
+		}
 
 		var defaultInspector = new VisualElement();
 		InspectorElement.FillDefaultInspector(defaultInspector, serializedObject, this);
@@ -42,8 +51,17 @@ public class LevelGenerator4Editor : Editor {
 		root.Add(defaultInspector);
 
 		var generateButton = new Button(() => {
+			if(!grid) return;
+			Undo.RegisterFullObjectHierarchyUndo(
+				generator.gameObject,
+				"Generate Level"
+			);
+
 			generator.Generate();
 			serializedObject.ApplyModifiedProperties();
+			if(grid){
+				gridSerializedObject.ApplyModifiedProperties();
+			}
 		});
 		generateButton.Add(new Label("Generate"));
 
@@ -55,13 +73,7 @@ public class LevelGenerator4Editor : Editor {
 #endif
 
 public class LevelGenerator4 : MonoBehaviour {
-	[System.Serializable]
-	enum CellType {
-		Empty,
-		Room,
-		Pathway,
-		OutOfBounds,
-	};
+	class RegenerateException : System.Exception {}
 
 	[System.Serializable]
 	class Door {
@@ -70,10 +82,15 @@ public class LevelGenerator4 : MonoBehaviour {
 		public bool Required = false;
 	}
 
-	[SerializeField] Vector2 cellSize = new(2, 2);
-	[SerializeField] Vector2Int gridSize = new(20, 20);
-	[SerializeField] Kutie.IntRange roomCount = new(10, 20);
-	[SerializeField] Kutie.IntRange roomLength = new(4, 8);
+	[Header("References")]
+	[SerializeField] public LevelGrid Grid;
+	[SerializeField] NavMeshSurface surface;
+
+	[Header("Parameters")]
+	[SerializeField] int seed = 42;
+	[SerializeField] IntRange roomCount = new(10, 20);
+	[SerializeField] IntRange roomLength = new(4, 8);
+	[SerializeField] IntRange nAdditionalEdges = new(5, 10);
 	[SerializeField] int roomGap = 1;
 	[SerializeField] int roomMargin = 1;
 	// these are the areas in which rooms will be spawned
@@ -81,33 +98,61 @@ public class LevelGenerator4 : MonoBehaviour {
 	// but just upper bounds
 	[SerializeField] List<RectInt> allSpacePartitions = new();
 	[SerializeField] List<RectInt> spacePartitions = new();
-	[SerializeField, HideInInspector] List<List<int>> adjacencies = new();
-	[SerializeField, HideInInspector] List<List<int>> spanningAdjacencies = new();
-	[SerializeField] List<Room> spawnedRooms = new();
+	[SerializeField] List<Vector2Int> edges = new();
+	[SerializeField] List<Vector2Int> spanningEdges = new();
+	[SerializeField] List<Vector2Int> additionalEdges = new();
+	[SerializeField, FormerlySerializedAs("spawnedRooms")]
+	public List<Room> SpawnedRooms = new();
+	[SerializeField]
+	public List<Hallway> SpawnedHallways = new();
+
+	[SerializeField]
+	int startRoomIndex = 0;
+
+	public Room StartRoom => SpawnedRooms[startRoomIndex];
+
 	[SerializeField] int maxIters = 2;
 
 	[Header("Prefabs")]
 	[SerializeField] List<GameObject> roomPrefabs = new();
+	[SerializeField] GameObject hallwayPrefab;
 	[SerializeField, HideInInspector] List<Room> roomPrefabRooms = new();
-	[SerializeField, HideInInspector] List<List<Door>> roomPrefabDoors = new();
+	List<List<Door>> roomPrefabDoors = new();
 	[SerializeField, HideInInspector] List<Vector2Int> roomSizes = new();
-	[SerializeField, HideInInspector] List<CellType> grid = new();
-	[SerializeField, HideInInspector] List<Vector2Int> doorCells = new();
-
-	int GetCellIndex(Vector2Int cell) => cell.x + cell.y * gridSize.x;
-	bool CellInBounds(Vector2Int cell) => CellInBounds(GetCellIndex(cell));
-	bool CellInBounds(int idx) => idx < grid.Count && idx >= 0;
-
-	void Start() {
-		PartitionSpace(new RectInt(Vector2Int.zero, gridSize));
-	}
+	Dictionary<int, List<Vector2Int>> doorPathwayCells = new();
+	Dictionary<int, List<Vector2Int>> requiredDoorPathwayCells = new();
+	Dictionary<int, List<Vector2Int>> optionalDoorPathwayCells = new();
+	HashSet<Vector2Int> requiredPathwayCells = new();
 
 	public void Generate(){
-		Clean();
-		PartitionSpace(new RectInt(Vector2Int.zero, gridSize));
-		BakeRoomCoordinates();
-		SpawnRooms();
-		Triangulate();
+		if(seed >= 0){
+			Random.InitState(seed);
+		}
+		bool success = false;
+		int nAttempts = 0;
+		while (!success && nAttempts++ < maxIters) {
+			try {
+				Clean();
+				PartitionSpace(new RectInt(Vector2Int.zero, Grid.Size));
+				BakeRoomCoordinates();
+				SpawnRooms();
+				Triangulate();
+				FindSpanningTree();
+				ChooseAdditionalEdges();
+				ConnectRooms();
+				ConnectRequiredDoors();
+				SpawnHallways();
+				BuildNavMesh();
+				success = true;
+			}
+			catch (RegenerateException) {
+				Debug.LogWarning($"Caught RegenerationException. Regenerating...");
+			}
+		}
+
+		if(!success){
+			Debug.LogError("Could not generate level.");
+		}
 	}
 
 	void PartitionSpace(RectInt bounds){
@@ -194,7 +239,11 @@ public class LevelGenerator4 : MonoBehaviour {
 			var room = roomPrefab.GetComponent<Room>();
 			roomPrefabRooms.Add(room);
 
-			roomSizes.Add(room.LevelEntry.Size.XZ().Divide(cellSize).RoundToInt());
+			roomSizes.Add(
+				room.LevelEntry.Size.XZ()
+				.Divide(Grid.CellSize)
+				.RoundToInt()
+			);
 
 			// Get cell and face for each door
 			List<Door> doors = new();
@@ -207,7 +256,7 @@ public class LevelGenerator4 : MonoBehaviour {
 				var relativePos =
 					(doorXform.position - room.LevelEntry.BottomLeftCornerOffset)
 					.XZ()
-					.Divide(cellSize)
+					.Divide(Grid.CellSize)
 				// the door transform is at an edge
 				// so move inward half a unit
 					+ forward / 2
@@ -233,6 +282,7 @@ public class LevelGenerator4 : MonoBehaviour {
 		// find the room of largest area
 		// that fits inside each space partition
 		List<RectInt> usedSpacedPartitions = new();
+		int spacePartitionIndex = 0;
 		foreach(var partition in spacePartitions){
 			Room roomPrefab = null;
 			int roomPrefabIndex = 0;
@@ -255,36 +305,62 @@ public class LevelGenerator4 : MonoBehaviour {
 				usedSpacedPartitions.Add(partition);
 
 				var bottomLeftCell = partition.min + (partition.size - size) / 2;
+				var roomPosition =
+					Grid.CellToWorld(bottomLeftCell)
+					- roomPrefab.LevelEntry.BottomLeftCornerOffset;
+#if UNITY_EDITOR
+				// this spawns it as a prefab (rather
+				// than ap refab clone), so that changes
+				// can be observed when using in edit mode
+				var roomGO = PrefabUtility.InstantiatePrefab(
+					roomPrefab.gameObject,
+					gameObject.scene
+				) as GameObject;
+				roomGO.transform.position = roomPosition;
+#else
 				var roomGO = Instantiate(
 					roomPrefab.gameObject,
-					bottomLeftCell.Hammard(cellSize).WithZ(0).XZY()
-					- roomPrefab.LevelEntry.BottomLeftCornerOffset,
+					roomPosition,
 					Quaternion.identity
 				);
+#endif
+
+				roomGO.transform.SetParent(transform);
 				var room = roomGO.GetComponent<Room>();
-				spawnedRooms.Add(room);
+				SpawnedRooms.Add(room);
 
 				// mark grid cells as occupied
 				for(int x = 0; x < size.x; x++){
 					for(int y = 0; y < size.y; y++){
-						int idx = GetCellIndex(bottomLeftCell + new Vector2Int(x, y));
-						if(CellInBounds(idx)){
-							grid[idx] = CellType.Room;
-						}
+						Grid.SetCellType(
+							bottomLeftCell + new Vector2Int(x, y),
+							CellType.Room
+						);
 					}
 				}
 
 				// add door cells as targets
 				var doors = roomPrefabDoors[roomPrefabIndex];
+				doorPathwayCells[spacePartitionIndex] = new();
+				optionalDoorPathwayCells[spacePartitionIndex] = new();
+				requiredDoorPathwayCells[spacePartitionIndex] = new();
 				foreach(var door in doors){
 					var doorCell = bottomLeftCell + door.Cell;
+					Grid.SetCellType(doorCell, CellType.Door);
+
 					var pathwayCell = doorCell + door.Face;
-					int idx = GetCellIndex(pathwayCell);
-					if(CellInBounds(idx)){
-						grid[idx] = CellType.Pathway;
-						doorCells.Add(pathwayCell);
+					if(Grid.CellInBounds(pathwayCell)){
+						doorPathwayCells[spacePartitionIndex].Add(pathwayCell);
+						if (door.Required){
+							requiredDoorPathwayCells[spacePartitionIndex].Add(pathwayCell);
+							requiredPathwayCells.Add(pathwayCell);
+						}
+						else {
+							optionalDoorPathwayCells[spacePartitionIndex].Add(pathwayCell);
+						}
 					}
 				}
+				spacePartitionIndex++;
 			}
 		}
 
@@ -304,15 +380,13 @@ public class LevelGenerator4 : MonoBehaviour {
 		}
 
 		// initialize adjacencies
-		adjacencies = new();
-		foreach(var _ in spacePartitions){
-			adjacencies.Add(new List<int>());
-		}
+		edges = new();
 
 		// for each triangle, add its
 		// edges to the adjacency list
 		// skip first triangle since this is the outer triangle
 		// subtract 3 from each index since we ignore the first triangle
+		HashSet<int> spacePartitionsAdded = new();
 		for(int i = 0; i < triangulation.TriangleSet.TriangleCount; i++){
 			var triangle = triangulation.TriangleSet.GetTrianglePoints(i);
 
@@ -323,15 +397,328 @@ public class LevelGenerator4 : MonoBehaviour {
 					spacePartitionCenterIndexMap.TryGetValue(a, out var aIndex)
 					&& spacePartitionCenterIndexMap.TryGetValue(b, out var bIndex)
 				){
-					adjacencies[aIndex].Add(bIndex);
-					adjacencies[bIndex].Add(aIndex);
+					edges.Add(new Vector2Int(aIndex, bIndex));
+					spacePartitionsAdded.Add(aIndex);
+					spacePartitionsAdded.Add(bIndex);
 				}
+			}
+		}
+
+		// check that all rooms have an edge
+		for(int i = 0; i < spacePartitions.Count; i++){
+			if(!spacePartitionsAdded.Contains(i)){
+				Debug.LogWarning($"Room {i} has no adjacent rooms.");
+				throw new RegenerateException();
 			}
 		}
 	}
 
 	void FindSpanningTree(){
+		// cache adjacency list
+		var adj = new Dictionary<int, List<int>>();
+		foreach(var edge in edges){
+			if(!adj.ContainsKey(edge.x)){
+				adj[edge.x] = new();
+			}
+			if(!adj.ContainsKey(edge.y)){
+				adj[edge.y] = new();
+			}
+			adj[edge.x].Add(edge.y);
+			adj[edge.y].Add(edge.x);
+		}
 
+		// select start room as top-leftmost room
+		startRoomIndex = 0;
+		for(int i = 0; i < spacePartitions.Count; i++){
+			bool sameLeft = (
+				spacePartitions[i].center.x
+				== spacePartitions[startRoomIndex].center.x
+			);
+			bool moreLeft = (
+				spacePartitions[i].center.x
+				< spacePartitions[startRoomIndex].center.x
+			);
+			bool moreUp = (
+				spacePartitions[i].center.y
+				> spacePartitions[startRoomIndex].center.y
+			);
+			if(moreLeft || (sameLeft && moreUp)){
+				startRoomIndex = i;
+			}
+		}
+
+		// Prim's algorithm
+		spanningEdges.Clear();
+		HashSet<int> added = new();
+		KPriorityQueue<Vector2Int, float> pq = new();
+
+		added.Add(startRoomIndex);
+		foreach(var neighbor in adj[startRoomIndex]){
+			var squareDistance = (
+				spacePartitions[startRoomIndex].center
+				- spacePartitions[neighbor].center
+			).sqrMagnitude;
+			// add noise to encourage randomness
+			squareDistance += Random.value * Grid.CellSize.sqrMagnitude * 3;
+			pq.Enqueue(
+				new Vector2Int(startRoomIndex, neighbor),
+				squareDistance
+			);
+		}
+
+		while(pq.Count > 0){
+			var edge = pq.Dequeue();
+			if(added.Contains(edge.y)){
+				continue;
+			}
+			added.Add(edge.y);
+			spanningEdges.Add(edge);
+			foreach(var neighbor in adj[edge.y]){
+				if(!added.Contains(neighbor)){
+					var squareDistance = (
+						spacePartitions[edge.y].center
+						- spacePartitions[neighbor].center
+					).sqrMagnitude;
+					// add noise to encourage randomness
+					squareDistance += Random.value * Grid.CellSize.sqrMagnitude * 3;
+					pq.Enqueue(
+						new Vector2Int(edge.y, neighbor),
+						squareDistance
+					);
+				}
+			}
+		}
+	}
+
+	void ChooseAdditionalEdges(){
+		var unusedEdges = new List<Vector2Int>();
+		foreach(var edge in edges){
+			var reverse = new Vector2Int(edge.y, edge.x);
+			if(unusedEdges.Contains(reverse)){
+				continue;
+			}
+			else if(spanningEdges.Contains(edge) || spanningEdges.Contains(reverse)){
+				continue;
+			}
+			unusedEdges.Add(edge);
+		}
+
+		additionalEdges = unusedEdges.Sample(nAdditionalEdges.Random());
+	}
+
+	void ConnectRooms(){
+		void Connect2Rooms(
+			Vector2Int edge,
+			bool stopOnHitPathway
+		){
+			// find closest doors
+			var aDoorCells = doorPathwayCells[edge.x];
+			var bDoorCells = doorPathwayCells[edge.y];
+
+			var (aMinDoorCell, bMinDoorCell) = aDoorCells
+				.Cartesian(bDoorCells)
+				.MinBy(
+					(pair) => (pair.Item1 - pair.Item2).sqrMagnitude
+				);
+
+			var path = Algorithm.AStar(
+				aMinDoorCell,
+				heuristic: (cell) => (cell - bMinDoorCell).sqrMagnitude,
+				isTarget: (cell) =>
+					(
+						stopOnHitPathway
+						&& cell != aMinDoorCell
+						&& Grid.GetCellType(cell) == CellType.Pathway
+						|| bDoorCells.Contains(cell)
+					),
+				isWalkable: (cell) => {
+					var type = Grid.GetCellType(cell);
+					return type == CellType.Empty || type == CellType.Pathway;
+				}
+			);
+
+			if(path == null){
+				Debug.LogWarning($"Could not connect rooms {edge.x} and {edge.y}");
+				throw new RegenerateException();
+			}
+
+			PostProcessPathwayPath(path);
+
+			foreach(var cell in path){
+				Grid.SetCellType(cell, CellType.Pathway);
+			}
+		}
+
+		// use A* to connect rooms
+		foreach(var edge in spanningEdges){
+			Connect2Rooms(edge, stopOnHitPathway: false);
+		}
+		foreach(var edge in additionalEdges){
+			Connect2Rooms(edge, stopOnHitPathway: true);
+		}
+	}
+
+	void PostProcessPathwayPath(List<Vector2Int> path){
+		// prevent many bends
+		for(int i = 0; i < path.Count; i++){
+			// if cell is in a square
+			// ..
+			// x.
+			// remove it
+
+			// check each dir
+			bool removed = false;
+			for(int dx = -1; dx <= 1; dx += 2){
+				for(int dy = -1; dy <= 1; dy += 2){
+					var a = path[i];
+					var b = a + new Vector2Int(dx, dy);
+					var c = a + new Vector2Int(dx, 0);
+					var d = a + new Vector2Int(0, dy);
+					if(
+						Grid.GetCellType(a) == CellType.Pathway
+						&& Grid.GetCellType(b) == CellType.Pathway
+						&& Grid.GetCellType(c) == CellType.Pathway
+						&& Grid.GetCellType(d) == CellType.Pathway
+					){
+						path.RemoveAt(i);
+						i--;
+						removed = true;
+						break;
+					}
+				}
+			}
+			if(removed) {
+				continue;
+			}
+
+
+			if(i + 3 < path.Count){
+				var a = path[i];
+				var b = path[i + 1];
+				var c = path[i + 2];
+				var d = path[i + 3];
+
+				var abDir = b - a;
+				var bcDir = c - b;
+				var cdDir = d - c;
+
+				// ..
+				//  ..
+				// to
+				// ...	or	.
+				//   .		...
+				if(abDir == cdDir && abDir != bcDir){
+					// fail chance
+					if(Random.value < 0.25f) continue;
+
+					// try to move c to b + abDir
+					var newC = b + abDir;
+					if(Grid.GetCellType(newC) != CellType.Room){
+						path[i + 2] = newC;
+						continue;
+					}
+
+					// try to move b to c - abDir
+					var newB = c - abDir;
+					if(Grid.GetCellType(newB) != CellType.Room){
+						path[i + 1] = newB;
+						continue;
+					}
+				}
+			}
+		}
+	}
+
+	void ConnectRequiredDoors(){
+		foreach(var (spacePartitionIndex, doorCells) in requiredDoorPathwayCells){
+			foreach(var doorCell in doorCells){
+				// if already in pathway, skip
+				if(Grid.GetCellType(doorCell) == CellType.Pathway){
+					continue;
+				}
+
+				// connect them
+				var path = Algorithm.BFS(
+					doorCell,
+					isTarget: cell => Grid.GetCellType(cell) == CellType.Pathway,
+					isWalkable: cell => {
+						var type = Grid.GetCellType(cell);
+						return type == CellType.Empty || type == CellType.Pathway;
+					}
+				);
+				if(path == null){
+					Debug.LogWarning($"Could not connect required door {doorCell} to pathway");
+					throw new RegenerateException();
+				}
+
+				PostProcessPathwayPath(path);
+
+				foreach(var cell in path){
+					Grid.SetCellType(cell, CellType.Pathway);
+				}
+			}
+		}
+	}
+
+	void SpawnHallways(){
+		// DFS to find connected components
+		// so we only spawn 1 hallway per connected
+		// component
+		var visited = new HashSet<Vector2Int>();
+
+		void DFS(Vector2Int start){
+			foreach(var dir in KMath.Directions4){
+				var neighbor = start + dir;
+				if(
+					Grid.CellInBounds(neighbor)
+					&& Grid.GetCellType(neighbor) == CellType.Pathway
+					&& !visited.Contains(neighbor)
+				){
+					visited.Add(neighbor);
+					DFS(neighbor);
+				}
+			}
+		}
+
+		// iterate over all door cells
+		foreach(var (_, doorCells) in doorPathwayCells){
+			foreach(var doorCell in doorCells){
+				if(
+					Grid.GetCellType(doorCell) != CellType.Pathway ||
+					visited.Contains(doorCell)
+				){
+					continue;
+				}
+				var hallwayPosition = Grid.CellToWorld(
+					(Vector2) doorCell + Vector2.one * 0.5f
+				);
+
+#if UNITY_EDITOR
+				var hallwayGO = PrefabUtility.InstantiatePrefab(
+					hallwayPrefab,
+					gameObject.scene
+				) as GameObject;
+				hallwayGO.transform.position = hallwayPosition;
+#else
+				var hallwayGO = Instantiate(
+					hallwayPrefab,
+					hallwayPosition,
+					Quaternion.identity
+				);
+#endif
+				hallwayGO.transform.SetParent(transform);
+
+				var hallway = hallwayGO.GetComponent<Hallway>();
+				hallway.LevelGenerator = this;
+				hallway.StartCell = doorCell;
+
+				hallway.Generate();
+
+				SpawnedHallways.Add(hallway);
+
+				DFS(doorCell);
+			}
+		}
 	}
 
 	void Clean(){
@@ -341,9 +728,14 @@ public class LevelGenerator4 : MonoBehaviour {
 		roomPrefabRooms.Clear();
 		roomPrefabDoors.Clear();
 
-		adjacencies.Clear();
+		edges.Clear();
+		spanningEdges.Clear();
 
-		foreach(var room in spawnedRooms){
+		doorPathwayCells.Clear();
+		requiredDoorPathwayCells.Clear();
+		optionalDoorPathwayCells.Clear();
+
+		foreach(var room in SpawnedRooms){
 			if(room){
 #if UNITY_EDITOR
 				if(EditorApplication.isPlaying){
@@ -357,26 +749,44 @@ public class LevelGenerator4 : MonoBehaviour {
 #endif
 			}
 		}
-		spawnedRooms.Clear();
+		SpawnedRooms.Clear();
 
-		grid = new(gridSize.x * gridSize.y);
-		for(int i = 0; i < gridSize.x * gridSize.y; i++){
-			grid.Add(CellType.Empty);
+		foreach(var hallway in SpawnedHallways){
+			if(hallway){
+#if UNITY_EDITOR
+				if(EditorApplication.isPlaying){
+					Destroy(hallway.gameObject);
+				}
+				else {
+					DestroyImmediate(hallway.gameObject);
+				}
+#else
+				Destroy(hallway.gameObject);
+#endif
+			}
 		}
+		SpawnedHallways.Clear();
+
+		Grid.Clear();
+	}
+
+	void BuildNavMesh(){
+#if UNITY_EDITOR
+		NavMeshAssetManager.instance.StartBakingSurfaces(new Object[]{ surface });
+#else
+		surface.AddData();
+        surface.UpdateNavMesh(surface.navMeshData);
+        surface.BuildNavMesh();
+#endif
+	}
+
+	public Vector3 GetPlayerSpawnPoint(){
+		return StartRoom.transform.position;
 	}
 
 	void OnDrawGizmos(){
-		if(!enabled) return;
-		// draw grid
-		Gizmos.color = Color.white.WithA(0.01f);
-		for(int x = 0; x < gridSize.x; x++){
-			for(int y = 0; y < gridSize.y; y++){
-				Gizmos.DrawWireCube(
-					new Vector3(x + 0.5f, y + 0.5f, 0).Hammard(cellSize).WithZ(0).XZY(),
-					cellSize.WithZ(0).XZY()
-				);
-			}
-		}
+#if UNITY_EDITOR
+		if(!enabled || !Grid) return;
 
 		// draw space partitions
 		foreach(var partition in allSpacePartitions){
@@ -386,12 +796,13 @@ public class LevelGenerator4 : MonoBehaviour {
 			else {
 				Gizmos.color = Color.red.WithA(0.1f);
 			}
-			var center = partition.center.Hammard(cellSize).WithZ(0).XZY();
+			var center = Grid.CellToWorld(partition.center);
 
 			Gizmos.DrawWireCube(
 				center,
-				partition.size.Hammard(cellSize).WithZ(0).XZY()
+				Grid.SizeToWorld(partition.size)
 			);
+
 			// draw center
 			Gizmos.color = Gizmos.color.WithA(0.4f);
 			Gizmos.DrawCube(
@@ -400,37 +811,32 @@ public class LevelGenerator4 : MonoBehaviour {
 			);
 		}
 
-		// draw grid cells
-		for(int x = 0; x < gridSize.x; ++x){
-			for(int y = 0; y < gridSize.y; ++y){
-				int idx = GetCellIndex(new Vector2Int(x, y));
-				var content = grid[idx];
-				if(content == CellType.Room){
-					Gizmos.color = Color.red.WithA(0.1f);
-				}
-				else if(content == CellType.Pathway){
-					Gizmos.color = Color.green.WithA(0.1f);
-				}
-				else {
-					Gizmos.color = Color.white.WithA(0.1f);
-				}
-				Gizmos.DrawCube(
-					new Vector3(x + 0.5f, y + 0.5f, 0).Hammard(cellSize).WithZ(0).XZY(),
-					Vector3.one.Hammard(cellSize).WithZ(0).XZY() * 0.25f
-				);
-			}
+		// draw room indices
+		foreach(var (i, spacePartition) in spacePartitions.ZipIndex()){
+			Handles.Label(
+				Grid.CellToWorld(spacePartitions[i].center),
+				i.ToString()
+			);
 		}
 
 		// draw lines between adjacent rooms
-		if(adjacencies != null){
-			for(int i = 0; i < adjacencies.Count; i++){
-				var a = spacePartitions[i].center.Hammard(cellSize).WithZ(0).XZY();
-				foreach(var j in adjacencies[i]){
-					var b = spacePartitions[j].center.Hammard(cellSize).WithZ(0).XZY();
-					Gizmos.color = Color.blue.WithA(0.1f);
-					Gizmos.DrawLine(a, b);
+		if(edges != null){
+			foreach(var edge in edges) {
+				var a = Grid.CellToWorld(spacePartitions[edge.x].center);
+				var b = Grid.CellToWorld(spacePartitions[edge.y].center);
+
+				if(spanningEdges.Contains(edge)){
+					Gizmos.color = Color.green.WithA(0.5f);
 				}
+				else if (additionalEdges.Contains(edge)){
+					Gizmos.color = new Color(1, 0.8f, 0).WithA(0.1f);
+				}
+				else {
+					Gizmos.color = Color.red.WithA(0.1f);
+				}
+				Gizmos.DrawLine(a, b);
 			}
 		}
+#endif
 	}
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyAIController : MonoBehaviour {
 	[SerializeField] public EnemyVisionCone Vision;
 	[SerializeField] public Entity Entity;
-	[SerializeField] public EnemyAINavigation AINavigation;
+	[SerializeField] public EntityAINavigation AINavigation;
 	[SerializeField] EnemyAIState defaultState;
 
 	[System.NonSerialized] public EnemyAIState ActiveState;
