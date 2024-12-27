@@ -107,6 +107,7 @@ public class LevelGrid : MonoBehaviour {
 		var sceneViewSize = SceneView.currentDrawingSceneView.size;
 		var sceneViewSizeProp = sceneViewSize / CellSize.magnitude;
 		var sceneCamera = SceneView.currentDrawingSceneView.camera;
+		var isOrtho = sceneCamera.orthographic;
 
 		for(int x = 0; x < Size.x; ++x){
 			for(int y = 0; y < Size.y; ++y){
@@ -139,9 +140,7 @@ public class LevelGrid : MonoBehaviour {
 					Vector3.one.Hammard(CellSize).WithZ(0).XZY() * 0.25f
 				);
 
-				// Debug.Log(sceneViewRect);
-				// Debug.Log(sceneViewSizeProp)
-				if (sceneViewSizeProp < 3) {
+				if (isOrtho && sceneViewSizeProp < 3) {
 					var viewportPoint = sceneCamera.WorldToViewportPoint(topLeft);
 					if(
 						viewportPoint.x > 0 && viewportPoint.x < 1

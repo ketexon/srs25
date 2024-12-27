@@ -1,11 +1,10 @@
-using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Gun : MonoBehaviour
 {
     [SerializeField] new Rigidbody rigidbody;
     [SerializeField] new Collider collider;
+    [SerializeField] Animator animator;
     [SerializeField] Entity entity;
     [SerializeField] float minAngle = -60;
     [SerializeField] float maxAngle = 80;
@@ -45,6 +44,7 @@ public class Gun : MonoBehaviour
     [System.NonSerialized] public bool Shooting = false;
     [System.NonSerialized] public IBulletCaster BulletCaster = new RayBulletCaster();
     float lastShotTime = float.NegativeInfinity;
+
 
     public float Rotation {
         get => rotationSpring.CurrentValue;
@@ -101,6 +101,15 @@ public class Gun : MonoBehaviour
             actualRotation,
             Vector3.right
         );
+
+        if(animator){
+            UpdateAnimator();
+        }
+    }
+
+    void UpdateAnimator(){
+        animator.SetBool("shooting", Shooting);
+        animator.SetBool("walking", entity.Movement.Walking);
     }
 
     public void Shoot()

@@ -8,6 +8,8 @@ using Kutie;
 using UnityEngine.Serialization;
 using Unity.AI.Navigation;
 using Unity.AI.Navigation.Editor;
+using Kutie.Editor;
+
 
 
 
@@ -124,6 +126,10 @@ public class LevelGenerator4 : MonoBehaviour {
 	Dictionary<int, List<Vector2Int>> optionalDoorPathwayCells = new();
 	HashSet<Vector2Int> requiredPathwayCells = new();
 
+	void Awake(){
+		this.ClearChildren();
+	}
+
 	public void Generate(){
 		if(seed >= 0){
 			Random.InitState(seed);
@@ -134,6 +140,7 @@ public class LevelGenerator4 : MonoBehaviour {
 			try {
 				Clean();
 				PartitionSpace(new RectInt(Vector2Int.zero, Grid.Size));
+				SelectStartRoom();
 				BakeRoomCoordinates();
 				SpawnRooms();
 				Triangulate();
@@ -232,9 +239,32 @@ public class LevelGenerator4 : MonoBehaviour {
 		);
 	}
 
+	void SelectStartRoom(){
+		// select start room as top-leftmost room
+		startRoomIndex = 0;
+		for(int i = 0; i < spacePartitions.Count; i++){
+			bool sameLeft = (
+				spacePartitions[i].center.x
+				== spacePartitions[startRoomIndex].center.x
+			);
+			bool moreLeft = (
+				spacePartitions[i].center.x
+				< spacePartitions[startRoomIndex].center.x
+			);
+			bool moreUp = (
+				spacePartitions[i].center.y
+				> spacePartitions[startRoomIndex].center.y
+			);
+			if(moreLeft || (sameLeft && moreUp)){
+				startRoomIndex = i;
+			}
+		}
+	}
+
 	// this calculates the cells for each door
 	// based on their world position
 	void BakeRoomCoordinates(){
+		roomSizes.Clear();
 		foreach(var roomPrefab in roomPrefabs){
 			var room = roomPrefab.GetComponent<Room>();
 			roomPrefabRooms.Add(room);
@@ -251,8 +281,6 @@ public class LevelGenerator4 : MonoBehaviour {
 				var doorXform = door.Transform;
 				var forward = doorXform.forward.XZ();
 
-				typeof(Room).GetHashCode();
-
 				var relativePos =
 					(doorXform.position - room.LevelEntry.BottomLeftCornerOffset)
 					.XZ()
@@ -266,7 +294,7 @@ public class LevelGenerator4 : MonoBehaviour {
 				if(
 					doorCell - relativePos != Vector2.zero
 				){
-					Debug.LogWarning($"Entrance {doorXform.name} of room {gameObject.name} is not aligned to the grid");
+					Debug.LogWarning($"Entrance {doorXform.name} of room {gameObject.name} is not aligned to the grid ({doorCell} vs {relativePos})");
 				}
 				doors.Add(new Door(){
 					Cell = doorCell,
@@ -283,7 +311,7 @@ public class LevelGenerator4 : MonoBehaviour {
 		// that fits inside each space partition
 		List<RectInt> usedSpacedPartitions = new();
 		int spacePartitionIndex = 0;
-		foreach(var partition in spacePartitions){
+		foreach(var (partitionIndex, partition) in spacePartitions.ZipIndex()){
 			Room roomPrefab = null;
 			int roomPrefabIndex = 0;
 			//TODO: Also consider rotation
@@ -308,15 +336,16 @@ public class LevelGenerator4 : MonoBehaviour {
 				var roomPosition =
 					Grid.CellToWorld(bottomLeftCell)
 					- roomPrefab.LevelEntry.BottomLeftCornerOffset;
+
 #if UNITY_EDITOR
 				// this spawns it as a prefab (rather
 				// than ap refab clone), so that changes
 				// can be observed when using in edit mode
-				var roomGO = PrefabUtility.InstantiatePrefab(
+				var roomGO = KPrefabUtility.InstantiatePrefab(
 					roomPrefab.gameObject,
-					gameObject.scene
-				) as GameObject;
-				roomGO.transform.position = roomPosition;
+					roomPosition,
+					Quaternion.identity
+				);
 #else
 				var roomGO = Instantiate(
 					roomPrefab.gameObject,
@@ -328,6 +357,10 @@ public class LevelGenerator4 : MonoBehaviour {
 				roomGO.transform.SetParent(transform);
 				var room = roomGO.GetComponent<Room>();
 				SpawnedRooms.Add(room);
+
+				if(spacePartitionIndex == startRoomIndex){
+					room.IsStartRoom = true;
+				}
 
 				// mark grid cells as occupied
 				for(int x = 0; x < size.x; x++){
@@ -425,26 +458,6 @@ public class LevelGenerator4 : MonoBehaviour {
 			}
 			adj[edge.x].Add(edge.y);
 			adj[edge.y].Add(edge.x);
-		}
-
-		// select start room as top-leftmost room
-		startRoomIndex = 0;
-		for(int i = 0; i < spacePartitions.Count; i++){
-			bool sameLeft = (
-				spacePartitions[i].center.x
-				== spacePartitions[startRoomIndex].center.x
-			);
-			bool moreLeft = (
-				spacePartitions[i].center.x
-				< spacePartitions[startRoomIndex].center.x
-			);
-			bool moreUp = (
-				spacePartitions[i].center.y
-				> spacePartitions[startRoomIndex].center.y
-			);
-			if(moreLeft || (sameLeft && moreUp)){
-				startRoomIndex = i;
-			}
 		}
 
 		// Prim's algorithm
@@ -694,11 +707,11 @@ public class LevelGenerator4 : MonoBehaviour {
 				);
 
 #if UNITY_EDITOR
-				var hallwayGO = PrefabUtility.InstantiatePrefab(
+				var hallwayGO = KPrefabUtility.InstantiatePrefab(
 					hallwayPrefab,
-					gameObject.scene
-				) as GameObject;
-				hallwayGO.transform.position = hallwayPosition;
+					hallwayPosition,
+					Quaternion.identity
+				);
 #else
 				var hallwayGO = Instantiate(
 					hallwayPrefab,

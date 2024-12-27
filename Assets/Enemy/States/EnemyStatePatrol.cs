@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 public class EnemyStatePatrol : EnemyAIState {
-	[SerializeField] List<Transform> patrolPoints;
+	[SerializeField] public List<Transform> PatrolPoints;
 	[SerializeField] float idleTime = 2.0f;
 
 	int pointIndex = 0;
@@ -11,10 +11,15 @@ public class EnemyStatePatrol : EnemyAIState {
 	bool idling = false;
 	float idleStartTime;
 
+	override protected void Start(){
+		base.Start();
+		PatrolPoints.ForEach(p => p.SetParent(null));
+	}
+
 	override public void Enter(){
 		base.Enter();
 		Controller.AINavigation.enabled = true;
-		Controller.AINavigation.SetDestination(patrolPoints[pointIndex].position);
+		Controller.AINavigation.SetDestination(PatrolPoints[pointIndex].position);
 
 		Vision.NewHitBoxVisibleEvent.AddListener(OnHitBoxVisible);
 	}
@@ -37,8 +42,8 @@ public class EnemyStatePatrol : EnemyAIState {
 
 	void StopIdle(){
 		idling = false;
-		pointIndex = (pointIndex + 1) % patrolPoints.Count;
-		Controller.AINavigation.SetDestination(patrolPoints[pointIndex].position);
+		pointIndex = (pointIndex + 1) % PatrolPoints.Count;
+		Controller.AINavigation.SetDestination(PatrolPoints[pointIndex].position);
 	}
 
 	override public void Exit(){

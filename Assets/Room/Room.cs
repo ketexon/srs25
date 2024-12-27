@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Kutie.Extensions;
+using Kutie.Inspector;
+
 
 
 #if UNITY_EDITOR
@@ -12,10 +14,14 @@ public class Room : MonoBehaviour
     [SerializeField] public LevelGridEntry2 LevelEntry;
     [SerializeField] public BoxCollider Bounds;
     [SerializeField] public List<Transform> Entrances;
-    [SerializeField] public RoomTypeSO Type;
+    [SerializeField] public List<EnemySpawn> enemySpawns;
+
+    [SerializeField, ReadOnly] public bool IsStartRoom = false;
 
     [System.NonSerialized] public Dictionary<Transform, Room> ConnectedRooms = new();
     [System.NonSerialized] public List<Transform> UnconnectedEntrances = new();
+
+    [System.NonSerialized] public List<Entity> Enemies = new();
 
     void Awake(){
         UnconnectedEntrances = new(Entrances);
@@ -99,6 +105,8 @@ public class Room : MonoBehaviour
             });
         }
 #endif
+
+        enemySpawns = new(GetComponentsInChildren<EnemySpawn>());
     }
 
     public void Connect(Room room, Transform entrance){
@@ -106,43 +114,17 @@ public class Room : MonoBehaviour
         UnconnectedEntrances.Remove(entrance);
     }
 
-    // void OnDrawGizmos()
-    // {
-    //     // draw level entry
-    //     if(LevelEntry != null){
-    //         var bottomLeftOffset = transform.rotation * LevelEntry.BottomLeftCornerOffset
-    //             + transform.position;
-    //         Gizmos.color = Color.red;
-    //         Gizmos.DrawWireCube(
-    //             bottomLeftOffset
-    //             + transform.rotation * ((Vector3)LevelEntry.Size).Hammard(LevelGenerator3.CellSize) / 2,
-    //             transform.rotation * ((Vector3)LevelEntry.Size).Hammard(LevelGenerator3.CellSize)
-    //         );
+    void Start(){
+        if(!IsStartRoom){
+            SpawnEnemies();
+        }
+    }
 
-    //         // draw door indicators
-    //         if(Entrances != null){
-    //             Gizmos.color = Color.blue;
-    //             foreach(var door in LevelEntry.Doors){
-    //                 Gizmos.DrawWireCube(
-    //                     transform.rotation * (
-    //                         ((Vector3)door.Position).Hammard(LevelGenerator3.CellSize)
-    //                          + LevelGenerator3.CellSize / 2
-    //                     )
-    //                     + bottomLeftOffset,
-    //                     transform.rotation * LevelGenerator3.CellSize
-    //                 );
-    //                 Gizmos.DrawIcon(
-    //                     transform.rotation * (
-    //                         ((Vector3)door.Position).Hammard(LevelGenerator3.CellSize)
-    //                         + ((Vector3)door.Face).Hammard(LevelGenerator3.CellSize) / 2
-    //                          + LevelGenerator3.CellSize / 2
-    //                     )
-    //                     + bottomLeftOffset,
-    //                     "door.png",
-    //                     true
-    //                 );
-    //             }
-    //         }
-    //     }
-    // }
+    void SpawnEnemies(){
+        foreach(var spawn in enemySpawns){
+            if(spawn.Spawn(out var entity)) {
+                Enemies.Add(entity);
+            }
+        }
+    }
 }

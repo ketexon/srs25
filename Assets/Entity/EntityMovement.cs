@@ -23,6 +23,8 @@ public class EntityMovement : MonoBehaviour
     [SerializeField] Rigidbody rb;
     [System.NonSerialized] public Transform TargetTransform;
 
+    public bool Walking => rb.linearVelocity.XZ().magnitude > 0.1f;
+
     Vector3 moveDir;
 
     float _yaw = 0;

@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class HumanIK : MonoBehaviour
 {
+    [SerializeField] bool runInEditor = false;
     [SerializeField] Animator animator;
 
     [SerializeField] Transform leftHandTarget;
@@ -11,29 +13,39 @@ public class HumanIK : MonoBehaviour
     [SerializeField] Transform leftFootTarget;
     [SerializeField] Transform rightFootTarget;
 
-    void OnAnimatorIK(int layerIndex) {
-        if(!(leftHandTarget && rightHandTarget && leftFootTarget && rightFootTarget))
-        {
-            return;
+    (AvatarIKGoal, Transform)[] IKTargets => new (AvatarIKGoal, Transform)[]{
+        (AvatarIKGoal.LeftHand, leftHandTarget),
+        (AvatarIKGoal.RightHand, rightHandTarget),
+        (AvatarIKGoal.LeftFoot, leftFootTarget),
+        (AvatarIKGoal.RightFoot, rightFootTarget)
+    };
+
+    public void SetHandIKTargets(IHandIKTarget handIKTarget)
+    {
+        leftHandTarget = handIKTarget.LeftHandTarget;
+        rightHandTarget = handIKTarget.RightHandTarget;
+    }
+
+    void Update(){
+        if(runInEditor){
+            animator.Update(0);
         }
-        animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1);
-        animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
-        animator.SetIKPositionWeight(AvatarIKGoal.LeftFoot, 1);
-        animator.SetIKPositionWeight(AvatarIKGoal.RightFoot, 1);
+    }
 
-        animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1);
-        animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
-        animator.SetIKRotationWeight(AvatarIKGoal.LeftFoot, 1);
-        animator.SetIKRotationWeight(AvatarIKGoal.RightFoot, 1);
-
-        animator.SetIKPosition(AvatarIKGoal.LeftHand, leftHandTarget.position);
-        animator.SetIKPosition(AvatarIKGoal.RightHand, rightHandTarget.position);
-        animator.SetIKPosition(AvatarIKGoal.LeftFoot, leftFootTarget.position);
-        animator.SetIKPosition(AvatarIKGoal.RightFoot, rightFootTarget.position);
-
-        animator.SetIKRotation(AvatarIKGoal.LeftHand, leftHandTarget.rotation);
-        animator.SetIKRotation(AvatarIKGoal.RightHand, rightHandTarget.rotation);
-        animator.SetIKRotation(AvatarIKGoal.LeftFoot, leftFootTarget.rotation);
-        animator.SetIKRotation(AvatarIKGoal.RightFoot, rightFootTarget.rotation);
+    void OnAnimatorIK(int layerIndex) {
+        foreach(var (goal, target) in IKTargets)
+        {
+            if(target)
+            {
+                animator.SetIKPositionWeight(goal, 1);
+                animator.SetIKRotationWeight(goal, 1);
+                animator.SetIKPosition(goal, target.position);
+                animator.SetIKRotation(goal, target.rotation);
+            }
+            else {
+                animator.SetIKPositionWeight(goal, 0);
+                animator.SetIKRotationWeight(goal, 0);
+            }
+        }
     }
 }
