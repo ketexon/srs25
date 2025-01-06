@@ -1,11 +1,10 @@
 using UnityEngine;
 
-public class Gun : MonoBehaviour
+public class Gun : EntityItem
 {
     [SerializeField] new Rigidbody rigidbody;
     [SerializeField] new Collider collider;
     [SerializeField] Animator animator;
-    [SerializeField] Entity entity;
     [SerializeField] float minAngle = -60;
     [SerializeField] float maxAngle = 80;
     [SerializeField] Transform tip;
@@ -70,6 +69,15 @@ public class Gun : MonoBehaviour
     // this is provided to bullet so that
     // they don't have to alloc
     RaycastHit[] raycastHits = new RaycastHit[64];
+
+    public override void Use(bool start = true)
+    {
+        Shooting = start;
+    }
+
+    void OnDisable(){
+        Shooting = false;
+    }
 
     public void PointAt(Vector3 position, bool instant = false)
     {

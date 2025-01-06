@@ -6,6 +6,7 @@ public class Entity : MonoBehaviour
     [SerializeField] public Gun Gun;
     [SerializeField] public TeamSO Team;
     [SerializeField] public EntityMovement Movement;
+    [SerializeField] public EntityItemController ItemController;
 
     void Awake()
     {

@@ -22,8 +22,14 @@ public class HumanIK : MonoBehaviour
 
     public void SetHandIKTargets(IHandIKTarget handIKTarget)
     {
-        leftHandTarget = handIKTarget.LeftHandTarget;
-        rightHandTarget = handIKTarget.RightHandTarget;
+        if(handIKTarget != null){
+            leftHandTarget = handIKTarget.LeftHandTarget;
+            rightHandTarget = handIKTarget.RightHandTarget;
+        }
+        else {
+            leftHandTarget = null;
+            rightHandTarget = null;
+        }
     }
 
     void Update(){

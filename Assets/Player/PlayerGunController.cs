@@ -7,6 +7,7 @@ public class PlayerGunController : MonoBehaviour
 
     void OnClick(InputValue inputValue)
     {
+        if(!gun.gameObject.activeSelf) return;
         if (inputValue.isPressed)
         {
             gun.Shooting = true;
