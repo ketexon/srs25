@@ -10,7 +10,7 @@ public class PlayerPills : EntityItem
 
     int selectedIndex = 0;
 
-    public override bool CanEquip => pillPrefabs.Count > 0;
+    public override bool CanEquip => spawnedPills.Count > 0;
 
     List<Pills> spawnedPills = new();
 
@@ -19,7 +19,7 @@ public class PlayerPills : EntityItem
         : null;
 
     void Awake(){
-        foreach(var (i, pillPrefab) in pillPrefabs.ZipIndex()) {
+        foreach(var pillPrefab in pillPrefabs) {
             var pillGO = Instantiate(
                 pillPrefab,
                 transform
