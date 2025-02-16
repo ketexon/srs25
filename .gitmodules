@@ -1,7 +1,3 @@
-[submodule "Assets/kutie"]
-	path = Assets/kutie
-	url = https://github.com/ketexon/kutie
-	branch = main
 [submodule "Assets/VolumetricTracer"]
 	path = Assets/VolumetricTracer
 	url = https://github.com/Fewes/VolumetricTracer
