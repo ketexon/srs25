@@ -8,6 +8,7 @@ public class Gun : EntityItem
     [SerializeField] float minAngle = -60;
     [SerializeField] float maxAngle = 80;
     [SerializeField] Transform tip;
+    Vector3 defaultPosition = new Vector3(0.11f, 0.385f, 0.007f);
     /// <summary>
     /// if true, the bullet will spawn in front
     /// of the entity instead of at the tip of the gun.
@@ -27,6 +28,7 @@ public class Gun : EntityItem
     [Header("Recoil")]
     [SerializeField] Kutie.SpringFloatValue recoilSpring;
     [SerializeField] float recoilAmplitude = 10;
+    [SerializeField] Kutie.SpringFloatValue HorizRecoilSpring;
 
     [Header("Gun Stats")]
     [SerializeField] float shotInterval = 1.0f;
@@ -105,11 +107,22 @@ public class Gun : EntityItem
         }
 
         var actualRotation = NoRecoil ? Rotation : CombinedRotation;
-        transform.localRotation = Quaternion.AngleAxis(
+        Quaternion rotationX = Quaternion.AngleAxis(
             actualRotation,
             Vector3.right
         );
-
+        
+        Quaternion rotationY = Quaternion.AngleAxis(
+           HorizRecoilSpring.CurrentValue,
+            Vector3.up
+        );
+        
+        transform.localRotation = rotationX*rotationY;
+        if (transform.localPosition!=defaultPosition)
+        {
+            transform.localPosition += (defaultPosition-transform.localPosition) / 20;
+        }
+        
         if(animator){
             UpdateAnimator();
         }
@@ -152,9 +165,13 @@ public class Gun : EntityItem
             bullet.Velocity = muzzleVelocity;
             bullet.EnergyPenaltyMult = energyPenaltyMult;
             bullet.Damage = damage;
+            float yRadians = CombinedRotation * Mathf.PI / 180;
+            transform.localPosition -= new Vector3(0, -0.0005f*recoilAmplitude*Mathf.Sin(yRadians), 0.0005f*recoilAmplitude*Mathf.Cos(yRadians));
         }
 
         recoilSpring.Velocity += recoilAmplitude;
+        float horizRotation = Random.Range(-recoilAmplitude, recoilAmplitude);
+        HorizRecoilSpring.Velocity += horizRotation;
     }
 
     public void Drop()
