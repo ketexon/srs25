@@ -23,12 +23,30 @@ public class Gun : EntityItem
     [SerializeField] public bool NoRecoil = false;
     [SerializeField] GameObject bulletPrefab;
 
-    [SerializeField] Kutie.SpringFloatValue rotationSpring;
 
     [Header("Recoil")]
-    [SerializeField] Kutie.SpringFloatValue recoilSpring;
-    [SerializeField] float recoilAmplitude = 10;
-    [SerializeField] Kutie.SpringFloatValue HorizRecoilSpring;
+    [SerializeField] Kutie.SpringParameters hRotRecoil;
+    [SerializeField] float maxHRot;
+    [SerializeField] float hRotVel;
+    [SerializeField] Kutie.SpringParameters vRotRecoil;
+    [SerializeField] float maxVRot;
+    [SerializeField] float vRotVel;
+    [SerializeField] Kutie.SpringParameters hTransRecoil;
+    [SerializeField] float maxHTrans;
+    [SerializeField] float hTransVel;
+    [SerializeField] Kutie.SpringParameters vTransRecoil;
+    [SerializeField] float maxVTrans;
+    [SerializeField] float vTransVel;
+    [SerializeField] float vTransKick;
+    [SerializeField] Kutie.SpringParameters zTransRecoil;
+    [SerializeField] float maxZTrans;
+    [SerializeField] float zTransVel;
+    [SerializeField] float zTransKick;
+
+    Kutie.SpringFloat hRotSpring;
+    Kutie.SpringFloat vRotSpring;
+    Kutie.SpringFloat hTransSpring;
+    Kutie.SpringFloat vTransSpring;
 
     [Header("Gun Stats")]
     [SerializeField] float shotInterval = 1.0f;
@@ -47,26 +65,42 @@ public class Gun : EntityItem
     float lastShotTime = float.NegativeInfinity;
 
 
-    public float Rotation {
-        get => rotationSpring.CurrentValue;
+    public float vRotation {
+        get => vRotSpring.CurrentValue;
         set {
             value = Mathf.Clamp(value, -maxAngle, -minAngle);
-            rotationSpring.TargetValue = value;
-            rotationSpring.LockToTarget();
+            vRotSpring.TargetValue = value;
+            vRotSpring.LockToTarget();
         }
     }
 
-    public float TargetRotation {
-        get => rotationSpring.TargetValue;
+    public float hRotation {
+        get => hRotSpring.CurrentValue;
         set {
             value = Mathf.Clamp(value, -maxAngle, -minAngle);
-            rotationSpring.TargetValue = value;
+            hRotSpring.TargetValue = value;
+            hRotSpring.LockToTarget();
         }
     }
 
-    public float CurrentRecoil => recoilSpring.CurrentValue;
+    public float vTargetRotation {
+        get => vRotSpring.TargetValue;
+        set {
+            value = Mathf.Clamp(value, -maxAngle, -minAngle);
+            vRotSpring.TargetValue = value;
+        }
+    }
+    public float hTargetRotation {
+        get => hRotSpring.TargetValue;
+        set {
+            value = Mathf.Clamp(value, -maxAngle, -minAngle);
+            hRotSpring.TargetValue = value;
+        }
+    }
 
-    public float CombinedRotation => Rotation - recoilSpring.CurrentValue;
+    public float CurrentRecoil => vRotSpring.CurrentValue;
+
+    public float CombinedRotation => vRotation - vRotSpring.CurrentValue;
 
     // this is provided to bullet so that
     // they don't have to alloc
@@ -81,6 +115,14 @@ public class Gun : EntityItem
         Shooting = false;
     }
 
+    private void Awake()
+    {
+        hRotSpring = new(0, hRotRecoil);
+        vRotSpring = new(0, vRotRecoil);
+        hTransSpring = new(0, vTransRecoil);
+        vTransSpring = new(0, hTransRecoil);
+    }
+
     public void PointAt(Vector3 position, bool instant = false)
     {
         // project position into forward-up plane
@@ -92,10 +134,10 @@ public class Gun : EntityItem
             entity.transform.right
         );
         if(instant){
-            Rotation = angle;
+            vRotation = angle;
         }
         else {
-            TargetRotation = angle;
+            vTargetRotation = angle;
         }
     }
 
@@ -105,16 +147,16 @@ public class Gun : EntityItem
         {
             Shoot();
         }
-
-        var actualRotation = NoRecoil ? Rotation : CombinedRotation;
-        Quaternion rotationX = Quaternion.AngleAxis(
-            actualRotation,
-            Vector3.right
+        
+        var actualRotation = NoRecoil ? vRotation : CombinedRotation;
+        Quaternion rotationY = Quaternion.AngleAxis(
+            hRotSpring.CurrentValue,
+            Vector3.up
         );
         
-        Quaternion rotationY = Quaternion.AngleAxis(
-           HorizRecoilSpring.CurrentValue,
-            Vector3.up
+        Quaternion rotationX = Quaternion.AngleAxis(
+            vRotSpring.CurrentValue,
+            Vector3.right
         );
         
         transform.localRotation = rotationX*rotationY;
@@ -126,6 +168,14 @@ public class Gun : EntityItem
         if(animator){
             UpdateAnimator();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        vRotSpring.Update(Time.fixedDeltaTime);
+        hRotSpring.Update(Time.fixedDeltaTime);
+        vTransSpring.Update(Time.fixedDeltaTime);
+        hTransSpring.Update(Time.fixedDeltaTime);
     }
 
     void UpdateAnimator(){
@@ -149,7 +199,7 @@ public class Gun : EntityItem
                 spawnRot = entity.Movement.Eyes.transform.rotation;
                 if(!NoRecoil){
                     spawnRot = Quaternion.AngleAxis(
-                        -recoilSpring.CurrentValue,
+                        -hTransSpring.CurrentValue,
                         entity.Movement.Eyes.transform.right
                     ) * spawnRot;
                 }
@@ -166,12 +216,18 @@ public class Gun : EntityItem
             bullet.EnergyPenaltyMult = energyPenaltyMult;
             bullet.Damage = damage;
             float yRadians = CombinedRotation * Mathf.PI / 180;
-            transform.localPosition -= new Vector3(0, -0.0005f*recoilAmplitude*Mathf.Sin(yRadians), 0.0005f*recoilAmplitude*Mathf.Cos(yRadians));
+            transform.localPosition -= new Vector3(
+                0,
+                -0.0005f * vTransKick * Mathf.Cos(yRadians),
+                0.0005f * zTransKick * Mathf.Cos(yRadians)
+            );
         }
 
-        recoilSpring.Velocity += recoilAmplitude;
-        float horizRotation = Random.Range(-recoilAmplitude, recoilAmplitude);
-        HorizRecoilSpring.Velocity += horizRotation;
+        hTransSpring.Velocity += hTransVel;
+        float vRot = Random.Range(-vRotVel, vRotVel);
+        vRotSpring.Velocity += vRot;
+        float hRot = Random.Range(-hRotVel, hRotVel);
+        hRotSpring.Velocity += hRot;
     }
 
     public void Drop()

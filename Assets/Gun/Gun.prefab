@@ -506,10 +506,38 @@ MonoBehaviour:
   NoRecoil: 0
   bulletPrefab: {fileID: 6025871477814436832, guid: 6b75240b5b2c41b46a15513242e5412f,
     type: 3}
-  rotationSpring: {fileID: 8880168453157742347}
-  recoilSpring: {fileID: 236827625948150393}
-  recoilAmplitude: 10
-  HorizRecoilSpring: {fileID: 2436920758082166945}
+  hRotRecoil:
+    Frequency: 1
+    DampingCoefficient: 1
+    Responsiveness: 0
+  maxHRot: 100
+  hRotVel: 100
+  vRotRecoil:
+    Frequency: 1
+    DampingCoefficient: 1
+    Responsiveness: 0
+  maxVRot: 100
+  vRotVel: 100
+  hTransRecoil:
+    Frequency: 1
+    DampingCoefficient: 1
+    Responsiveness: 0
+  maxHTrans: 0
+  hTransVel: 0
+  vTransRecoil:
+    Frequency: 1
+    DampingCoefficient: 1
+    Responsiveness: 0
+  maxVTrans: 0
+  vTransVel: 0
+  vTransKick: 0
+  zTransRecoil:
+    Frequency: 1
+    DampingCoefficient: 1
+    Responsiveness: 0
+  maxZTrans: 0
+  zTransVel: 0
+  zTransKick: 0
   shotInterval: 0.1
   muzzleVelocity: 900
   energyPenaltyMult: 300000

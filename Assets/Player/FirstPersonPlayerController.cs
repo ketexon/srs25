@@ -28,7 +28,7 @@ public class FirstPersonPlayerController : PlayerController
 
         Vector2 delta = inputValue.Get<Vector2>();
         movement.LookDelta(delta * Settings.Sensitivity);
-        gun.Rotation = movement.Pitch;
+        gun.vRotation = movement.Pitch;
         UpdateMovementDir();
     }
 

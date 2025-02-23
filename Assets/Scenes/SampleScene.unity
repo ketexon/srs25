@@ -26796,6 +26796,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1017349987205405921, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1256350266785174426, guid: d7980a5181a5be841be2dc992f23e73f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -26961,6 +26966,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.00000001490116
       objectReference: {fileID: 0}
+    - target: {fileID: 5182274612167137573, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5408552837735920396, guid: d7980a5181a5be841be2dc992f23e73f,
         type: 3}
       propertyPath: m_Enabled
@@ -27001,6 +27011,71 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 667722773}
+    - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
+      propertyPath: hRotVel
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
+      propertyPath: maxHRot
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
+      propertyPath: maxVRot
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
+      propertyPath: vRotVel
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
+      propertyPath: hTransVel
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
+      propertyPath: maxHTrans
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
+      propertyPath: maxVTrans
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
+      propertyPath: vTransVel
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
+      propertyPath: vTransKick
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
+      propertyPath: zTransKick
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
+      propertyPath: hRotRecoil.DampingCoefficient
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
+      propertyPath: vTransRecoil.DampingCoefficient
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6828339258360430785, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7510103735435561197, guid: d7980a5181a5be841be2dc992f23e73f,
         type: 3}
       propertyPath: m_LocalPosition.x
