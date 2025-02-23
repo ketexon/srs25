@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Name: LSD
   m_EditorClassIdentifier: 
   m_Active: 1
-  injectionPoint: 600
+  injectionPoint: 550
   fetchColorBuffer: 1
   requirements: 4
   passMaterial: {fileID: 2100000, guid: 3b7bf6bc21ab24741b9a3aa42d7aeb91, type: 2}

@@ -42,6 +42,7 @@ Material:
     - _Saturation: 1.51
     - _Temperature: 0
     - _Tint: 0.36
+    - _TrippyStrength: 0.03
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
