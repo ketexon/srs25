@@ -4,7 +4,7 @@ public class IncreaseDarkness : PillBehavior
 {
     public override void Use()
     {
-		  GetComponentInParent<PlayerStats>().ChangeStat(PlayerStats.StatType.Speed, 5);
+		  GetComponentInParent<EntityStats>().ChangeStat(EntityStats.StatType.Speed, 5);
     }
 }
 

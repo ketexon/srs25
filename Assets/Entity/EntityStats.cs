@@ -1,13 +1,9 @@
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
-public class PlayerStats : MonoBehaviour
+public class EntityStats : MonoBehaviour
 {
-    [SerializeField] EntityMovement movement;
-
-    public enum StatType
+   public enum StatType
     {
         None,
         Darkness,
@@ -22,13 +18,20 @@ public class PlayerStats : MonoBehaviour
         Reaction
     }
 
+
+
+    [Header("Starting Stats")]
+    [Range(1, 10)]
+    public float startingDarkness, startingNightmare, startingStimulation, startingMania, startingDissociation, 
+        startingPainTolerance, startingStrength, startingShakiness, startingSpeed, startingReaction;
+
     public UnityEvent<StatType, float> OnStatChanged = new();
 
     public float Darkness
     {
         get => darkness; set
         {
-            if (value < 0) darkness = 0;
+            if (value < 1) darkness = 0;
             else if (value > 10) darkness = 10;
             else darkness = value;
 
@@ -39,7 +42,7 @@ public class PlayerStats : MonoBehaviour
     {
         get => nightmare; set
         {
-            if (value < 0) nightmare = 0;
+            if (value < 1) nightmare = 0;
             else if (value > 10) nightmare = 10;
             else nightmare = value;
 
@@ -50,7 +53,7 @@ public class PlayerStats : MonoBehaviour
     {
         get => stimulation; set
         {
-            if (value < 0) stimulation = 0;
+            if (value < 1) stimulation = 0;
             else if (value > 10) stimulation = 10;
             else stimulation = value;
 
@@ -61,7 +64,7 @@ public class PlayerStats : MonoBehaviour
     {
         get => mania; set
         {
-            if (value < 0) mania = 0;
+            if (value < 1) mania = 0;
             else if (value > 10) mania = 10;
             else mania = value;
 
@@ -72,7 +75,7 @@ public class PlayerStats : MonoBehaviour
     {
         get => dissociation; set
         {
-            if (value < 0) dissociation = 0;
+            if (value < 1) dissociation = 0;
             else if (value > 10) dissociation = 10;
             else dissociation = value;
 
@@ -84,7 +87,7 @@ public class PlayerStats : MonoBehaviour
     {
         get => painTolerance; set
         {
-            if (value < 0) painTolerance = 0;
+            if (value < 1) painTolerance = 0;
             else if (value > 10) painTolerance = 10;
             else painTolerance = value;
 
@@ -95,7 +98,7 @@ public class PlayerStats : MonoBehaviour
     {
         get => strength; set
         {
-            if (value < 0) strength = 0;
+            if (value < 1) strength = 0;
             else if (value > 10) strength = 10;
             else strength = value;
 
@@ -106,7 +109,7 @@ public class PlayerStats : MonoBehaviour
     {
         get => shakiness; set
         {
-            if (value < 0) shakiness = 0;
+            if (value < 1) shakiness = 0;
             else if (value > 10) shakiness = 10;
             else shakiness = value;
 
@@ -117,11 +120,10 @@ public class PlayerStats : MonoBehaviour
     {
         get => speed; set
         {
-            if (value < 0) speed = 0;
+            if (value < 1) speed = 1;
             else if (value > 10) speed = 10;
             else speed = value;
 
-            movement.MovementSpeed = speed + 1;
             OnStatChanged.Invoke(StatType.Speed, speed);
         }
     }
@@ -129,7 +131,7 @@ public class PlayerStats : MonoBehaviour
     {
         get => reaction; set
         {
-            if (value < 0) reaction = 0;
+            if (value < 1) reaction = 0;
             else if (value > 10) reaction = 10;
             else reaction = value;
 
@@ -137,42 +139,21 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    float darkness;
-    float nightmare;
-    float stimulation;
-    float mania;
-    float dissociation;
-    float painTolerance;
-    float strength;
-    float shakiness;
-    float speed;
-    float reaction;
+    float darkness, nightmare, stimulation, mania, dissociation, painTolerance, strength, shakiness, speed, reaction;
 
-
-    [SerializeField] Slider[] statSliders;
 
     void Start()
     {
-        darkness = 0;
-        nightmare = 0;
-        stimulation = 0;
-        mania = 0;
-        dissociation = 0;
-        painTolerance = 0;
-        strength = 0;
-        shakiness = 0;
-        Speed = 5;
-        reaction = 0;
-
-    }
-
-    void Update()
-    {
-        statSliders[0].value = darkness;
-        statSliders[1].value = nightmare;
-        statSliders[2].value = stimulation;
-        statSliders[3].value = mania;
-        statSliders[4].value = dissociation;
+        darkness = startingDarkness;
+        nightmare = startingNightmare;
+        stimulation = startingStimulation;
+        mania = startingMania;
+        dissociation = startingDissociation;
+        painTolerance = startingPainTolerance;
+        strength = startingStrength;
+        shakiness = startingShakiness;
+        speed = startingSpeed;
+        reaction = startingReaction;
     }
 
     public void ChangeStat(StatType stat, float value)
