@@ -47,6 +47,7 @@ public class Gun : EntityItem
     Kutie.SpringFloat vRotSpring;
     Kutie.SpringFloat hTransSpring;
     Kutie.SpringFloat vTransSpring;
+    Kutie.SpringFloat zTransSpring;
 
     [Header("Gun Stats")]
     [SerializeField] float shotInterval = 1.0f;
@@ -101,7 +102,6 @@ public class Gun : EntityItem
     public float CurrentRecoil => vRotSpring.CurrentValue;
 
     public float CombinedRotation => vRotation - vRotSpring.CurrentValue;
-
     // this is provided to bullet so that
     // they don't have to alloc
     RaycastHit[] raycastHits = new RaycastHit[64];
@@ -121,6 +121,9 @@ public class Gun : EntityItem
         vRotSpring = new(0, vRotRecoil);
         hTransSpring = new(0, vTransRecoil);
         vTransSpring = new(0, hTransRecoil);
+        //zTransSpring = new(0, zTransRecoil);
+        zTransSpring = new(0, zTransRecoil);
+        //Debug.Log("HI");
     }
 
     public void PointAt(Vector3 position, bool instant = false)
@@ -160,22 +163,26 @@ public class Gun : EntityItem
         );
         
         transform.localRotation = rotationX*rotationY;
+        transform.localPosition = defaultPosition - transform.localRotation * (Vector3.forward * zTransSpring.CurrentValue/* *0.0005f*/);
+        /*
         if (transform.localPosition!=defaultPosition)
         {
             transform.localPosition += (defaultPosition-transform.localPosition) / 20;
-        }
+        }*/
         
         if(animator){
             UpdateAnimator();
         }
+        //Debug.Log(zTransSpring.Velocity);
     }
 
     private void FixedUpdate()
     {
         vRotSpring.Update(Time.fixedDeltaTime);
         hRotSpring.Update(Time.fixedDeltaTime);
-        vTransSpring.Update(Time.fixedDeltaTime);
         hTransSpring.Update(Time.fixedDeltaTime);
+        vTransSpring.Update(Time.fixedDeltaTime);
+        zTransSpring.Update(Time.fixedDeltaTime);
     }
 
     void UpdateAnimator(){
@@ -215,19 +222,18 @@ public class Gun : EntityItem
             bullet.Velocity = muzzleVelocity;
             bullet.EnergyPenaltyMult = energyPenaltyMult;
             bullet.Damage = damage;
-            float yRadians = CombinedRotation * Mathf.PI / 180;
-            transform.localPosition -= new Vector3(
-                0,
-                -0.0005f * vTransKick * Mathf.Cos(yRadians),
-                0.0005f * zTransKick * Mathf.Cos(yRadians)
-            );
+            transform.localPosition -= transform.localRotation * (Vector3.forward * 0.0005f * zTransKick);
+
         }
 
-        hTransSpring.Velocity += hTransVel;
+        //hTransSpring.Velocity += hTransVel;
         float vRot = Random.Range(-vRotVel, vRotVel);
         vRotSpring.Velocity += vRot;
         float hRot = Random.Range(-hRotVel, hRotVel);
         hRotSpring.Velocity += hRot;
+        zTransSpring.Velocity += zTransKick;
+        Debug.Log(zTransSpring.Velocity);
+
     }
 
     public void Drop()
