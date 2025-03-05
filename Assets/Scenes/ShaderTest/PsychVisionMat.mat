@@ -40,6 +40,7 @@ Material:
     m_Floats:
     - _BreatheSpeed: 6
     - _Contrast: 0
+    - _Fade: 1
     - _Fullscreen_AlphaBlendOperation: 0
     - _Fullscreen_BlendMode: 2
     - _Fullscreen_ColorBlendOperation: 0
