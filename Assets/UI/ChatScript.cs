@@ -1,10 +1,17 @@
 using System.Collections;
+using NUnit.Framework;
 using UnityEngine;
+using System.Collections.Generic;
+using TMPro;
 
 public class ChatScript : MonoBehaviour
 {
     public Transform chatContainer;
-    public GameObject messageContainer; 
+    public GameObject messageText;
+    public List<string> users;
+    public List<string> messages;
+    public List<string> colors = new List<string> { "red", "blue", "purple", "green" };
+    private int i = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -14,16 +21,24 @@ public class ChatScript : MonoBehaviour
 
     IEnumerator SpawnMessages()
     {
-        while (chatContainer.childCount < 10)
+        while (chatContainer.childCount < 20)
         {
             SpawnMessage();
-            yield return new WaitForSeconds(2f); 
+            yield return new WaitForSeconds(.3f); 
         }
     }
 
     public void SpawnMessage()
     {
-        GameObject newMessage = Instantiate(messageContainer, chatContainer);
+        GameObject newMessage = Instantiate(messageText, chatContainer);
+        TMP_Text textComponent = newMessage.GetComponent<TMP_Text>();
+        if (textComponent != null)
+        {
+            int randomColor = Random.Range(0, colors.Count);
+            textComponent.text = $"<color=\"{colors[randomColor]}\">{users[i]}</color>: {messages[i]}";
+            // for this to work users must be the same length as messages
+            i = (i + 1) % messages.Count;
+        }
     }
 
     // Update is called once per frame
