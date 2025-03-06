@@ -5239,8 +5239,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 11.018001, z: 0.0000011920928}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.478, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24355,10 +24355,10 @@ MonoBehaviour:
   startingMania: 1
   startingDissociation: 1
   startingPainTolerance: 1
-  startingStrength: 1
+  startingStrength: 3
   startingShakiness: 1
-  startingSpeed: 3
-  startingReaction: 1
+  startingSpeed: 4
+  startingReaction: 5
   OnStatChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -27287,6 +27287,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
+    - target: {fileID: 7641248480179899501, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
+      propertyPath: Stats
+      value: 
+      objectReference: {fileID: 1920391535}
     - target: {fileID: 7913521173103801310, guid: d7980a5181a5be841be2dc992f23e73f,
         type: 3}
       propertyPath: Health.Invincible

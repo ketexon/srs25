@@ -19,8 +19,6 @@ public class EntityStats : MonoBehaviour
     }
 
 
-
-    [Header("Starting Stats")]
     [Range(1, 10)]
     public float startingDarkness, startingNightmare, startingStimulation, startingMania, startingDissociation, 
         startingPainTolerance, startingStrength, startingShakiness, startingSpeed, startingReaction;
@@ -144,16 +142,16 @@ public class EntityStats : MonoBehaviour
 
     void Start()
     {
-        darkness = startingDarkness;
-        nightmare = startingNightmare;
-        stimulation = startingStimulation;
-        mania = startingMania;
-        dissociation = startingDissociation;
-        painTolerance = startingPainTolerance;
-        strength = startingStrength;
-        shakiness = startingShakiness;
-        speed = startingSpeed;
-        reaction = startingReaction;
+        Darkness = startingDarkness;
+        Nightmare = startingNightmare;
+        Stimulation = startingStimulation;
+        Mania = startingMania;
+        Dissociation = startingDissociation;
+        PainTolerance = startingPainTolerance;
+        Strength = startingStrength;
+        Shakiness = startingShakiness;
+        Speed = startingSpeed;
+        Reaction = startingReaction;
     }
 
     public void ChangeStat(StatType stat, float value)
@@ -192,5 +190,4 @@ public class EntityStats : MonoBehaviour
                 break;
         }
     }
-
 }

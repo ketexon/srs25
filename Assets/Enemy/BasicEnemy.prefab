@@ -63,6 +63,11 @@ PrefabInstance:
       propertyPath: entityStats
       value: 
       objectReference: {fileID: 1907943442689181317}
+    - target: {fileID: 1585037385362862602, guid: b323db8ddfd02ea44b3eae56b5e40c52,
+        type: 3}
+      propertyPath: Stats
+      value: 
+      objectReference: {fileID: 1605297443720475340}
     - target: {fileID: 2480839514888217651, guid: b323db8ddfd02ea44b3eae56b5e40c52,
         type: 3}
       propertyPath: 'managedReferences[2367309630658052346]'
@@ -117,7 +122,7 @@ PrefabInstance:
     - target: {fileID: 5253118550740448393, guid: b323db8ddfd02ea44b3eae56b5e40c52,
         type: 3}
       propertyPath: startingStrength
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5253118550740448393, guid: b323db8ddfd02ea44b3eae56b5e40c52,
         type: 3}
@@ -170,6 +175,18 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1907943442689181317}
   m_SourcePrefab: {fileID: 100100000, guid: b323db8ddfd02ea44b3eae56b5e40c52, type: 3}
+--- !u!114 &1605297443720475340 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5253118550740448393, guid: b323db8ddfd02ea44b3eae56b5e40c52,
+    type: 3}
+  m_PrefabInstance: {fileID: 6819007255085254213}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2362056251168385244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479371939ba8eb343b56d0fe3b1a4a2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1721062800293118214 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5279216603495876419, guid: b323db8ddfd02ea44b3eae56b5e40c52,

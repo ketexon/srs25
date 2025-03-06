@@ -27,7 +27,8 @@ public class FirstPersonPlayerController : PlayerController
         if(Cursor.lockState != CursorLockMode.Locked) return;
 
         Vector2 delta = inputValue.Get<Vector2>();
-        movement.LookDelta(delta * Settings.Sensitivity);
+        float reaction = entity.Stats.Reaction;
+        movement.LookDelta(reaction * Settings.Sensitivity * delta / 5);
         gun.Rotation = movement.Pitch;
         UpdateMovementDir();
     }

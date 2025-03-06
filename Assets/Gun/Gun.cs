@@ -33,6 +33,7 @@ public class Gun : EntityItem
     [Header("Gun Stats")]
     [SerializeField] float shotInterval = 1.0f;
     [SerializeField] float muzzleVelocity = 900;
+
     /// <summary>
     /// This field represents a multiplier for how
     /// much energy should be lost when colliding with an object
@@ -77,8 +78,14 @@ public class Gun : EntityItem
         Shooting = start;
     }
 
+    void OnEnable()
+    {
+        entity.Stats.OnStatChanged.AddListener(OnStatChanged);
+    }
+
     void OnDisable(){
         Shooting = false;
+        entity.Stats.OnStatChanged.RemoveListener(OnStatChanged);
     }
 
     public void PointAt(Vector3 position, bool instant = false)
@@ -178,5 +185,21 @@ public class Gun : EntityItem
     {
         rigidbody.isKinematic = false;
         collider.enabled = true;
+        entity = null;
+    }
+    public void PickUp(Entity entity)
+    {
+        rigidbody.isKinematic = true;
+        collider.enabled = false;
+        this.entity = entity;
+    }
+
+    void OnStatChanged(EntityStats.StatType type, float value)
+    {
+        switch(type){
+            case EntityStats.StatType.Strength:
+                damage = 10*value;
+                break;
+        }
     }
 }
