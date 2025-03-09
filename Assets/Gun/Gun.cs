@@ -3,12 +3,13 @@ using UnityEngine;
 public class Gun : EntityItem
 {
     [SerializeField] new Rigidbody rigidbody;
+    public EntityMovement entityMovement;
     [SerializeField] new Collider collider;
     [SerializeField] Animator animator;
     [SerializeField] float minAngle = -60;
     [SerializeField] float maxAngle = 80;
     [SerializeField] Transform tip;
-    Vector3 defaultPosition = new Vector3(0.11f, 0.385f, 0.007f);
+    Vector3 defaultPosition;//= new Vector3(0.11f, 0.385f, 0.007f);
     /// <summary>
     /// if true, the bullet will spawn in front
     /// of the entity instead of at the tip of the gun.
@@ -65,13 +66,14 @@ public class Gun : EntityItem
     [System.NonSerialized] public IBulletCaster BulletCaster = new RayBulletCaster();
     float lastShotTime = float.NegativeInfinity;
 
-
+    private float vBaseRotation = 0;
     public float vRotation {
-        get => vRotSpring.CurrentValue;
+        get => vBaseRotation + vRotSpring.CurrentValue;
         set {
             value = Mathf.Clamp(value, -maxAngle, -minAngle);
-            vRotSpring.TargetValue = value;
-            vRotSpring.LockToTarget();
+            vBaseRotation = value;
+            //vRotSpring.TargetValue = value;
+            //vRotSpring.LockToTarget();
         }
     }
 
@@ -121,9 +123,9 @@ public class Gun : EntityItem
         vRotSpring = new(0, vRotRecoil);
         hTransSpring = new(0, vTransRecoil);
         vTransSpring = new(0, hTransRecoil);
-        //zTransSpring = new(0, zTransRecoil);
         zTransSpring = new(0, zTransRecoil);
-        //Debug.Log("HI");
+        defaultPosition = transform.localPosition;
+        entityMovement = entity.GetComponent<EntityMovement>();
     }
 
     public void PointAt(Vector3 position, bool instant = false)
@@ -150,30 +152,22 @@ public class Gun : EntityItem
         {
             Shoot();
         }
-        
-        var actualRotation = NoRecoil ? vRotation : CombinedRotation;
+            var actualRotation = NoRecoil ? vRotation : CombinedRotation;
         Quaternion rotationY = Quaternion.AngleAxis(
             hRotSpring.CurrentValue,
             Vector3.up
         );
-        
+
         Quaternion rotationX = Quaternion.AngleAxis(
-            vRotSpring.CurrentValue,
+            vRotation + vRotSpring.CurrentValue,
             Vector3.right
-        );
-        
+        );  
         transform.localRotation = rotationX*rotationY;
-        transform.localPosition = defaultPosition - transform.localRotation * (Vector3.forward * zTransSpring.CurrentValue/* *0.0005f*/);
-        /*
-        if (transform.localPosition!=defaultPosition)
-        {
-            transform.localPosition += (defaultPosition-transform.localPosition) / 20;
-        }*/
-        
-        if(animator){
+        transform.localPosition = defaultPosition - transform.localRotation * (Vector3.forward * zTransSpring.CurrentValue *0.0005f);
+
+        if (animator){
             UpdateAnimator();
         }
-        //Debug.Log(zTransSpring.Velocity);
     }
 
     private void FixedUpdate()
@@ -222,18 +216,18 @@ public class Gun : EntityItem
             bullet.Velocity = muzzleVelocity;
             bullet.EnergyPenaltyMult = energyPenaltyMult;
             bullet.Damage = damage;
-            transform.localPosition -= transform.localRotation * (Vector3.forward * 0.0005f * zTransKick);
 
         }
 
         //hTransSpring.Velocity += hTransVel;
-        float vRot = Random.Range(-vRotVel, vRotVel);
-        vRotSpring.Velocity += vRot;
+        float vRot = Random.Range(0, vRotVel);
         float hRot = Random.Range(-hRotVel, hRotVel);
-        hRotSpring.Velocity += hRot;
-        zTransSpring.Velocity += zTransKick;
-        Debug.Log(zTransSpring.Velocity);
-
+        if (!NoRecoil)
+        {
+            vRotSpring.Velocity -= 0.25f * vRot;
+            hRotSpring.Velocity += hRot;
+            zTransSpring.CurrentValue += zTransKick;
+        }
     }
 
     public void Drop()
