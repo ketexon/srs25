@@ -264,74 +264,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!1 &4705820222089469025
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4659434189814222340}
-  - component: {fileID: 5199385808979652009}
-  m_Layer: 0
-  m_Name: ChatManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4659434189814222340
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4705820222089469025}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1128417799434771827}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5199385808979652009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4705820222089469025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce0a9a5f11e39434697a5114f1019657, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chatContainer: {fileID: 1187199815885069597}
-  messageText: {fileID: 8460235688827606305, guid: 0c1c39454ad2a124baaed7d50d283210,
-    type: 3}
-  users:
-  - user1
-  - erica
-  - aubrey
-  - harry
-  - helen
-  - rachel
-  - kel
-  messages:
-  - hi
-  - hello
-  - xxx
-  - erm
-  - asdf
-  - msg5
-  - windows
-  colors:
-  - red
-  - blue
-  - purple
-  - green
 --- !u!1 &5130968208842528924
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,7 +293,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4659434189814222340}
   - {fileID: 704573638625739699}
   - {fileID: 5316648050186552800}
   - {fileID: 1137953471908302172}
@@ -470,9 +401,10 @@ GameObject:
   - component: {fileID: 4175971521659418509}
   - component: {fileID: 2044570119131483592}
   - component: {fileID: 1184521903355119354}
+  - component: {fileID: 1648809437278115495}
   m_Layer: 5
   m_Name: ChatParent
-  m_TagString: Untagged
+  m_TagString: ChatParent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -492,10 +424,10 @@ RectTransform:
   - {fileID: 1187199815885069597}
   m_Father: {fileID: 704573638625739699}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.75364935, y: 0.324}
+  m_AnchorMin: {x: 0.84588844, y: 0.32643548}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -1}
+  m_SizeDelta: {x: 0, y: 1}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &4175971521659418509
 MonoBehaviour:
@@ -546,6 +478,42 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &1648809437278115495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6487222746119776133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce0a9a5f11e39434697a5114f1019657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chatContainer: {fileID: 1187199815885069597}
+  messageText: {fileID: 8460235688827606305, guid: 0c1c39454ad2a124baaed7d50d283210,
+    type: 3}
+  users:
+  - user1
+  - erica
+  - aubrey
+  - harry
+  - helen
+  - rachel
+  - kel
+  messages:
+  - hi
+  - hello
+  - this is a really long message to test message wrapping
+  - erm
+  - asdf
+  - msg5
+  - windows
+  colors:
+  - red
+  - blue
+  - purple
+  - green
 --- !u!1 &7836183399755147067
 GameObject:
   m_ObjectHideFlags: 0

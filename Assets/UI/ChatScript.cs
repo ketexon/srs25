@@ -31,6 +31,8 @@ public class ChatScript : MonoBehaviour
     public void SpawnMessage()
     {
         GameObject newMessage = Instantiate(messageText, chatContainer);
+        MessageScript message = newMessage.GetComponent<MessageScript>();
+        message.chatParent = gameObject;
         TMP_Text textComponent = newMessage.GetComponent<TMP_Text>();
         if (textComponent != null)
         {

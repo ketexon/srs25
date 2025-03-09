@@ -27508,60 +27508,45 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3112505696864156361, guid: 0115e9f58b3396041b3d32fbafc09fac,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3112505696864156361, guid: 0115e9f58b3396041b3d32fbafc09fac,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4007978141517477545, guid: 0115e9f58b3396041b3d32fbafc09fac,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.000017166138
-      objectReference: {fileID: 0}
-    - target: {fileID: 4007978141517477545, guid: 0115e9f58b3396041b3d32fbafc09fac,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5130968208842528924, guid: 0115e9f58b3396041b3d32fbafc09fac,
         type: 3}
       propertyPath: m_Name
       value: DiegeticUI
       objectReference: {fileID: 0}
-    - target: {fileID: 5713245101416734532, guid: 0115e9f58b3396041b3d32fbafc09fac,
+    - target: {fileID: 5199385808979652009, guid: 0115e9f58b3396041b3d32fbafc09fac,
         type: 3}
-      propertyPath: m_Size
-      value: 1
+      propertyPath: 'messages.Array.data[0]'
+      value: hi
       objectReference: {fileID: 0}
-    - target: {fileID: 5713245101416734532, guid: 0115e9f58b3396041b3d32fbafc09fac,
+    - target: {fileID: 5199385808979652009, guid: 0115e9f58b3396041b3d32fbafc09fac,
         type: 3}
-      propertyPath: m_Value
-      value: 1
+      propertyPath: 'messages.Array.data[2]'
+      value: this is a really long message to test message wrapping
       objectReference: {fileID: 0}
-    - target: {fileID: 6019840661232231919, guid: 0115e9f58b3396041b3d32fbafc09fac,
+    - target: {fileID: 7013794526732079846, guid: 0115e9f58b3396041b3d32fbafc09fac,
         type: 3}
-      propertyPath: m_Value
-      value: 0
+      propertyPath: m_AnchorMin.x
+      value: 0.84588844
       objectReference: {fileID: 0}
-    - target: {fileID: 6461592828500431600, guid: 0115e9f58b3396041b3d32fbafc09fac,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6461592828500431600, guid: 0115e9f58b3396041b3d32fbafc09fac,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6461592828500431600, guid: 0115e9f58b3396041b3d32fbafc09fac,
+    - target: {fileID: 7013794526732079846, guid: 0115e9f58b3396041b3d32fbafc09fac,
         type: 3}
       propertyPath: m_AnchorMin.y
+      value: 0.32643548
+      objectReference: {fileID: 0}
+    - target: {fileID: 7013794526732079846, guid: 0115e9f58b3396041b3d32fbafc09fac,
+        type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7013794526732079846, guid: 0115e9f58b3396041b3d32fbafc09fac,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7013794526732079846, guid: 0115e9f58b3396041b3d32fbafc09fac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7811538426490833413, guid: 0115e9f58b3396041b3d32fbafc09fac,
         type: 3}
