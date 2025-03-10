@@ -1,22 +1,32 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Kutie.Extensions;
 
-public class LevelGenerator5 : LevelGenerator {
+public class LevelGenerator5 : LevelGenerator
+{
 	[System.Serializable]
-	class RoomSizeEntry {
+	class RoomSizeEntry
+	{
 		public Vector2Int Size;
 		public int Weight;
 	}
 
 
 	[System.Serializable]
-	public class RoomDoor {
+	public class RoomDoor
+	{
 		public Vector2Int Position;
 		public DirectionMask Direction;
-	}
+
+        public override string ToString()
+        {
+			return $"RoomDoor(Position: {Position}, Direction: {Direction})";
+        }
+    }
 
 	[System.Serializable]
-	class FixedRoomEntry {
+	class FixedRoomEntry
+	{
 		public Alignment2D Alignment;
 		public Vector2Int Size;
 		public Vector2Int Offset;
@@ -26,7 +36,8 @@ public class LevelGenerator5 : LevelGenerator {
 	}
 
 	[System.Serializable]
-	class RequiredPathEntry {
+	class RequiredPathEntry
+	{
 		public Alignment2D StartAlignment;
 		public Vector2Int StartOffset;
 		public Alignment2D EndAlignment;
@@ -57,35 +68,45 @@ public class LevelGenerator5 : LevelGenerator {
 	[SerializeField, HideInInspector] List<bool> horizontalDoors = new();
 	[SerializeField, HideInInspector] List<bool> verticalDoors = new();
 	[SerializeField, HideInInspector] List<List<Vector2Int>> paths = new();
+	[SerializeField, HideInInspector] List<int> fixedRoomRectIndices = new();
 
 	Queue<Vector2Int> spawnRoomQueue = new();
 
 	Vector2Int maxRoomSize;
 
-	class RegenerateException : System.Exception {}
+	class RegenerateException : System.Exception { }
 
-    public override Vector3 GetPlayerSpawnPoint()
-    {
-        return Vector3.zero;
-    }
-
-    void Reset()
-    {
-        grid = GetComponent<LevelGrid5>();
-		grid.Size = Vector2Int.one * (2 * officeWidth + parkLength);
-    }
-
-	void Clear(){
-		grid.Clear();
-		roomRects.Clear();
+	public override Vector3 GetPlayerSpawnPoint()
+	{
+		return Vector3.zero;
 	}
 
-    public override void Generate()
-    {
+	void Reset()
+	{
+		grid = GetComponent<LevelGrid5>();
+		grid.Size = Vector2Int.one * (2 * officeWidth + parkLength);
+	}
+
+	void Clear()
+	{
+		grid.Clear();
+		roomRects.Clear();
+		paths.Clear();
+		fixedRoomRectIndices.Clear();
+		foreach (Transform child in transform)
+		{
+			DestroyImmediate(child.gameObject);
+		}
+	}
+
+	public override void Generate()
+	{
 		grid.Size = grid.Size = Vector2Int.one * (2 * officeWidth + parkLength);
 		int attempts = 0;
-		while(attempts < maxAttempts){
-			try {
+		while (attempts < maxAttempts)
+		{
+			try
+			{
 				Clear();
 				CalculateRoomSizes();
 				InitializeGrid();
@@ -93,36 +114,47 @@ public class LevelGenerator5 : LevelGenerator {
 				AddFixedRooms();
 				PartitionGrid();
 				FindPaths();
+				PlaceRooms();
 
 				return;
-			} catch (RegenerateException) {
+			}
+			catch (RegenerateException)
+			{
 				++attempts;
 			}
 		}
-    }
+	}
 
-	void CalculateRoomSizes(){
+	void CalculateRoomSizes()
+	{
 		maxRoomSize = Vector2Int.zero;
-		foreach(var sizeEntry in roomSizes){
+		foreach (var sizeEntry in roomSizes)
+		{
 			maxRoomSize.x = System.Math.Max(maxRoomSize.x, sizeEntry.Size.x);
 			maxRoomSize.y = System.Math.Max(maxRoomSize.y, sizeEntry.Size.y);
 		}
 	}
 
-	void InitializeGrid(){
-		for(int x = officeWidth; x < officeWidth + parkLength; ++x){
-			for(int y = officeWidth; y < officeWidth + parkLength; ++y){
+	void InitializeGrid()
+	{
+		for (int x = officeWidth; x < officeWidth + parkLength; ++x)
+		{
+			for (int y = officeWidth; y < officeWidth + parkLength; ++y)
+			{
 				grid.SetCellType(new Vector2Int(x, y), CellType5.Blocked);
 			}
 		}
 	}
 
-	void InitializeSpawning(){
+	void InitializeSpawning()
+	{
 		spawnRoomQueue = new();
 	}
 
-	void AddFixedRooms(){
-		foreach(var entry in fixedRooms){
+	void AddFixedRooms()
+	{
+		foreach (var entry in fixedRooms)
+		{
 			// calculate room position
 			Vector2Int roomSize = entry.Size;
 			Vector2Int roomPosition = grid.AlignmentOffsetRectToCell(
@@ -136,22 +168,29 @@ public class LevelGenerator5 : LevelGenerator {
 				roomPosition.x, roomPosition.y,
 				roomSize.x, roomSize.y
 			);
-			PlaceRoom(roomRect, entry.GizmosColorOverride);
+			PlaceRoomRect(roomRect, entry.GizmosColorOverride);
+			fixedRoomRectIndices.Add(roomRects.Count - 1);
+
 			// set the doors
-			foreach(var doorEntry in entry.Doors){
+			foreach (var doorEntry in entry.Doors)
+			{
 				Vector2Int doorPosition = doorEntry.Position;
 				grid.GetCell(roomPosition + doorPosition).DoorDirections = doorEntry.Direction;
 			}
 		}
 	}
 
-	void PlaceRoom(RectInt chosenRoomRect, CellType5 cellType = CellType5.Occupied){
-		PlaceRoom(chosenRoomRect, Color.clear, cellType);
+	void PlaceRoomRect(RectInt chosenRoomRect, CellType5 cellType = CellType5.Occupied)
+	{
+		PlaceRoomRect(chosenRoomRect, Color.clear, cellType);
 	}
 
-	void PlaceRoom(RectInt chosenRoomRect, Color colorOverride, CellType5 cellType = CellType5.Occupied){
-		for (int x = chosenRoomRect.xMin; x < chosenRoomRect.xMax; ++x) {
-			for (int y = chosenRoomRect.yMin; y < chosenRoomRect.yMax; ++y) {
+	void PlaceRoomRect(RectInt chosenRoomRect, Color colorOverride, CellType5 cellType = CellType5.Occupied)
+	{
+		for (int x = chosenRoomRect.xMin; x < chosenRoomRect.xMax; ++x)
+		{
+			for (int y = chosenRoomRect.yMin; y < chosenRoomRect.yMax; ++y)
+			{
 				var cell = grid.GetCell(
 					x, y
 				);
@@ -164,33 +203,43 @@ public class LevelGenerator5 : LevelGenerator {
 		roomRects.Add(chosenRoomRect);
 
 		// add all cells surrounding the room rect to the queue
-		for (int x = chosenRoomRect.xMin - 1; x < chosenRoomRect.xMax + 1; ++x) {
+		for (int x = chosenRoomRect.xMin - 1; x < chosenRoomRect.xMax + 1; ++x)
+		{
 			spawnRoomQueue.Enqueue(new Vector2Int(x, chosenRoomRect.yMin - 1));
 			spawnRoomQueue.Enqueue(new Vector2Int(x, chosenRoomRect.yMax));
 		}
-		for (int y = chosenRoomRect.yMin; y < chosenRoomRect.yMax; ++y) {
+		for (int y = chosenRoomRect.yMin; y < chosenRoomRect.yMax; ++y)
+		{
 			spawnRoomQueue.Enqueue(new Vector2Int(chosenRoomRect.xMin - 1, y));
 			spawnRoomQueue.Enqueue(new Vector2Int(chosenRoomRect.xMax, y));
 		}
 	}
 
-	void PartitionGrid() {
-		if(spawnRoomQueue.Count == 0){
+	void PartitionGrid()
+	{
+		if (spawnRoomQueue.Count == 0)
+		{
 			spawnRoomQueue.Enqueue(new Vector2Int(0, 0));
 		}
-		while (spawnRoomQueue.Count > 0) {
+		while (spawnRoomQueue.Count > 0)
+		{
 			var cell = spawnRoomQueue.Dequeue();
-			if (!grid.CellInBounds(cell) || grid.GetCellType(cell) != CellType5.Empty) {
+			if (!grid.CellInBounds(cell) || grid.GetCellType(cell) != CellType5.Empty)
+			{
 				continue;
 			}
 
-			bool CanFit(RectInt rect){
-				for (int x = rect.xMin; x < rect.xMax; ++x) {
-					for (int y = rect.yMin; y < rect.yMax; ++y) {
+			bool CanFit(RectInt rect)
+			{
+				for (int x = rect.xMin; x < rect.xMax; ++x)
+				{
+					for (int y = rect.yMin; y < rect.yMax; ++y)
+					{
 						if (
 							!grid.CellInBounds(x, y)
 							|| grid.GetCellType(x, y) != CellType5.Empty
-						) {
+						)
+						{
 							return false;
 						}
 					}
@@ -199,7 +248,8 @@ public class LevelGenerator5 : LevelGenerator {
 			}
 
 			List<(RectInt, int)> viableRoomPositions = new();
-			foreach (var roomSizeEntry in roomSizes){
+			foreach (var roomSizeEntry in roomSizes)
+			{
 				var roomSize = roomSizeEntry.Size;
 				RectInt[] roomRects = {
 					new(cell.x, cell.y, roomSize.x, roomSize.y),
@@ -215,43 +265,51 @@ public class LevelGenerator5 : LevelGenerator {
 					new(cell.x - roomSize.y + 1, cell.y - roomSize.x + 1, roomSize.y, roomSize.x),
 				};
 
-				foreach (var roomRect in roomRects){
-					if (CanFit(roomRect)){
+				foreach (var roomRect in roomRects)
+				{
+					if (CanFit(roomRect))
+					{
 						viableRoomPositions.Add((roomRect, roomSizeEntry.Weight));
 					}
 				}
 			}
 
-			if (viableRoomPositions.Count == 0){
+			if (viableRoomPositions.Count == 0)
+			{
 				Debug.LogError("NOOOOOOOO :((((");
 				throw new RegenerateException();
 			}
 
 			// weight by room size to make larger rooms more likely
 			int totalWeight = 0;
-			foreach (var (roomRect, weight) in viableRoomPositions){
+			foreach (var (roomRect, weight) in viableRoomPositions)
+			{
 				totalWeight += weight;
 			}
 
 			int choice = Random.Range(0, totalWeight);
 			RectInt chosenRoomRect = new();
-			foreach (var (roomRect, weight) in viableRoomPositions){
+			foreach (var (roomRect, weight) in viableRoomPositions)
+			{
 				choice -= weight;
-				if (choice <= 0){
+				if (choice <= 0)
+				{
 					chosenRoomRect = roomRect;
 					break;
 				}
 			}
 
-			PlaceRoom(chosenRoomRect);
+			PlaceRoomRect(chosenRoomRect);
 		}
 	}
 
 
 
-	void FindPaths(){
+	void FindPaths()
+	{
 		List<(Vector2Int, Vector2Int)> startEnds = new();
-		foreach(var requiredPath in requiredPaths){
+		foreach (var requiredPath in requiredPaths)
+		{
 			Vector2Int start = grid.AlignmentOffsetToCell(
 				requiredPath.StartAlignment,
 				requiredPath.StartOffset
@@ -264,7 +322,8 @@ public class LevelGenerator5 : LevelGenerator {
 		}
 
 		HashSet<Vector2Int> reachableCells = new();
-		foreach(var (start, end) in startEnds){
+		foreach (var (start, end) in startEnds)
+		{
 			// do A* to find path and place doors
 			// mark cells as reachable
 			// so that we can break if a path is already connected
@@ -279,21 +338,192 @@ public class LevelGenerator5 : LevelGenerator {
 				)
 			) ?? throw new RegenerateException();
 
-            foreach (var cell in path){
+			foreach (var cell in path)
+			{
 				reachableCells.Add(cell);
 			}
 			paths.Add(path);
 		}
 	}
 
-	void OnDrawGizmos(){
-		foreach(var roomRect in roomRects){
+	void PlaceRooms()
+	{
+		RoomDoor entranceDoor = null;
+		RoomDoor exitDoor;
+		int curRoomIndex = -1;
+		List<(Room5, int)> FindRoomsWithDoors()
+		{
+			var size = roomRects[curRoomIndex].size;
+
+			Vector2Int origin = Vector2Int.Min(
+				entranceDoor?.Position ?? exitDoor.Position,
+				exitDoor.Position
+			);
+
+			List<RoomDoor> doors = new() {
+				new RoomDoor {
+					Position = exitDoor.Position - origin,
+					Direction = exitDoor.Direction
+				}
+			};
+			if (entranceDoor != null)
+			{
+				doors.Add(new RoomDoor
+				{
+					Position = entranceDoor.Position - origin,
+					Direction = entranceDoor.Direction
+				});
+			}
+			List<(Room5, int)> rooms = new();
+			foreach (var roomPrefab in roomPrefabs)
+			{
+				var room = roomPrefab.GetComponent<Room5>();
+				if (room == null)
+				{
+					Debug.LogError("Room prefab does not have a Room component");
+					continue;
+				}
+				// 4 rotations
+				for (int i = 0; i < 4; ++i)
+				{
+					if (room.Size.Rotate90(i).Abs() != size)
+					{
+						continue;
+					}
+
+					bool hasDoors = true;
+					foreach (var door in doors)
+					{
+						bool found = true;
+						foreach (var roomDoor in room.Doors)
+						{
+							var doorPosition = door.Position.Rotate90(i);
+							var doorMask = door.Direction.Rotate90(i);
+							if (roomDoor.Position == door.Position && roomDoor.Direction == door.Direction)
+							{
+								found = true;
+								break;
+							}
+						}
+						if (!found)
+						{
+							hasDoors = false;
+							break;
+						}
+					}
+
+					if (hasDoors)
+					{
+						rooms.Add((room, i));
+					}
+				}
+			}
+			return rooms;
+		}
+
+		HashSet<int> placedRooms = new();
+		// place fixed rooms
+		foreach (var entry in fixedRooms)
+		{
+			placedRooms.Add(roomRects.Count - 1);
+		}
+
+		int numPlacedRooms = 0;
+
+		// place room along each room in the path
+		foreach (var path in paths)
+		{
+			for (int i = 0; i < path.Count - 1; ++i)
+			{
+				var start = path[i];
+				var end = path[i + 1];
+				int startRoomIndex = grid.GetCell(start).RoomIndex;
+				int endRoomIndex = grid.GetCell(end).RoomIndex;
+				if (curRoomIndex < 0)
+				{
+					curRoomIndex = startRoomIndex;
+				}
+				else if (curRoomIndex != endRoomIndex)
+				{
+					// we are entering a new room
+					exitDoor = new()
+					{
+						Position = start,
+						Direction = (end - start).ToDirection()
+					};
+
+					// place room if not already placed
+					if (!placedRooms.Contains(curRoomIndex))
+					{
+						// find room with entrance and exit
+						var rooms = FindRoomsWithDoors();
+						if (rooms.Count == 0)
+						{
+							Debug.LogError($"No room found with entrance and exit doors: {roomRects[curRoomIndex]} {entranceDoor} {exitDoor}");
+
+							throw new RegenerateException();
+						}
+
+						// spawn the room
+						var (roomPrefab, rotation) = rooms[Random.Range(0, rooms.Count)];
+						var room = Instantiate(roomPrefab, transform);
+						room.transform.SetSiblingIndex(numPlacedRooms++);
+						var roomRect = roomRects[curRoomIndex];
+						room.gameObject.name = $"Room {curRoomIndex} {roomRect.x}x{roomRect.y}";
+						var rot = Quaternion.Euler(0, 90 * rotation, 0) *
+							room.transform.localRotation;
+						room.transform.localPosition = (
+							new Vector3(
+								roomRect.x,
+								0,
+								roomRect.y
+							)
+							+ (
+								new Vector3(
+									1,
+									0,
+									1
+								)
+								+ Quaternion.Inverse(rot) * -new Vector3(
+									1,
+									0,
+									1
+								)
+							).Hammard(
+								new Vector3(roomRect.size.x, 0, roomRect.size.x)
+							) / 2
+						) * grid.CellLength;
+						room.transform.localRotation = rot;
+
+						room.LevelGenerator = this;
+						room.Grid = grid;
+						room.Position = new Vector2Int(
+							roomRects[curRoomIndex].x,
+							roomRects[curRoomIndex].y
+						);
+
+						placedRooms.Add(curRoomIndex);
+					}
+
+					entranceDoor = exitDoor;
+					entranceDoor.Direction = entranceDoor.Direction.Rotate90(2);
+					exitDoor = null;
+					curRoomIndex = endRoomIndex;
+				}
+			}
+		}
+	}
+
+	void OnDrawGizmos()
+	{
+		foreach (var roomRect in roomRects)
+		{
 			Gizmos.color = Color.green;
 			Gizmos.DrawWireCube(
 				transform.position + new Vector3(
-					roomRect.x + (float) roomRect.width / 2,
+					roomRect.x + (float)roomRect.width / 2,
 					0,
-					roomRect.y + (float) roomRect.height / 2
+					roomRect.y + (float)roomRect.height / 2
 				) * grid.CellLength,
 				new Vector3(roomRect.width, 0, roomRect.height) * grid.CellLength
 			);
@@ -301,9 +531,11 @@ public class LevelGenerator5 : LevelGenerator {
 
 		for (int x = 0; x < grid.Size.x; ++x)
 		{
-			for(int y = 0; y < grid.Size.y; ++y){
+			for (int y = 0; y < grid.Size.y; ++y)
+			{
 				var cell = grid.GetCell(new Vector2Int(x, y));
-				if(cell.DoorDirections != DirectionMask.None){
+				if (cell.DoorDirections != DirectionMask.None)
+				{
 					Gizmos.color = Color.blue;
 					var center = transform.position + new Vector3(x + 0.5f, 0, y + 0.5f) * grid.CellLength;
 					(DirectionMask, Vector3)[] doorDirections = {
@@ -313,8 +545,10 @@ public class LevelGenerator5 : LevelGenerator {
 						(DirectionMask.Right, Vector3.right),
 					};
 
-					foreach(var (direction, directionVector) in doorDirections){
-						if((cell.DoorDirections & direction) != 0){
+					foreach (var (direction, directionVector) in doorDirections)
+					{
+						if ((cell.DoorDirections & direction) != 0)
+						{
 							Gizmos.DrawRay(
 								center,
 								directionVector * grid.CellLength
@@ -324,7 +558,8 @@ public class LevelGenerator5 : LevelGenerator {
 				}
 			}
 		}
-		foreach(var requiredPath in requiredPaths){
+		foreach (var requiredPath in requiredPaths)
+		{
 			Gizmos.color = Color.red;
 			var startCenter = grid.AlignmentOffsetToCell(
 				requiredPath.StartAlignment,
@@ -341,9 +576,11 @@ public class LevelGenerator5 : LevelGenerator {
 		}
 
 		// draw paths
-		foreach(var path in paths){
+		foreach (var path in paths)
+		{
 			Gizmos.color = Color.red;
-			for(int i = 0; i < path.Count - 1; ++i){
+			for (int i = 0; i < path.Count - 1; ++i)
+			{
 				var start = path[i];
 				var end = path[i + 1];
 				Gizmos.DrawLine(
