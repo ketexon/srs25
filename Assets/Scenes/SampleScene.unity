@@ -27508,50 +27508,40 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1648809437278115495, guid: 0115e9f58b3396041b3d32fbafc09fac,
+        type: 3}
+      propertyPath: 'users.Array.data[0]'
+      value: kennedy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648809437278115495, guid: 0115e9f58b3396041b3d32fbafc09fac,
+        type: 3}
+      propertyPath: 'messages.Array.data[5]'
+      value: meowww
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648809437278115495, guid: 0115e9f58b3396041b3d32fbafc09fac,
+        type: 3}
+      propertyPath: 'messages.Array.data[6]'
+      value: xd
+      objectReference: {fileID: 0}
     - target: {fileID: 5130968208842528924, guid: 0115e9f58b3396041b3d32fbafc09fac,
         type: 3}
       propertyPath: m_Name
       value: DiegeticUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 5199385808979652009, guid: 0115e9f58b3396041b3d32fbafc09fac,
-        type: 3}
-      propertyPath: 'messages.Array.data[0]'
-      value: hi
-      objectReference: {fileID: 0}
-    - target: {fileID: 5199385808979652009, guid: 0115e9f58b3396041b3d32fbafc09fac,
-        type: 3}
-      propertyPath: 'messages.Array.data[2]'
-      value: this is a really long message to test message wrapping
-      objectReference: {fileID: 0}
-    - target: {fileID: 7013794526732079846, guid: 0115e9f58b3396041b3d32fbafc09fac,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.84588844
-      objectReference: {fileID: 0}
-    - target: {fileID: 7013794526732079846, guid: 0115e9f58b3396041b3d32fbafc09fac,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.32643548
       objectReference: {fileID: 0}
     - target: {fileID: 7013794526732079846, guid: 0115e9f58b3396041b3d32fbafc09fac,
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7013794526732079846, guid: 0115e9f58b3396041b3d32fbafc09fac,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7013794526732079846, guid: 0115e9f58b3396041b3d32fbafc09fac,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -1
-      objectReference: {fileID: 0}
     - target: {fileID: 7811538426490833413, guid: 0115e9f58b3396041b3d32fbafc09fac,
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8789892379368251336, guid: 0115e9f58b3396041b3d32fbafc09fac,
+        type: 3}
+      propertyPath: m_VerticalFit
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
