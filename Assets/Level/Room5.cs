@@ -6,6 +6,8 @@ public class Room5 : MonoBehaviour
 {
     [SerializeField] public Vector2Int Size = Vector2Int.one;
     [SerializeField] public List<LevelGenerator5.RoomDoor> Doors = new();
+    [Tooltip("The player spawn point in this room. Doesn't matter if the player does not spawn in this room.")]
+    [SerializeField] public Vector3 PlayerSpawnPoint;
 
     [SerializeField, Kutie.Inspector.ReadOnly]
     public Vector2Int Position;
@@ -15,6 +17,9 @@ public class Room5 : MonoBehaviour
 
     [SerializeField, Kutie.Inspector.ReadOnly]
     public LevelGrid5 Grid;
+
+    [SerializeField, Kutie.Inspector.ReadOnly]
+    public List<LevelGenerator5.RoomDoor> OpenDoors = new();
 
     void OnDrawGizmos()
     {

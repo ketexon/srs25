@@ -40,20 +40,11 @@ public class Hallway : MonoBehaviour
 
     void SpawnHallwaySegment(Vector2Int cell){
         var pos = Grid.CellToWorld(cell + new Vector2(0.5f, 0.5f));
-#if UNITY_EDITOR
-        var segment = Kutie.Editor.KPrefabUtility.InstantiatePrefab(
+        KPrefabUtility.InstantiatePrefab(
             hallwaySegmentPrefab,
             pos,
             Quaternion.identity,
             transform
         );
-#else
-        Instantiate(
-            hallwaySegmentPrefab,
-            pos,
-            Quaternion.identity,
-            transform
-        );
-#endif
     }
 }

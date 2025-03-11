@@ -68,13 +68,16 @@ MonoBehaviour:
   - Alignment: 7
     Size: {x: 2, y: 1}
     Offset: {x: 0, y: 0}
-    Prefab: {fileID: 0}
+    Prefab: {fileID: 1172646569373742454, guid: cdbf0add3c654ba46ada3f99db66f706,
+      type: 3}
+    PrefabRotation: 0
     GizmosColorOverride: {r: 0.9844359, g: 1, b: 0, a: 1}
     Doors:
     - Position: {x: 0, y: 0}
       Direction: 1
     - Position: {x: 1, y: 0}
       Direction: 1
+    IsSpawnPoint: 1
   roomPrefabs:
   - {fileID: 1172646569373742454, guid: 81da1c5cb98b9e4479029fff1f5d5e68, type: 3}
   - {fileID: 1172646569373742454, guid: 3ad5526e8dc78844f98da9e3810d7f27, type: 3}
@@ -655,6 +658,8 @@ MonoBehaviour:
     height: 1
   horizontalDoors: 
   verticalDoors: 
+  fixedRoomRectIndices: 
+  spawnRoom: {fileID: 0}
 --- !u!114 &645056498663961425
 MonoBehaviour:
   m_ObjectHideFlags: 0

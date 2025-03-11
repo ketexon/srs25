@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Kutie.Extensions;
+using System.Runtime.Serialization.Formatters;
+using UnityEditor;
+using Kutie;
 
 public class LevelGenerator5 : LevelGenerator
 {
@@ -31,8 +34,10 @@ public class LevelGenerator5 : LevelGenerator
 		public Vector2Int Size;
 		public Vector2Int Offset;
 		public GameObject Prefab;
+		public int PrefabRotation = 0;
 		public Color GizmosColorOverride = Color.clear;
 		public List<RoomDoor> Doors = new();
+		public bool IsSpawnPoint = false;
 	}
 
 	[System.Serializable]
@@ -69,6 +74,9 @@ public class LevelGenerator5 : LevelGenerator
 	[SerializeField, HideInInspector] List<bool> verticalDoors = new();
 	[SerializeField, HideInInspector] List<List<Vector2Int>> paths = new();
 	[SerializeField, HideInInspector] List<int> fixedRoomRectIndices = new();
+	[SerializeField, HideInInspector] Room5 spawnRoom = null;
+
+	HashSet<int> placedRooms = new();
 
 	Queue<Vector2Int> spawnRoomQueue = new();
 
@@ -78,7 +86,11 @@ public class LevelGenerator5 : LevelGenerator
 
 	public override Vector3 GetPlayerSpawnPoint()
 	{
-		return Vector3.zero;
+		if(spawnRoom == null){
+			Debug.LogError("No spawn room found");
+			return Vector3.zero;
+		}
+		return spawnRoom.transform.position + spawnRoom.PlayerSpawnPoint;
 	}
 
 	void Reset()
@@ -93,10 +105,8 @@ public class LevelGenerator5 : LevelGenerator
 		roomRects.Clear();
 		paths.Clear();
 		fixedRoomRectIndices.Clear();
-		foreach (Transform child in transform)
-		{
-			DestroyImmediate(child.gameObject);
-		}
+		this.ClearChildren();
+		placedRooms.Clear();
 	}
 
 	public override void Generate()
@@ -111,10 +121,11 @@ public class LevelGenerator5 : LevelGenerator
 				CalculateRoomSizes();
 				InitializeGrid();
 				InitializeSpawning();
-				AddFixedRooms();
+				AddFixedRoomsToGrid();
 				PartitionGrid();
 				FindPaths();
-				PlaceRooms();
+				InstantiateFixedRooms();
+				InstantiateRooms();
 
 				return;
 			}
@@ -151,7 +162,7 @@ public class LevelGenerator5 : LevelGenerator
 		spawnRoomQueue = new();
 	}
 
-	void AddFixedRooms()
+	void AddFixedRoomsToGrid()
 	{
 		foreach (var entry in fixedRooms)
 		{
@@ -251,6 +262,8 @@ public class LevelGenerator5 : LevelGenerator
 			foreach (var roomSizeEntry in roomSizes)
 			{
 				var roomSize = roomSizeEntry.Size;
+				// one room rect for each rotation
+				// and for each pivot point
 				RectInt[] roomRects = {
 					new(cell.x, cell.y, roomSize.x, roomSize.y),
 					new(cell.x, cell.y, roomSize.y, roomSize.x),
@@ -346,12 +359,90 @@ public class LevelGenerator5 : LevelGenerator
 		}
 	}
 
-	void PlaceRooms()
+	string GetRoomName(int index){
+		var rect = roomRects[index];
+		return $"Room {index} {rect.x}x{rect.y}";
+	}
+
+	Room5 InstantiateRoom(
+		int roomIndex,
+		GameObject roomPrefab,
+		int rotation,
+		List<RoomDoor> doors = null
+	){
+		var roomGO = KPrefabUtility.InstantiatePrefab(
+			roomPrefab,
+			parent: transform
+		);
+		var room = roomGO.GetComponent<Room5>();
+		var roomRect = roomRects[roomIndex];
+		room.gameObject.name = GetRoomName(roomIndex);
+		var rot = Quaternion.Euler(0, 90 * rotation, 0) *
+			room.transform.localRotation;
+		// maps rotation to origin
+		//		0 rot -> (0,0)
+		//		1 rot -> (1,0)
+		//		2 rot -> (1,1)
+		//		3 rot -> (0,1)
+		var roomOrigin = ((
+			new Vector3(
+				1,
+				0,
+				1
+			)
+			- rot * new Vector3(
+				1,
+				0,
+				1
+			)
+		) / 2).Hammard(
+			new Vector3(roomRect.size.x, 0, roomRect.size.y)
+		);
+		room.transform.localPosition = (
+			new Vector3(
+				roomRect.x,
+				0,
+				roomRect.y
+			)
+			+ roomOrigin
+		) * grid.CellLength;
+		room.transform.localRotation = rot;
+		room.transform.SetAsLastSibling();
+
+		room.LevelGenerator = this;
+		room.Grid = grid;
+		room.Position = new Vector2Int(
+			roomRects[roomIndex].x,
+			roomRects[roomIndex].y
+		);
+		room.OpenDoors = doors ?? new List<RoomDoor>();
+
+		placedRooms.Add(roomIndex);
+
+		return room;
+	}
+
+	void InstantiateFixedRooms(){
+		for(int i = 0; i < fixedRooms.Count; ++i){
+			var fixedRoom = fixedRooms[i];
+			var roomIndex = fixedRoomRectIndices[i];
+			var room = InstantiateRoom(
+				roomIndex,
+				fixedRoom.Prefab,
+				fixedRoom.PrefabRotation
+			);
+			if(fixedRoom.IsSpawnPoint){
+				spawnRoom = room;
+			}
+		}
+	}
+
+	void InstantiateRooms()
 	{
 		RoomDoor entranceDoor = null;
 		RoomDoor exitDoor;
 		int curRoomIndex = -1;
-		List<(Room5, int)> FindRoomsWithDoors()
+		List<(Room5, int, List<RoomDoor>)> FindRoomsWithDoors()
 		{
 			var size = roomRects[curRoomIndex].size;
 
@@ -374,7 +465,7 @@ public class LevelGenerator5 : LevelGenerator
 					Direction = entranceDoor.Direction
 				});
 			}
-			List<(Room5, int)> rooms = new();
+			List<(Room5, int, List<RoomDoor>)> rooms = new();
 			foreach (var roomPrefab in roomPrefabs)
 			{
 				var room = roomPrefab.GetComponent<Room5>();
@@ -395,10 +486,10 @@ public class LevelGenerator5 : LevelGenerator
 					foreach (var door in doors)
 					{
 						bool found = true;
+						var doorPosition = door.Position.Rotate90(i);
+						var doorMask = door.Direction.Rotate90(i);
 						foreach (var roomDoor in room.Doors)
 						{
-							var doorPosition = door.Position.Rotate90(i);
-							var doorMask = door.Direction.Rotate90(i);
 							if (roomDoor.Position == door.Position && roomDoor.Direction == door.Direction)
 							{
 								found = true;
@@ -414,21 +505,21 @@ public class LevelGenerator5 : LevelGenerator
 
 					if (hasDoors)
 					{
-						rooms.Add((room, i));
+						var openDoors = new List<RoomDoor>();
+						foreach (var door in doors)
+						{
+							openDoors.Add(new RoomDoor
+							{
+								Position = door.Position,
+								Direction = door.Direction
+							});
+						}
+						rooms.Add((room, i, openDoors));
 					}
 				}
 			}
 			return rooms;
 		}
-
-		HashSet<int> placedRooms = new();
-		// place fixed rooms
-		foreach (var entry in fixedRooms)
-		{
-			placedRooms.Add(roomRects.Count - 1);
-		}
-
-		int numPlacedRooms = 0;
 
 		// place room along each room in the path
 		foreach (var path in paths)
@@ -443,7 +534,7 @@ public class LevelGenerator5 : LevelGenerator
 				{
 					curRoomIndex = startRoomIndex;
 				}
-				else if (curRoomIndex != endRoomIndex)
+				if (curRoomIndex != endRoomIndex)
 				{
 					// we are entering a new room
 					exitDoor = new()
@@ -465,44 +556,13 @@ public class LevelGenerator5 : LevelGenerator
 						}
 
 						// spawn the room
-						var (roomPrefab, rotation) = rooms[Random.Range(0, rooms.Count)];
-						var room = Instantiate(roomPrefab, transform);
-						room.transform.SetSiblingIndex(numPlacedRooms++);
-						var roomRect = roomRects[curRoomIndex];
-						room.gameObject.name = $"Room {curRoomIndex} {roomRect.x}x{roomRect.y}";
-						var rot = Quaternion.Euler(0, 90 * rotation, 0) *
-							room.transform.localRotation;
-						room.transform.localPosition = (
-							new Vector3(
-								roomRect.x,
-								0,
-								roomRect.y
-							)
-							+ (
-								new Vector3(
-									1,
-									0,
-									1
-								)
-								+ Quaternion.Inverse(rot) * -new Vector3(
-									1,
-									0,
-									1
-								)
-							).Hammard(
-								new Vector3(roomRect.size.x, 0, roomRect.size.x)
-							) / 2
-						) * grid.CellLength;
-						room.transform.localRotation = rot;
-
-						room.LevelGenerator = this;
-						room.Grid = grid;
-						room.Position = new Vector2Int(
-							roomRects[curRoomIndex].x,
-							roomRects[curRoomIndex].y
+						var (roomPrefab, rotation, doors) = rooms[Random.Range(0, rooms.Count)];
+						InstantiateRoom(
+							curRoomIndex,
+							roomPrefab.gameObject,
+							rotation,
+							doors
 						);
-
-						placedRooms.Add(curRoomIndex);
 					}
 
 					entranceDoor = exitDoor;
