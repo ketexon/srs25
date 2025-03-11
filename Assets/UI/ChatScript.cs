@@ -8,6 +8,7 @@ public class ChatScript : MonoBehaviour
 {
     public Transform chatContainer;
     public GameObject messageText;
+    public float chatSpawnInterval = 0.3f;
     public List<string> users;
     public List<string> messages;
     public List<string> colors = new List<string> { "red", "blue", "purple", "green" };
@@ -21,10 +22,10 @@ public class ChatScript : MonoBehaviour
 
     IEnumerator SpawnMessages()
     {
-        while (chatContainer.childCount < 20)
+        while (true)
         {
             SpawnMessage();
-            yield return new WaitForSeconds(.3f); 
+            yield return new WaitForSeconds(chatSpawnInterval); 
         }
     }
 
