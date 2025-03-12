@@ -47,8 +47,9 @@ Material:
     - _Fullscreen_DstColorBlend: 10
     - _Fullscreen_SrcAlphaBlend: 1
     - _Fullscreen_SrcColorBlend: 5
-    - _PsychoticEffect: 1.2
-    - _VignetteEffect: 3
-    m_Colors: []
+    - _PsychoticEffect: 1.35
+    - _VignetteEffect: 3.36
+    m_Colors:
+    - _Color: {r: 0.13207547, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
