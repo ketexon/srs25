@@ -9,7 +9,7 @@ public class Gun : EntityItem
     [SerializeField] float minAngle = -60;
     [SerializeField] float maxAngle = 80;
     [SerializeField] Transform tip;
-    Vector3 defaultPosition;//= new Vector3(0.11f, 0.385f, 0.007f);
+    Vector3 defaultPosition;
     /// <summary>
     /// if true, the bullet will spawn in front
     /// of the entity instead of at the tip of the gun.
@@ -26,6 +26,8 @@ public class Gun : EntityItem
 
 
     [Header("Recoil")]
+    [SerializeField] float cameraVRecoilMult = 1;
+    [SerializeField] float cameraHRecoilMult = 1;
     [SerializeField] Kutie.SpringParameters hRotRecoil;
     [SerializeField] float maxHRot;
     [SerializeField] float hRotVel;
@@ -164,7 +166,6 @@ public class Gun : EntityItem
         );  
         transform.localRotation = rotationX*rotationY;
         transform.localPosition = defaultPosition - transform.localRotation * (Vector3.forward * zTransSpring.CurrentValue *0.0005f);
-
         if (animator){
             UpdateAnimator();
         }
@@ -227,7 +228,10 @@ public class Gun : EntityItem
             vRotSpring.Velocity -= 0.25f * vRot;
             hRotSpring.Velocity += hRot;
             zTransSpring.CurrentValue += zTransKick;
+            entityMovement.LookDelta(new Vector2(0.005f*cameraHRecoilMult*hRotSpring.Velocity, -0.025f*cameraVRecoilMult* vRotSpring.Velocity));
+
         }
+
     }
 
     public void Drop()
