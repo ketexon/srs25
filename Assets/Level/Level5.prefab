@@ -1,0 +1,2982 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7133800530568295414
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8279705847114550240}
+  - component: {fileID: 4959308196068069480}
+  - component: {fileID: 1664146719483905623}
+  - component: {fileID: 645056498663961425}
+  m_Layer: 0
+  m_Name: Level5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8279705847114550240
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7133800530568295414}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4959308196068069480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7133800530568295414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50fa83e07da0bd84399a94ff0dadbcfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LevelGenerator: {fileID: 1664146719483905623}
+  Player: {fileID: 0}
+--- !u!114 &1664146719483905623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7133800530568295414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c339f70cdf44e9d419bcba0a917e0836, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 645056498663961425}
+  officeWidth: 4
+  parkLength: 16
+  maxAttempts: 10
+  fixedRooms:
+  - Alignment: 7
+    Size: {x: 2, y: 1}
+    Offset: {x: 0, y: 0}
+    Prefab: {fileID: 1172646569373742454, guid: cdbf0add3c654ba46ada3f99db66f706,
+      type: 3}
+    PrefabRotation: 0
+    GizmosColorOverride: {r: 0.9844359, g: 1, b: 0, a: 1}
+    Doors:
+    - Position: {x: 0, y: 0}
+      Direction: 1
+    - Position: {x: 1, y: 0}
+      Direction: 1
+    IsSpawnPoint: 1
+  roomPrefabs:
+  - {fileID: 1172646569373742454, guid: 81da1c5cb98b9e4479029fff1f5d5e68, type: 3}
+  - {fileID: 1172646569373742454, guid: 3ad5526e8dc78844f98da9e3810d7f27, type: 3}
+  - {fileID: 1172646569373742454, guid: 4a5d06532bd91a24d855573083d649bb, type: 3}
+  - {fileID: 1172646569373742454, guid: 0af71e88af900b141894bd40e349f079, type: 3}
+  - {fileID: 1172646569373742454, guid: ca95461d0f5e59341a8ece2d666faf33, type: 3}
+  - {fileID: 1172646569373742454, guid: 48fe85a7c2e527348967f2c9b7605460, type: 3}
+  roomSizes:
+  - Size: {x: 1, y: 1}
+    Weight: 1
+  - Size: {x: 2, y: 1}
+    Weight: 7
+  requiredPaths:
+  - StartAlignment: 7
+    StartOffset: {x: 0, y: 0}
+    EndAlignment: 2
+    EndOffset: {x: 0, y: 0}
+  - StartAlignment: 7
+    StartOffset: {x: -1, y: 0}
+    EndAlignment: 2
+    EndOffset: {x: 0, y: 0}
+  - StartAlignment: 7
+    StartOffset: {x: -1, y: 0}
+    EndAlignment: 7
+    EndOffset: {x: -1, y: 1}
+  - StartAlignment: 7
+    StartOffset: {x: 0, y: 0}
+    EndAlignment: 7
+    EndOffset: {x: 0, y: 1}
+  roomRects:
+  - x: 11
+    y: 0
+    width: 2
+    height: 1
+  - x: 8
+    y: 1
+    width: 3
+    height: 1
+  - x: 11
+    y: 1
+    width: 1
+    height: 2
+  - x: 12
+    y: 1
+    width: 1
+    height: 1
+  - x: 13
+    y: 1
+    width: 1
+    height: 3
+  - x: 9
+    y: 0
+    width: 2
+    height: 1
+  - x: 13
+    y: 0
+    width: 2
+    height: 1
+  - x: 7
+    y: 0
+    width: 1
+    height: 1
+  - x: 5
+    y: 2
+    width: 3
+    height: 1
+  - x: 8
+    y: 0
+    width: 1
+    height: 1
+  - x: 8
+    y: 2
+    width: 1
+    height: 2
+  - x: 9
+    y: 2
+    width: 1
+    height: 1
+  - x: 10
+    y: 2
+    width: 1
+    height: 2
+  - x: 5
+    y: 1
+    width: 3
+    height: 1
+  - x: 11
+    y: 3
+    width: 2
+    height: 1
+  - x: 12
+    y: 2
+    width: 1
+    height: 1
+  - x: 14
+    y: 1
+    width: 2
+    height: 3
+  - x: 15
+    y: 0
+    width: 4
+    height: 1
+  - x: 4
+    y: 0
+    width: 3
+    height: 1
+  - x: 2
+    y: 1
+    width: 3
+    height: 2
+  - x: 4
+    y: 3
+    width: 2
+    height: 1
+  - x: 6
+    y: 3
+    width: 2
+    height: 1
+  - x: 9
+    y: 3
+    width: 1
+    height: 1
+  - x: 16
+    y: 1
+    width: 1
+    height: 3
+  - x: 17
+    y: 1
+    width: 3
+    height: 2
+  - x: 19
+    y: 0
+    width: 3
+    height: 1
+  - x: 2
+    y: 0
+    width: 2
+    height: 1
+  - x: 1
+    y: 0
+    width: 1
+    height: 2
+  - x: 1
+    y: 3
+    width: 1
+    height: 3
+  - x: 2
+    y: 3
+    width: 1
+    height: 1
+  - x: 3
+    y: 3
+    width: 1
+    height: 3
+  - x: 0
+    y: 2
+    width: 2
+    height: 1
+  - x: 17
+    y: 3
+    width: 4
+    height: 1
+  - x: 20
+    y: 1
+    width: 4
+    height: 1
+  - x: 20
+    y: 2
+    width: 3
+    height: 1
+  - x: 22
+    y: 0
+    width: 2
+    height: 1
+  - x: 0
+    y: 0
+    width: 1
+    height: 2
+  - x: 0
+    y: 6
+    width: 3
+    height: 1
+  - x: 0
+    y: 3
+    width: 1
+    height: 3
+  - x: 2
+    y: 4
+    width: 1
+    height: 2
+  - x: 3
+    y: 6
+    width: 1
+    height: 2
+  - x: 20
+    y: 4
+    width: 1
+    height: 1
+  - x: 21
+    y: 4
+    width: 1
+    height: 4
+  - x: 21
+    y: 3
+    width: 1
+    height: 1
+  - x: 23
+    y: 2
+    width: 1
+    height: 3
+  - x: 22
+    y: 3
+    width: 1
+    height: 1
+  - x: 0
+    y: 7
+    width: 1
+    height: 3
+  - x: 1
+    y: 7
+    width: 1
+    height: 3
+  - x: 2
+    y: 7
+    width: 1
+    height: 2
+  - x: 3
+    y: 8
+    width: 1
+    height: 1
+  - x: 20
+    y: 5
+    width: 1
+    height: 1
+  - x: 20
+    y: 7
+    width: 1
+    height: 2
+  - x: 21
+    y: 8
+    width: 1
+    height: 2
+  - x: 22
+    y: 8
+    width: 1
+    height: 4
+  - x: 22
+    y: 4
+    width: 1
+    height: 2
+  - x: 20
+    y: 6
+    width: 1
+    height: 1
+  - x: 22
+    y: 6
+    width: 1
+    height: 2
+  - x: 23
+    y: 5
+    width: 1
+    height: 2
+  - x: 0
+    y: 10
+    width: 1
+    height: 1
+  - x: 1
+    y: 10
+    width: 1
+    height: 2
+  - x: 2
+    y: 10
+    width: 2
+    height: 3
+  - x: 2
+    y: 9
+    width: 2
+    height: 1
+  - x: 20
+    y: 9
+    width: 1
+    height: 3
+  - x: 21
+    y: 10
+    width: 1
+    height: 3
+  - x: 22
+    y: 12
+    width: 1
+    height: 1
+  - x: 23
+    y: 7
+    width: 1
+    height: 3
+  - x: 23
+    y: 12
+    width: 1
+    height: 3
+  - x: 23
+    y: 10
+    width: 1
+    height: 2
+  - x: 0
+    y: 11
+    width: 1
+    height: 3
+  - x: 1
+    y: 12
+    width: 1
+    height: 3
+  - x: 2
+    y: 13
+    width: 2
+    height: 3
+  - x: 20
+    y: 12
+    width: 1
+    height: 1
+  - x: 20
+    y: 13
+    width: 2
+    height: 1
+  - x: 22
+    y: 13
+    width: 1
+    height: 1
+  - x: 21
+    y: 15
+    width: 2
+    height: 1
+  - x: 23
+    y: 15
+    width: 1
+    height: 3
+  - x: 20
+    y: 14
+    width: 3
+    height: 1
+  - x: 0
+    y: 14
+    width: 1
+    height: 1
+  - x: 0
+    y: 15
+    width: 1
+    height: 3
+  - x: 1
+    y: 15
+    width: 1
+    height: 2
+  - x: 2
+    y: 16
+    width: 2
+    height: 3
+  - x: 20
+    y: 16
+    width: 3
+    height: 1
+  - x: 20
+    y: 15
+    width: 1
+    height: 1
+  - x: 21
+    y: 18
+    width: 2
+    height: 1
+  - x: 23
+    y: 18
+    width: 1
+    height: 1
+  - x: 20
+    y: 17
+    width: 3
+    height: 1
+  - x: 0
+    y: 18
+    width: 1
+    height: 2
+  - x: 1
+    y: 18
+    width: 1
+    height: 3
+  - x: 1
+    y: 17
+    width: 1
+    height: 1
+  - x: 2
+    y: 19
+    width: 1
+    height: 2
+  - x: 3
+    y: 19
+    width: 1
+    height: 1
+  - x: 20
+    y: 19
+    width: 1
+    height: 4
+  - x: 21
+    y: 19
+    width: 1
+    height: 3
+  - x: 22
+    y: 19
+    width: 1
+    height: 3
+  - x: 23
+    y: 19
+    width: 1
+    height: 3
+  - x: 20
+    y: 18
+    width: 1
+    height: 1
+  - x: 0
+    y: 20
+    width: 1
+    height: 3
+  - x: 1
+    y: 21
+    width: 1
+    height: 3
+  - x: 2
+    y: 21
+    width: 3
+    height: 1
+  - x: 3
+    y: 20
+    width: 3
+    height: 1
+  - x: 16
+    y: 23
+    width: 4
+    height: 1
+  - x: 20
+    y: 23
+    width: 3
+    height: 1
+  - x: 19
+    y: 20
+    width: 1
+    height: 2
+  - x: 16
+    y: 22
+    width: 4
+    height: 1
+  - x: 21
+    y: 22
+    width: 1
+    height: 1
+  - x: 22
+    y: 22
+    width: 1
+    height: 1
+  - x: 23
+    y: 22
+    width: 1
+    height: 2
+  - x: 0
+    y: 23
+    width: 1
+    height: 1
+  - x: 2
+    y: 22
+    width: 1
+    height: 1
+  - x: 2
+    y: 23
+    width: 3
+    height: 1
+  - x: 3
+    y: 22
+    width: 3
+    height: 1
+  - x: 5
+    y: 21
+    width: 2
+    height: 1
+  - x: 6
+    y: 20
+    width: 3
+    height: 1
+  - x: 14
+    y: 22
+    width: 2
+    height: 1
+  - x: 15
+    y: 23
+    width: 1
+    height: 1
+  - x: 17
+    y: 20
+    width: 2
+    height: 1
+  - x: 17
+    y: 21
+    width: 2
+    height: 1
+  - x: 14
+    y: 21
+    width: 2
+    height: 1
+  - x: 16
+    y: 21
+    width: 1
+    height: 1
+  - x: 5
+    y: 23
+    width: 1
+    height: 1
+  - x: 6
+    y: 23
+    width: 3
+    height: 1
+  - x: 6
+    y: 22
+    width: 2
+    height: 1
+  - x: 7
+    y: 21
+    width: 3
+    height: 1
+  - x: 9
+    y: 20
+    width: 1
+    height: 1
+  - x: 13
+    y: 21
+    width: 1
+    height: 3
+  - x: 14
+    y: 23
+    width: 1
+    height: 1
+  - x: 15
+    y: 20
+    width: 2
+    height: 1
+  - x: 12
+    y: 20
+    width: 2
+    height: 1
+  - x: 14
+    y: 20
+    width: 1
+    height: 1
+  - x: 8
+    y: 22
+    width: 3
+    height: 1
+  - x: 9
+    y: 23
+    width: 1
+    height: 1
+  - x: 10
+    y: 20
+    width: 1
+    height: 2
+  - x: 11
+    y: 21
+    width: 2
+    height: 1
+  - x: 12
+    y: 22
+    width: 1
+    height: 2
+  - x: 11
+    y: 20
+    width: 1
+    height: 1
+  - x: 10
+    y: 23
+    width: 2
+    height: 1
+  - x: 11
+    y: 22
+    width: 1
+    height: 1
+  horizontalDoors: 
+  verticalDoors: 
+  fixedRoomRectIndices: 
+  spawnRoom: {fileID: 0}
+--- !u!114 &645056498663961425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7133800530568295414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160987816c00d9f459f99c35798fe8a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultCellType: 0
+  Size: {x: 24, y: 24}
+  CellLength: 5
+  grid:
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 36
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 27
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 26
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 26
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 18
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 18
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 18
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 7
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 9
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 5
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 5
+  - Type: 1
+    ColorOverride: {r: 0.9844359, g: 1, b: 0, a: 1}
+    DoorDirections: 1
+    RoomIndex: 0
+  - Type: 1
+    ColorOverride: {r: 0.9844359, g: 1, b: 0, a: 1}
+    DoorDirections: 1
+    RoomIndex: 0
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 6
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 6
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 17
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 17
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 17
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 17
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 25
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 25
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 25
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 35
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 35
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 36
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 27
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 19
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 19
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 19
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 13
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 13
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 13
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 2
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 3
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 4
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 16
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 16
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 23
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 24
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 24
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 24
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 33
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 33
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 33
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 33
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 31
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 31
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 19
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 19
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 19
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 8
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 8
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 8
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 10
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 11
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 12
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 2
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 15
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 4
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 16
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 16
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 23
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 24
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 24
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 24
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 34
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 34
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 34
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 44
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 38
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 28
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 29
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 30
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 20
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 20
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 21
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 21
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 10
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 22
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 12
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 14
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 14
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 4
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 16
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 16
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 23
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 32
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 32
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 32
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 32
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 43
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 45
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 44
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 38
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 28
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 39
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 30
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 41
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 42
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 54
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 44
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 38
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 28
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 39
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 30
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 50
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 42
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 54
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 57
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 37
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 37
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 37
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 40
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 55
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 42
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 56
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 57
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 46
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 47
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 48
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 40
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 51
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 42
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 56
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 65
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 46
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 47
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 48
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 49
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 51
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 52
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 53
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 65
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 46
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 47
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 61
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 61
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 62
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 52
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 53
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 65
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 58
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 59
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 60
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 60
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 62
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 63
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 53
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 67
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 68
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 59
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 60
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 60
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 62
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 63
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 53
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 67
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 68
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 69
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 60
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 60
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 71
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 63
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 64
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 66
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 68
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 69
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 70
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 70
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 72
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 72
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 73
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 66
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 77
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 69
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 70
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 70
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 76
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 76
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 76
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 66
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 78
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 79
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 70
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 70
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 82
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 74
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 74
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 75
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 78
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 79
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 80
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 80
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 81
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 81
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 81
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 75
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 78
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 88
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 80
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 80
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 85
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 85
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 85
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 75
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 86
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 87
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 80
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 80
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 95
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 83
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 83
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 84
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 86
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 87
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 89
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 90
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 2
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: -1
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 91
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 92
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 93
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 94
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 96
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 87
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 89
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 99
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 99
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 99
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 112
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 112
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 112
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 123
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 131
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 134
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 127
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 127
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 128
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 126
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 126
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 115
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 115
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 102
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 91
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 92
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 93
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 94
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 96
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 97
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 98
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 98
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 98
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 111
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 111
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 122
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 122
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 122
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 131
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 132
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 132
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 124
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 117
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 117
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 118
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 116
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 116
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 102
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 91
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 92
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 93
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 94
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 96
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 97
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 108
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 110
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 110
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 110
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 121
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 121
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 129
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 129
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 129
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 136
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 133
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 124
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 113
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 113
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 103
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 103
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 103
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 103
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 91
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 104
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 105
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 106
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 107
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 97
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 109
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 109
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 109
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 119
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 120
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 120
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 120
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 130
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 135
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 135
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 133
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 124
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 125
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 114
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 100
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 100
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 100
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 100
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 101
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 101
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 101
+  - Type: 1
+    ColorOverride: {r: 0, g: 0, b: 0, a: 0}
+    DoorDirections: 0
+    RoomIndex: 106
