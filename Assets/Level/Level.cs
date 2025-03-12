@@ -23,6 +23,6 @@ public class Level : MonoBehaviour {
 	void Start(){
 		LevelGenerator.Generate();
 		Player.Teleport(LevelGenerator.GetPlayerSpawnPoint());
-		Debug.Log(LevelGenerator.GetPlayerSpawnPoint());
+		// Debug.Log(LevelGenerator.GetPlayerSpawnPoint());
 	}
 }
