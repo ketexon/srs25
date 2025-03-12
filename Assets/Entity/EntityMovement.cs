@@ -22,6 +22,7 @@ public class EntityMovement : MonoBehaviour
     [SerializeField] public EntityMovementMove Mode = EntityMovementMove.Transform;
     [SerializeField] Rigidbody rb;
     [System.NonSerialized] public Transform TargetTransform;
+    [SerializeField] EntityStats entityStats;
 
     public bool Walking => rb.linearVelocity.XZ().magnitude > 0.1f;
 
@@ -72,6 +73,16 @@ public class EntityMovement : MonoBehaviour
         if(rb){
             rb.transform.SetParent(null);
         }
+    }
+
+    void OnEnable()
+    {
+        entityStats.OnStatChanged.AddListener(OnStatsChanged);
+    }
+
+    void OnDisable()
+    {
+        entityStats.OnStatChanged.RemoveListener(OnStatsChanged);
     }
 
     public void LookDelta(float deltaYaw)
@@ -133,5 +144,15 @@ public class EntityMovement : MonoBehaviour
 		location.y += baseOffset;
         rb.position = location;
         transform.position = location;
+    }
+
+    void OnStatsChanged(EntityStats.StatType stat, float value)
+    {
+        switch (stat)
+        {
+            case EntityStats.StatType.Speed:
+                MovementSpeed = value + 1;
+                break;
+        }
     }
 }

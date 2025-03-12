@@ -23,6 +23,11 @@ PrefabInstance:
       propertyPath: eyes
       value: 
       objectReference: {fileID: 539926200190001067}
+    - target: {fileID: 5015012108194661265, guid: b3b5d88e597f7234b93e5f410268ed07,
+        type: 3}
+      propertyPath: entityStats
+      value: 
+      objectReference: {fileID: 5253118550740448393}
     - target: {fileID: 5545661372892488183, guid: b3b5d88e597f7234b93e5f410268ed07,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -94,6 +99,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 7e761e7db1541694b957641a8f682cc3,
         type: 2}
+    - target: {fileID: 6806978343244172374, guid: b3b5d88e597f7234b93e5f410268ed07,
+        type: 3}
+      propertyPath: Stats
+      value: 
+      objectReference: {fileID: 5253118550740448393}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -110,6 +120,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2480839514888217651}
+    - targetCorrespondingSourceObject: {fileID: 3886147962188206277, guid: b3b5d88e597f7234b93e5f410268ed07,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5253118550740448393}
     - targetCorrespondingSourceObject: {fileID: 4933963664057253099, guid: b3b5d88e597f7234b93e5f410268ed07,
         type: 3}
       insertIndex: -1
@@ -288,3 +302,28 @@ MonoBehaviour:
           m_Value1: 7100461126887394650
         Name: Vision Cone
         m_Value: {fileID: 5279216603495876419}
+--- !u!114 &5253118550740448393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108054557359533721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479371939ba8eb343b56d0fe3b1a4a2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingDarkness: 1
+  startingNightmare: 1
+  startingStimulation: 1
+  startingMania: 1
+  startingDissociation: 1
+  startingPainTolerance: 1
+  startingStrength: 3
+  startingShakiness: 1
+  startingSpeed: 2
+  startingReaction: 1
+  OnStatChanged:
+    m_PersistentCalls:
+      m_Calls: []
