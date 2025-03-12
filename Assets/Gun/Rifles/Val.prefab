@@ -92,9 +92,54 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1437398756355824967, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
         type: 3}
+      propertyPath: hRotVel
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437398756355824967, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
+        type: 3}
+      propertyPath: maxHRot
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437398756355824967, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
+        type: 3}
+      propertyPath: vRotVel
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437398756355824967, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
+        type: 3}
       propertyPath: animator
       value: 
       objectReference: {fileID: 6720383395098041141}
+    - target: {fileID: 1437398756355824967, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
+        type: 3}
+      propertyPath: hTransVel
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437398756355824967, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
+        type: 3}
+      propertyPath: maxHTrans
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437398756355824967, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
+        type: 3}
+      propertyPath: maxVTrans
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437398756355824967, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
+        type: 3}
+      propertyPath: vTransVel
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437398756355824967, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
+        type: 3}
+      propertyPath: zTransKick
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437398756355824967, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
+        type: 3}
+      propertyPath: zTransRecoil.Frequency
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2248743570182613228, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
         type: 3}
       propertyPath: leftHandTarget

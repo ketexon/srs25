@@ -235,7 +235,8 @@ public class Gun : EntityItem
             vRotSpring.Velocity -= 0.25f * vRot;
             hRotSpring.Velocity += hRot;
             zTransSpring.CurrentValue += zTransKick;
-            entityMovement.LookDelta(new Vector2(0.005f*cameraHRecoilMult*hRotSpring.Velocity, -0.025f*cameraVRecoilMult* vRotSpring.Velocity));
+            float vRotFixed = (vRotSpring.Velocity < 0) ? vRotSpring.Velocity : 0.5f * vRotSpring.Velocity;
+            entityMovement.LookDelta(new Vector2(0.005f*cameraHRecoilMult*hRotSpring.Velocity, -0.025f*cameraVRecoilMult* vRotFixed));
 
         }
 
