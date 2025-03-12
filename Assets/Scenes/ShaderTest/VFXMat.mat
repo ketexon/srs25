@@ -39,9 +39,9 @@ Material:
     m_Ints: []
     m_Floats:
     - _Contrast: 0
-    - _CookedMode: 1
+    - _CookedMode: 0
     - _CookedSpeed: 1
-    - _Saturation: 2
+    - _Saturation: 1.89
     - _Temperature: 0
     - _Tint: 0
     - _WavyFade: 0.04
