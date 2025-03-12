@@ -40,6 +40,29 @@ public class Room5 : MonoBehaviour
                 Vector3.zero,
                 roomSize
             );
+
+            foreach(var openDoor in OpenDoors){
+                var doorPosition = openDoor.Position;
+                var doorDirection = openDoor.Direction;
+                var dirVector = doorDirection.ToVector2Int();
+                var doorCenter = transform.position
+                    + transform.rotation * (new Vector3(
+                        doorPosition.x + 0.5f + dirVector.x/3.0f,
+                        0,
+                        doorPosition.y + 0.5f + dirVector.y/3.0f
+                    ) * Grid.CellLength);
+
+                Gizmos.matrix = Matrix4x4.TRS(
+                    doorCenter,
+                    transform.rotation,
+                    Vector3.one
+                );
+                Gizmos.color = Color.green.WithA(0.5f);
+                Gizmos.DrawCube(
+                    Vector3.zero,
+                    Vector3.one * Grid.CellLength/8
+                );
+            }
         }
     }
 }

@@ -9,6 +9,8 @@ public class LevelEditor : Editor {
 		DrawDefaultInspector();
 		if(GUILayout.Button("Generate")){
 			((Level)target).LevelGenerator.Generate();
+			var levelGeneratorSO = new SerializedObject(((Level)target).LevelGenerator);
+			levelGeneratorSO.Update();
 		}
 	}
 }

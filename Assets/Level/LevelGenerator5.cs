@@ -377,7 +377,7 @@ public class LevelGenerator5 : LevelGenerator
 		var room = roomGO.GetComponent<Room5>();
 		var roomRect = roomRects[roomIndex];
 		room.gameObject.name = GetRoomName(roomIndex);
-		var rot = Quaternion.Euler(0, 90 * rotation, 0) *
+		var rot = Quaternion.Euler(0, -90 * rotation, 0) *
 			room.transform.localRotation;
 		// maps rotation to origin
 		//		0 rot -> (0,0)
@@ -437,89 +437,108 @@ public class LevelGenerator5 : LevelGenerator
 		}
 	}
 
+	List<(Room5, int, List<RoomDoor>)> FindRoomsWithDoors(
+		int curRoomIndex,
+		List<RoomDoor> doors
+	)
+	{
+		var size = roomRects[curRoomIndex].size;
+
+		Debug.Log($"Looking for rooms of size {size} with doors:");
+		foreach(var door in doors){
+			Debug.Log($"Door: {door.Position} {door.Direction}");
+		}
+
+		List<(Room5, int, List<RoomDoor>)> rooms = new();
+		foreach (var roomPrefab in roomPrefabs)
+		{
+			var room = roomPrefab.GetComponent<Room5>();
+			if (room == null)
+			{
+				Debug.LogError("Room prefab does not have a Room component");
+				continue;
+			}
+			// 4 rotations
+			for (int rotation = 0; rotation < 4; ++rotation)
+			{
+				if (room.Size.Rotate90(rotation).Abs() != size)
+				{
+					continue;
+				}
+
+				// maps rotation to origin
+				// to prevent negative positions
+				//		0 rot -> (0,0)
+				//		1 rot -> (1,0)
+				//		2 rot -> (1,1)
+				//		3 rot -> (0,1)
+				var maxCoord = room.Size - Vector2Int.one;
+				var originOffset = maxCoord.Rotate90(rotation);
+				// min each component with 0
+				originOffset = -Vector2Int.Min(originOffset, Vector2Int.zero);
+
+				// imagine this room:
+				// a b
+				// c d
+				// if it is rotated 90, then it becomes
+				// b d
+				// a c
+				// thus, 	c (0,0) -> (1,0) = (0,0) + (1,0)
+				// 			d (1,0) -> (1,1) = (0,1) + (1,0)
+				//			b (1,1) -> (0,1) = (-1,1) + (1,0)
+				//			a (0,1) -> (0,0) = (-1,0) + (1,0)
+				// all of these are equal to the rotated position
+				// plus the origin offset
+
+				bool hasDoors = true;
+				List<RoomDoor> pickedDoors = new();
+				foreach (var door in doors)
+				{
+					bool found = false;
+					var doorPosition = door.Position;
+					var doorMask = door.Direction;
+					Debug.Log($"{curRoomIndex} Looking for door {doorPosition} {doorMask} ({size})");
+					foreach (var roomDoor in room.Doors)
+					{
+						var roomDoorPosition = roomDoor.Position.Rotate90(rotation) + originOffset;
+						var roomDoorDirection = roomDoor.Direction.Rotate90(rotation);
+						Debug.Log($"{curRoomIndex} ({rotation}, {room.Size}, {room.gameObject.name}) {originOffset}+{roomDoor.Position}={roomDoorPosition} ({roomDoor.Direction}->{roomDoorDirection})");
+						if (
+							doorPosition == roomDoorPosition
+							&& roomDoorDirection.HasFlag(doorMask)
+						)
+						{
+							Debug.Log("Found");
+							pickedDoors.Add(new RoomDoor {
+								Position = roomDoor.Position,
+								Direction = door.Direction.Rotate90(-rotation)
+							});
+							found = true;
+							break;
+						}
+					}
+					if (!found)
+					{
+						Debug.Log("Not found");
+						hasDoors = false;
+						break;
+					}
+				}
+
+				if (hasDoors)
+				{
+					rooms.Add((room, rotation, pickedDoors));
+				}
+			}
+		}
+		return rooms;
+	}
+
 	void InstantiateRooms()
 	{
 		RoomDoor entranceDoor = null;
 		RoomDoor exitDoor;
 		int curRoomIndex = -1;
-		List<(Room5, int, List<RoomDoor>)> FindRoomsWithDoors()
-		{
-			var size = roomRects[curRoomIndex].size;
-
-			Vector2Int origin = Vector2Int.Min(
-				entranceDoor?.Position ?? exitDoor.Position,
-				exitDoor.Position
-			);
-
-			List<RoomDoor> doors = new() {
-				new RoomDoor {
-					Position = exitDoor.Position - origin,
-					Direction = exitDoor.Direction
-				}
-			};
-			if (entranceDoor != null)
-			{
-				doors.Add(new RoomDoor
-				{
-					Position = entranceDoor.Position - origin,
-					Direction = entranceDoor.Direction
-				});
-			}
-			List<(Room5, int, List<RoomDoor>)> rooms = new();
-			foreach (var roomPrefab in roomPrefabs)
-			{
-				var room = roomPrefab.GetComponent<Room5>();
-				if (room == null)
-				{
-					Debug.LogError("Room prefab does not have a Room component");
-					continue;
-				}
-				// 4 rotations
-				for (int i = 0; i < 4; ++i)
-				{
-					if (room.Size.Rotate90(i).Abs() != size)
-					{
-						continue;
-					}
-
-					bool hasDoors = true;
-					foreach (var door in doors)
-					{
-						bool found = true;
-						var doorPosition = door.Position.Rotate90(i);
-						var doorMask = door.Direction.Rotate90(i);
-						foreach (var roomDoor in room.Doors)
-						{
-							if (roomDoor.Position == door.Position && roomDoor.Direction == door.Direction)
-							{
-								found = true;
-								break;
-							}
-						}
-						if (!found)
-						{
-							hasDoors = false;
-							break;
-						}
-					}
-
-					if (hasDoors)
-					{
-						var openDoors = new List<RoomDoor>();
-						foreach (var door in doors)
-						{
-							openDoors.Add(new RoomDoor
-							{
-								Position = door.Position,
-								Direction = door.Direction
-							});
-						}
-						rooms.Add((room, i, openDoors));
-					}
-				}
-			}
-			return rooms;
-		}
 
 		// place room along each room in the path
 		foreach (var path in paths)
@@ -534,7 +553,7 @@ public class LevelGenerator5 : LevelGenerator
 				{
 					curRoomIndex = startRoomIndex;
 				}
-				if (curRoomIndex != endRoomIndex)
+				if (startRoomIndex != endRoomIndex)
 				{
 					// we are entering a new room
 					exitDoor = new()
@@ -542,12 +561,33 @@ public class LevelGenerator5 : LevelGenerator
 						Position = start,
 						Direction = (end - start).ToDirection()
 					};
+					Debug.Log($"doors: {entranceDoor?.Position} {exitDoor.Position}");
 
 					// place room if not already placed
 					if (!placedRooms.Contains(curRoomIndex))
 					{
+						Vector2Int origin = roomRects[curRoomIndex].position;
+						List<RoomDoor> doorsRelative = new();
+						if (entranceDoor != null)
+						{
+							doorsRelative.Add(new RoomDoor
+							{
+								Position = entranceDoor.Position - origin,
+								Direction = entranceDoor.Direction
+							});
+						}
+						if(exitDoor != null){
+							doorsRelative.Add(new RoomDoor
+							{
+								Position = exitDoor.Position - origin,
+								Direction = exitDoor.Direction
+							});
+						}
 						// find room with entrance and exit
-						var rooms = FindRoomsWithDoors();
+						var rooms = FindRoomsWithDoors(
+							curRoomIndex,
+							doorsRelative
+						);
 						if (rooms.Count == 0)
 						{
 							Debug.LogError($"No room found with entrance and exit doors: {roomRects[curRoomIndex]} {entranceDoor} {exitDoor}");
@@ -567,6 +607,7 @@ public class LevelGenerator5 : LevelGenerator
 
 					entranceDoor = exitDoor;
 					entranceDoor.Direction = entranceDoor.Direction.Rotate90(2);
+					entranceDoor.Position = end;
 					exitDoor = null;
 					curRoomIndex = endRoomIndex;
 				}
