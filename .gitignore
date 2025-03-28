@@ -3,6 +3,7 @@
 *.blend[0-9].meta
 
 .vscode
+.idea
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #
