@@ -1,6 +1,6 @@
-using System.Numerics;
 using UnityEngine;
 using Kutie.Extensions;
+using Quaternion = UnityEngine.Quaternion;
 
 [System.Serializable]
 public enum Alignment {
@@ -75,5 +75,27 @@ public static partial class Util {
 			(x,y) = (-y, x);
 		}
 		return new(x, y);
+	}
+	
+	public static int ToDegrees(this DirectionMask dir){
+		return dir switch {
+			DirectionMask.Right => 0,
+			DirectionMask.Up => 90,
+			DirectionMask.Left => 180,
+			DirectionMask.Down => 270,
+			_ => 0,
+		};
+	}
+
+	public static int ToDegrees(this DirectionMask dir, DirectionMask relativeTo)
+	{
+		return (dir.ToDegrees() - relativeTo.ToDegrees() + 360) % 360;
+	}
+	
+	public static Quaternion ToQuaternion(this DirectionMask dir,
+		Vector3 axis,
+		DirectionMask relativeTo = DirectionMask.Right)
+	{
+		return Quaternion.AngleAxis(dir.ToDegrees(relativeTo), axis);
 	}
 }

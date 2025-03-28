@@ -8,7 +8,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] protected Gun gun;
     [SerializeField] protected EntityMovement movement;
     [SerializeField] protected Entity entity;
-
+    
+    public bool InputEnabled { get; set; } = true;
+    
     virtual protected void Reset()
     {
         gun = FindAnyObjectByType<Gun>();

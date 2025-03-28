@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelGenerator: {fileID: 1664146719483905623}
   Player: {fileID: 0}
+  Seed: -1
 --- !u!114 &1664146719483905623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,7 +69,7 @@ MonoBehaviour:
   - Alignment: 7
     Size: {x: 2, y: 1}
     Offset: {x: 0, y: 0}
-    Prefab: {fileID: 1172646569373742454, guid: cdbf0add3c654ba46ada3f99db66f706,
+    Prefab: {fileID: 1688833711136458871, guid: cdbf0add3c654ba46ada3f99db66f706,
       type: 3}
     PrefabRotation: 0
     GizmosColorOverride: {r: 0.9844359, g: 1, b: 0, a: 1}
@@ -79,12 +80,11 @@ MonoBehaviour:
       Direction: 1
     IsSpawnPoint: 1
   roomPrefabs:
-  - {fileID: 1172646569373742454, guid: 81da1c5cb98b9e4479029fff1f5d5e68, type: 3}
+  - {fileID: 70880968265515919, guid: 81da1c5cb98b9e4479029fff1f5d5e68, type: 3}
   - {fileID: 1172646569373742454, guid: 3ad5526e8dc78844f98da9e3810d7f27, type: 3}
-  - {fileID: 1172646569373742454, guid: 4a5d06532bd91a24d855573083d649bb, type: 3}
-  - {fileID: 1172646569373742454, guid: 0af71e88af900b141894bd40e349f079, type: 3}
+  - {fileID: 5571943112079495, guid: 0af71e88af900b141894bd40e349f079, type: 3}
   - {fileID: 1172646569373742454, guid: ca95461d0f5e59341a8ece2d666faf33, type: 3}
-  - {fileID: 1172646569373742454, guid: 48fe85a7c2e527348967f2c9b7605460, type: 3}
+  - {fileID: 3532613572912136509, guid: fbebd72db4997544db6fd7583d25d3c6, type: 3}
   roomSizes:
   - Size: {x: 1, y: 1}
     Weight: 1
@@ -660,6 +660,7 @@ MonoBehaviour:
   verticalDoors: 
   fixedRoomRectIndices: 
   spawnRoom: {fileID: 0}
+  rooms: []
 --- !u!114 &645056498663961425
 MonoBehaviour:
   m_ObjectHideFlags: 0
