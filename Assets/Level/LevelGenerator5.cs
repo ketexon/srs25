@@ -46,7 +46,18 @@ public class LevelGenerator5 : LevelGenerator
         public Alignment2D EndAlignment;
         public Vector2Int EndOffset;
     }
+    
+    [System.Serializable]
+    class BlockedRoomEntry
+    {
+        public Alignment2D Alignment;
+        public Vector2Int Offset;
+        public Vector2Int Size;
+    }
 
+    
+    [SerializeField] public int Floor;
+    [SerializeField] public Elevators Elevators;
     [SerializeField] LevelGrid5 grid;
     [SerializeField] int officeWidth = 5;
     [SerializeField] int parkLength = 12;
@@ -55,6 +66,7 @@ public class LevelGenerator5 : LevelGenerator
     [SerializeField] List<FixedRoomEntry> fixedRooms = new();
     [SerializeField] List<GameObject> roomPrefabs = new();
     [SerializeField] List<RoomSizeEntry> roomSizes = new();
+    [SerializeField] List<BlockedRoomEntry> blockedRooms = new();
 
     /// <summary>
     /// For every path in requiredPaths, there must be a path
@@ -98,7 +110,7 @@ public class LevelGenerator5 : LevelGenerator
         grid.Size = Vector2Int.one * (2 * officeWidth + parkLength);
     }
 
-    void Clear()
+    public override void Clear()
     {
         grid.Clear();
         roomRects.Clear();
@@ -158,6 +170,20 @@ public class LevelGenerator5 : LevelGenerator
             {
                 grid.SetCellType(new Vector2Int(x, y), CellType5.Blocked);
             }
+        }
+        
+        foreach(var blockedRoom in blockedRooms){
+            var roomSize = blockedRoom.Size;
+            var roomPosition = grid.AlignmentOffsetRectToCell(
+                blockedRoom.Alignment,
+                blockedRoom.Offset,
+                roomSize
+            );
+            RectInt roomRect = new(
+                roomPosition.x, roomPosition.y,
+                roomSize.x, roomSize.y
+            );
+            PlaceRoomRect(roomRect, Color.red, CellType5.Blocked);
         }
     }
 

@@ -1,3 +1,4 @@
+using Kutie.Extensions;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -8,9 +9,15 @@ public class LevelEditor : Editor {
 	public override void OnInspectorGUI(){
 		var level = (Level)target;
 		DrawDefaultInspector();
+		var levelGeneratorSO = new SerializedObject(((Level)target).LevelGenerator);
 		if(GUILayout.Button("Generate")){
 			level.Generate();
-			var levelGeneratorSO = new SerializedObject(((Level)target).LevelGenerator);
+			levelGeneratorSO.Update();
+		}
+
+		if (GUILayout.Button("Clear"))
+		{
+			level.Clear();
 			levelGeneratorSO.Update();
 		}
 	}
@@ -36,5 +43,10 @@ public class Level : MonoBehaviour {
 			? Random.Range(0, int.MaxValue)
 			: Seed;
 		LevelGenerator.Generate(seed);
+	}
+
+	public void Clear()
+	{
+		LevelGenerator.Clear();
 	}
 }

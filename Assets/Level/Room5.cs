@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Kutie;
 using Kutie.Extensions;
@@ -18,6 +19,7 @@ public class Room5 : MonoBehaviour
     [SerializeField] public Vector3 PlayerSpawnPoint;
     
     [SerializeField] public List<GameObject> DoorPrefabs = new();
+    [SerializeField] private List<Elevator> elevators = new();
 
     [SerializeField, Kutie.Inspector.ReadOnly]
     public Vector2Int Position;
@@ -88,7 +90,15 @@ public class Room5 : MonoBehaviour
         //         Vector3.up, DirectionMask.Up);
         // }
     }
-    
+
+    private void Awake()
+    {
+        foreach (var elevator in elevators)
+        {
+            elevator.Room = this;
+        }
+    }
+
     void OnDrawGizmos()
     {
         if(Grid){

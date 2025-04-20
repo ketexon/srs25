@@ -61,9 +61,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c339f70cdf44e9d419bcba0a917e0836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Floor: 0
+  Elevators: {fileID: 0}
   grid: {fileID: 645056498663961425}
   officeWidth: 4
-  parkLength: 16
+  parkLength: 12
   maxAttempts: 10
   fixedRooms:
   - Alignment: 7
@@ -90,6 +92,7 @@ MonoBehaviour:
     Weight: 1
   - Size: {x: 2, y: 1}
     Weight: 7
+  blockedRooms: []
   requiredPaths:
   - StartAlignment: 7
     StartOffset: {x: 0, y: 0}
@@ -675,7 +678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DefaultCellType: 0
   Size: {x: 24, y: 24}
-  CellLength: 5
+  CellLength: 10
   grid:
   - Type: 1
     ColorOverride: {r: 0, g: 0, b: 0, a: 0}
