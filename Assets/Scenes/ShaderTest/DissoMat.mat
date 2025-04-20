@@ -41,7 +41,7 @@ Material:
     - _CookedMode: 0
     - _CookedSpeed: 0.3
     - _Saturation: 1
-    - _WavyFade: 0.04
+    - _WavyFade: 0.0092
     - _WavySpeed: 1
     m_Colors: []
   m_BuildTextureStacks: []

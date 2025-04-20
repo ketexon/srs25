@@ -42,7 +42,7 @@ Material:
     - _Fullscreen_DepthWrite: 0
     - _Threshold: 0.045
     - _Weight_1: 1
-    - _Width: 0.318
+    - _Width: 0.261
     m_Colors:
     - _Offset: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
