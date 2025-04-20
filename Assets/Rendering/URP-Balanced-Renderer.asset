@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
   m_Name: PsychVision
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   injectionPoint: 550
   fetchColorBuffer: 1
   requirements: 4
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
   m_Name: VFX
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   injectionPoint: 550
   fetchColorBuffer: 1
   requirements: 0
@@ -108,7 +108,8 @@ MonoBehaviour:
   - {fileID: -7002401720613035386}
   - {fileID: 4557940156837291826}
   - {fileID: -597496946809663571}
-  m_RendererFeatureMap: adc0de57c6d2eee532b9ff8478c72d231a71b9bd6df8743186a24644bc78d29e3267c6736c0e413fad8f074bb143b5f7
+  - {fileID: 6160481564266338389}
+  m_RendererFeatureMap: adc0de57c6d2eee532b9ff8478c72d231a71b9bd6df8743186a24644bc78d29e3267c6736c0e413fad8f074bb143b5f7551870d3576d7e55
   m_UseNativeRenderPass: 0
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -192,6 +193,26 @@ MonoBehaviour:
   fetchColorBuffer: 1
   requirements: 0
   passMaterial: {fileID: 2100000, guid: d5c5e99c147948640abdec58757cd8a7, type: 2}
+  passIndex: 0
+  bindDepthStencilAttachment: 0
+  m_Version: 1
+--- !u!114 &6160481564266338389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
+  m_Name: Disso
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  injectionPoint: 550
+  fetchColorBuffer: 1
+  requirements: 0
+  passMaterial: {fileID: 2100000, guid: 8f4b8e5972300004aa989553ef8c1a68, type: 2}
   passIndex: 0
   bindDepthStencilAttachment: 0
   m_Version: 1
