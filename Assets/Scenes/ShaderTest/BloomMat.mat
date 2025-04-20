@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: VFXMat
-  m_Shader: {fileID: -6465566751694194690, guid: b1c277b251fb21c4d87482fbfdedb48d,
+  m_Name: BloomMat
+  m_Shader: {fileID: -6465566751694194690, guid: 8fc54b44b8a4a7e4ab13a976d8182da2,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -38,17 +38,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Contrast: 0
-    - _CookedMode: 0
-    - _CookedSpeed: 0.643
-    - _Flicker: 1
-    - _Saturation: 2
-    - _Temperature: 0
-    - _Tint: 0
-    - _WavyFade: 0.04
-    - _WavySpeed: 5
+    - _Brightness: 0
+    - _Fullscreen_DepthWrite: 0
+    - _Threshold: 0.045
+    - _Weight_1: 1
+    - _Width: 0.318
     m_Colors:
-    - _FlickerSpeed: {r: 0.94, g: 1, b: 0, a: 0}
-    - _Vector2: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _Offset: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
