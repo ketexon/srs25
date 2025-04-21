@@ -289,7 +289,7 @@ public class LevelGenerator5 : LevelGenerator
 
 			if (viableRoomPositions.Count == 0)
 			{
-				Debug.LogError("NOOOOOOOO :((((");
+				// Debug.LogError("NOOOOOOOO :((((");
 				throw new RegenerateException();
 			}
 
@@ -444,9 +444,9 @@ public class LevelGenerator5 : LevelGenerator
 	{
 		var size = roomRects[curRoomIndex].size;
 
-		Debug.Log($"Looking for rooms of size {size} with doors:");
+		// Debug.Log($"Looking for rooms of size {size} with doors:");
 		foreach(var door in doors){
-			Debug.Log($"Door: {door.Position} {door.Direction}");
+			// Debug.Log($"Door: {door.Position} {door.Direction}");
 		}
 
 		List<(Room5, int, List<RoomDoor>)> rooms = new();
@@ -497,18 +497,18 @@ public class LevelGenerator5 : LevelGenerator
 					bool found = false;
 					var doorPosition = door.Position;
 					var doorMask = door.Direction;
-					Debug.Log($"{curRoomIndex} Looking for door {doorPosition} {doorMask} ({size})");
+					// Debug.Log($"{curRoomIndex} Looking for door {doorPosition} {doorMask} ({size})");
 					foreach (var roomDoor in room.Doors)
 					{
 						var roomDoorPosition = roomDoor.Position.Rotate90(rotation) + originOffset;
 						var roomDoorDirection = roomDoor.Direction.Rotate90(rotation);
-						Debug.Log($"{curRoomIndex} ({rotation}, {room.Size}, {room.gameObject.name}) {originOffset}+{roomDoor.Position}={roomDoorPosition} ({roomDoor.Direction}->{roomDoorDirection})");
+						// Debug.Log($"{curRoomIndex} ({rotation}, {room.Size}, {room.gameObject.name}) {originOffset}+{roomDoor.Position}={roomDoorPosition} ({roomDoor.Direction}->{roomDoorDirection})");
 						if (
 							doorPosition == roomDoorPosition
 							&& roomDoorDirection.HasFlag(doorMask)
 						)
 						{
-							Debug.Log("Found");
+							// Debug.Log("Found");
 							pickedDoors.Add(new RoomDoor {
 								Position = roomDoor.Position,
 								Direction = door.Direction.Rotate90(-rotation)
@@ -519,7 +519,7 @@ public class LevelGenerator5 : LevelGenerator
 					}
 					if (!found)
 					{
-						Debug.Log("Not found");
+						// Debug.Log("Not found");
 						hasDoors = false;
 						break;
 					}
@@ -561,7 +561,7 @@ public class LevelGenerator5 : LevelGenerator
 						Position = start,
 						Direction = (end - start).ToDirection()
 					};
-					Debug.Log($"doors: {entranceDoor?.Position} {exitDoor.Position}");
+					// Debug.Log($"doors: {entranceDoor?.Position} {exitDoor.Position}");
 
 					// place room if not already placed
 					if (!placedRooms.Contains(curRoomIndex))
@@ -590,7 +590,7 @@ public class LevelGenerator5 : LevelGenerator
 						);
 						if (rooms.Count == 0)
 						{
-							Debug.LogError($"No room found with entrance and exit doors: {roomRects[curRoomIndex]} {entranceDoor} {exitDoor}");
+							// Debug.LogError($"No room found with entrance and exit doors: {roomRects[curRoomIndex]} {entranceDoor} {exitDoor}");
 
 							throw new RegenerateException();
 						}
