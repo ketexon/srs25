@@ -62,7 +62,7 @@ PrefabInstance:
         type: 3}
       propertyPath: entityStats
       value: 
-      objectReference: {fileID: 1907943442689181317}
+      objectReference: {fileID: 0}
     - target: {fileID: 1585037385362862602, guid: b323db8ddfd02ea44b3eae56b5e40c52,
         type: 3}
       propertyPath: Stats
@@ -170,10 +170,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1864209856977022780}
-    - targetCorrespondingSourceObject: {fileID: 9108054557359533721, guid: b323db8ddfd02ea44b3eae56b5e40c52,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1907943442689181317}
   m_SourcePrefab: {fileID: 100100000, guid: b323db8ddfd02ea44b3eae56b5e40c52, type: 3}
 --- !u!114 &1605297443720475340 stripped
 MonoBehaviour:
@@ -246,28 +242,3 @@ MonoBehaviour:
   bodyPartPreferences: 000000000100000002000000030000000400000005000000
   maxRecoil: 3
   minRecoil: 0.1
---- !u!114 &1907943442689181317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2362056251168385244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 479371939ba8eb343b56d0fe3b1a4a2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingDarkness: 1
-  startingNightmare: 1
-  startingStimulation: 1
-  startingMania: 1
-  startingDissociation: 1
-  startingPainTolerance: 1
-  startingStrength: 1
-  startingShakiness: 1
-  startingSpeed: 1
-  startingReaction: 1
-  OnStatChanged:
-    m_PersistentCalls:
-      m_Calls: []

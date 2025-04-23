@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Kutie.Extensions;
 using UnityEngine;
 
@@ -9,23 +10,23 @@ public class LevelEditor : Editor {
 	public override void OnInspectorGUI(){
 		var level = (Level)target;
 		DrawDefaultInspector();
-		var levelGeneratorSO = new SerializedObject(((Level)target).LevelGenerator);
 		if(GUILayout.Button("Generate")){
 			level.Generate();
-			levelGeneratorSO.Update();
+            level.UpdateSerializedObject();
 		}
 
 		if (GUILayout.Button("Clear"))
 		{
 			level.Clear();
-			levelGeneratorSO.Update();
+            level.UpdateSerializedObject();
 		}
 	}
 }
 #endif
 
 public class Level : MonoBehaviour {
-	[SerializeField] public LevelGenerator LevelGenerator;
+    [SerializeField] public Transform PlayerSpawn;
+	[SerializeField] public List<LevelGenerator> LevelGenerator;
 	[SerializeField] public EntityMovement Player;
 	[SerializeField]
 	[Tooltip("Seed for the level generator. If negative, a random seed will be used.")]
@@ -33,8 +34,7 @@ public class Level : MonoBehaviour {
 
 	void Start(){
 		Generate();
-		Player.Teleport(LevelGenerator.GetPlayerSpawnPoint());
-		// Debug.Log(LevelGenerator.GetPlayerSpawnPoint());
+		Player.Teleport(PlayerSpawn.position);
 	}
 
 	public void Generate()
@@ -42,11 +42,28 @@ public class Level : MonoBehaviour {
 		var seed = Seed < 0
 			? Random.Range(0, int.MaxValue)
 			: Seed;
-		LevelGenerator.Generate(seed);
+        foreach(var generator in LevelGenerator)
+        {
+            generator.Generate(seed);
+        }
 	}
 
 	public void Clear()
 	{
-		LevelGenerator.Clear();
+        foreach(var generator in LevelGenerator)
+        {
+            generator.Clear();
+        }
 	}
+    
+    #if UNITY_EDITOR
+    public void UpdateSerializedObject()
+    {
+        foreach(var generator in LevelGenerator)
+        {
+            var serializedObject = new SerializedObject(generator);
+            serializedObject.Update();
+        }
+    }
+    #endif
 }
