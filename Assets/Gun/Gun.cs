@@ -69,6 +69,7 @@ public class Gun : EntityItem
     [System.NonSerialized] public IBulletCaster BulletCaster = new RayBulletCaster();
     float lastShotTime = float.NegativeInfinity;
 
+    [SerializeField] float overallRecoilMult= 1;
     private float vBaseRotation = 0;
     public float vRotation {
         get => vBaseRotation + vRotSpring.CurrentValue;
@@ -172,7 +173,7 @@ public class Gun : EntityItem
             Vector3.right
         );  
         transform.localRotation = rotationX*rotationY;
-        transform.localPosition = defaultPosition - transform.localRotation * (Vector3.forward * zTransSpring.CurrentValue *0.0005f);
+        transform.localPosition = defaultPosition - transform.localRotation * (Vector3.forward * zTransSpring.CurrentValue *0.0005f*(overallRecoilMult/2));
         if (animator){
             UpdateAnimator();
         }
@@ -232,8 +233,8 @@ public class Gun : EntityItem
         float hRot = Random.Range(-hRotVel, hRotVel);
         if (!NoRecoil)
         {
-            vRotSpring.Velocity -= 0.25f * vRot;
-            hRotSpring.Velocity += hRot;
+            vRotSpring.Velocity -= 0.25f * vRot *overallRecoilMult;
+            hRotSpring.Velocity += hRot*overallRecoilMult;
             zTransSpring.CurrentValue += zTransKick;
             float vRotFixed = (vRotSpring.Velocity < 0) ? vRotSpring.Velocity : 0.5f * vRotSpring.Velocity;
             entityMovement.LookDelta(new Vector2(0.005f*cameraHRecoilMult*hRotSpring.Velocity, -0.025f*cameraVRecoilMult* vRotFixed));
@@ -259,7 +260,8 @@ public class Gun : EntityItem
     {
         switch(type){
             case EntityStats.StatType.Strength:
-                damage = 10*value;
+                //damage = 10*value;
+                overallRecoilMult = value;
                 break;
         }
     }

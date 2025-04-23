@@ -6161,7 +6161,7 @@ PrefabInstance:
     - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
         type: 3}
       propertyPath: vRotVel
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
         type: 3}
@@ -6175,7 +6175,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
         type: 3}
+      propertyPath: zTransKick
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
       propertyPath: cameraVRecoilMult
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
+        type: 3}
+      propertyPath: overallRecoilMult
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6350217944077431651, guid: d7980a5181a5be841be2dc992f23e73f,
