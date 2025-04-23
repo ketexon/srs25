@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: VignetteMat
-  m_Shader: {fileID: -6465566751694194690, guid: 7cd3a01351c8ffc4fa7bce50efe3b1fa,
+  m_Name: DeliriumMat
+  m_Shader: {fileID: -6465566751694194690, guid: c8ebc68088c5c0847a3f138bb8d8ac88,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -37,20 +37,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats:
-    - _Fade: 1
-    - _Fullscreen_AlphaBlendOperation: 0
-    - _Fullscreen_BlendMode: 1
-    - _Fullscreen_ColorBlendOperation: 0
-    - _Fullscreen_DepthWrite: 0
-    - _Fullscreen_DstAlphaBlend: 10
-    - _Fullscreen_DstColorBlend: 10
-    - _Fullscreen_SrcAlphaBlend: 1
-    - _Fullscreen_SrcColorBlend: 5
-    - _PsychoticEffect: 1.2592
-    - _VignetteEffect: 4.68
-    m_Colors:
-    - _Color: {r: 0.13207547, g: 0, b: 0, a: 0}
-    - _FlickerSpeed: {r: 0.3, g: 1, b: 0, a: 0}
+    m_Floats: []
+    m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

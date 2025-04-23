@@ -189,8 +189,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
   m_Name: Vignette
   m_EditorClassIdentifier: 
-  m_Active: 0
-  injectionPoint: 550
+  m_Active: 1
+  injectionPoint: 600
   fetchColorBuffer: 1
   requirements: 0
   passMaterial: {fileID: 2100000, guid: d5c5e99c147948640abdec58757cd8a7, type: 2}
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
   m_Name: Disso
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   injectionPoint: 600
   fetchColorBuffer: 1
   requirements: 4
@@ -227,13 +227,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
-  m_Name: FullScreenPassRendererFeature
+  m_Name: Delirium
   m_EditorClassIdentifier: 
-  m_Active: 0
-  injectionPoint: 600
+  m_Active: 1
+  injectionPoint: 550
   fetchColorBuffer: 1
-  requirements: 4
-  passMaterial: {fileID: 2100000, guid: b4c4c450d6571484ab817ac8f3ecd9bf, type: 2}
+  requirements: 0
+  passMaterial: {fileID: 2100000, guid: ce4893b8228f2e8449bbf34232163dec, type: 2}
   passIndex: 0
   bindDepthStencilAttachment: 0
   m_Version: 1
