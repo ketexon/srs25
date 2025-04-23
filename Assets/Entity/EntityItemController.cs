@@ -15,7 +15,7 @@ public class EntityItemController : MonoBehaviour
 		for(int i = 0; i < Items.Count; i++) {
 			Items[i].gameObject.SetActive(i == ActiveItemIndex);
 		}
-		SetItem(ActiveItemIndex);
+		SetItem(ActiveItemIndex, 1);
 	}
 
 	public void Cycle(int dir, bool wrap = false, bool subItem = true) {
@@ -28,7 +28,7 @@ public class EntityItemController : MonoBehaviour
             int newIndex = KMath.Rem(ActiveItemIndex + dir, Items.Count);
             while(newIndex != ActiveItemIndex) {
                 if(Items[newIndex].CanEquip) {
-                    SetItem(newIndex);
+                    SetItem(newIndex, dir);
                     break;
                 };
                 newIndex = KMath.Rem(newIndex + dir, Items.Count);
@@ -36,10 +36,11 @@ public class EntityItemController : MonoBehaviour
         }
     }
 
-	public void SetItem(int index) {
+	public void SetItem(int index, int cycleDir) {
         if(ActiveItemIndex != index) {
             ActiveItem.gameObject.SetActive(false);
             ActiveItemIndex = index;
+            ActiveItem.CycleDir = cycleDir;
             ActiveItem.gameObject.SetActive(true);
         }
 

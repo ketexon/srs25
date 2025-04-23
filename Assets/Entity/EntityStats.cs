@@ -1,193 +1,162 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
+
+#if UNITY_EDITOR
+
+using UnityEditor;
+using UnityEditor.UIElements;
+
+[CustomEditor(typeof(EntityStats))]
+public class EntityStatsEditor : Editor
+{
+    private System.Action cleanup = null;
+    
+    public override VisualElement CreateInspectorGUI()
+    {
+        cleanup?.Invoke();
+        cleanup = null;
+        
+        var root = new VisualElement();
+        InspectorElement.FillDefaultInspector(root, serializedObject, this);
+
+        if (!EditorApplication.isPlaying && !EditorApplication.isPaused)
+            return root;
+        
+        var stats = (EntityStats)target;
+
+        if (!stats.didAwake) return root;
+            
+        Dictionary<EntityStats.StatType, FloatField> fields = new();
+        foreach (var statType in EntityStats.StatTypes)
+        {
+            var field = new FloatField
+            {
+                label = statType.ToString(),
+                value = stats[statType]
+            };
+            field.RegisterValueChangedCallback(evt =>
+            {
+                stats.SetStat(statType, evt.newValue);
+            });
+            fields[statType] = field;
+            root.Add(field);
+        }
+
+        stats.OnStatChanged.AddListener(OnStatChanged);
+        cleanup = () =>
+        {
+            stats.OnStatChanged.RemoveListener(OnStatChanged);
+        };
+
+        return root;
+
+        void OnStatChanged(EntityStats.StatType stat, float value)
+        {
+            fields[stat].value = value;
+        }
+    }
+}
+
+#endif
 
 public class EntityStats : MonoBehaviour
 {
-   public enum StatType
+    public enum StatType
     {
-        None,
         Darkness,
         Nightmare,
         Stimulation,
-        Mania, 
+        Mania,
         Dissociation,
         PainTolerance,
         Strength,
         Shakiness,
-        Speed, 
+        Speed,
         Reaction
     }
+    
+    public static Dictionary<StatType, float> DefaultStats = new()
+    {
+        { StatType.Darkness, 1 },
+        { StatType.Nightmare, 1 },
+        { StatType.Stimulation, 1 },
+        { StatType.Mania, 1 },
+        { StatType.Dissociation, 1 },
+        { StatType.PainTolerance, 1 },
+        { StatType.Strength, 1 },
+        { StatType.Shakiness, 1 },
+        { StatType.Speed, 1 },
+        { StatType.Reaction, 1 }
+    };
 
+    public static List<StatType> StatTypes = new()
+    {
+        StatType.Darkness,
+        StatType.Nightmare,
+        StatType.Stimulation,
+        StatType.Mania,
+        StatType.Dissociation,
+        StatType.PainTolerance,
+        StatType.Strength,
+        StatType.Shakiness,
+        StatType.Speed,
+        StatType.Reaction,
+    };
 
-    [Range(1, 10)]
-    public float startingDarkness, startingNightmare, startingStimulation, startingMania, startingDissociation, 
-        startingPainTolerance, startingStrength, startingShakiness, startingSpeed, startingReaction;
+    [System.Serializable]
+    struct StartStat
+    {
+        public StatType StatType;
+        [Range(1, 10)] public float Value;
+    }
+
+    [SerializeField] private List<StartStat> startStatOverrides = new();
 
     public UnityEvent<StatType, float> OnStatChanged = new();
 
-    public float Darkness
-    {
-        get => darkness; set
-        {
-            if (value < 1) darkness = 0;
-            else if (value > 10) darkness = 10;
-            else darkness = value;
+    Dictionary<StatType, float> stats = new();
 
-            OnStatChanged.Invoke(StatType.Darkness, darkness);
+    void Awake()
+    {
+        foreach (var statType in StatTypes)
+        {
+            stats[statType] = DefaultStats[statType];
         }
-    }
-    public float Nightmare
-    {
-        get => nightmare; set
-        {
-            if (value < 1) nightmare = 0;
-            else if (value > 10) nightmare = 10;
-            else nightmare = value;
 
-            OnStatChanged.Invoke(StatType.Nightmare, nightmare);
+        foreach (var startStat in startStatOverrides)
+        {
+            stats[startStat.StatType] = startStat.Value;
         }
+        
+        Debug.Log(stats[StatType.Darkness]);
     }
-    public float Stimulation
+
+    public float GetStat(StatType stat)
     {
-        get => stimulation; set
+        return this[stat];
+    }
+
+    public void SetStat(StatType stat, float value)
+    {
+        this[stat] = value;
+    }
+
+    public void ChangeStat(StatType stat, float delta)
+    {
+        this[stat] += delta;
+    }
+    
+    public float this[StatType stat]
+    {
+        get => stats[stat];
+        set
         {
-            if (value < 1) stimulation = 0;
-            else if (value > 10) stimulation = 10;
-            else stimulation = value;
-
-            OnStatChanged.Invoke(StatType.Stimulation, stimulation);
-        }
-    }
-    public float Mania
-    {
-        get => mania; set
-        {
-            if (value < 1) mania = 0;
-            else if (value > 10) mania = 10;
-            else mania = value;
-
-            OnStatChanged.Invoke(StatType.Mania, mania);
-        }
-    }
-    public float Dissociation
-    {
-        get => dissociation; set
-        {
-            if (value < 1) dissociation = 0;
-            else if (value > 10) dissociation = 10;
-            else dissociation = value;
-
-            OnStatChanged.Invoke(StatType.Dissociation, dissociation);
-        }
-    }
-
-    public float PainTolerance
-    {
-        get => painTolerance; set
-        {
-            if (value < 1) painTolerance = 0;
-            else if (value > 10) painTolerance = 10;
-            else painTolerance = value;
-
-            OnStatChanged.Invoke(StatType.PainTolerance, painTolerance);
-        }
-    }
-    public float Strength
-    {
-        get => strength; set
-        {
-            if (value < 1) strength = 0;
-            else if (value > 10) strength = 10;
-            else strength = value;
-
-            OnStatChanged.Invoke(StatType.Strength, strength);
-        }
-    }
-    public float Shakiness
-    {
-        get => shakiness; set
-        {
-            if (value < 1) shakiness = 0;
-            else if (value > 10) shakiness = 10;
-            else shakiness = value;
-
-            OnStatChanged.Invoke(StatType.Shakiness, shakiness);
-        }
-    }
-    public float Speed
-    {
-        get => speed; set
-        {
-            if (value < 1) speed = 1;
-            else if (value > 10) speed = 10;
-            else speed = value;
-
-            OnStatChanged.Invoke(StatType.Speed, speed);
-        }
-    }
-    public float Reaction
-    {
-        get => reaction; set
-        {
-            if (value < 1) reaction = 0;
-            else if (value > 10) reaction = 10;
-            else reaction = value;
-
-            OnStatChanged.Invoke(StatType.Reaction, reaction);
-        }
-    }
-
-    float darkness, nightmare, stimulation, mania, dissociation, painTolerance, strength, shakiness, speed, reaction;
-
-
-    void Start()
-    {
-        Darkness = startingDarkness;
-        Nightmare = startingNightmare;
-        Stimulation = startingStimulation;
-        Mania = startingMania;
-        Dissociation = startingDissociation;
-        PainTolerance = startingPainTolerance;
-        Strength = startingStrength;
-        Shakiness = startingShakiness;
-        Speed = startingSpeed;
-        Reaction = startingReaction;
-    }
-
-    public void ChangeStat(StatType stat, float value)
-    {
-        switch (stat)
-        {
-            case StatType.Darkness:
-                Darkness += value;
-                break;
-            case StatType.Nightmare:
-                Nightmare += value;
-                break;
-            case StatType.Stimulation:
-                Stimulation += value;
-                break;
-            case StatType.Mania:
-                Mania += value;
-                break;
-            case StatType.Dissociation:
-                Dissociation += value;
-                break;
-            case StatType.PainTolerance:
-                PainTolerance += value;
-                break;
-            case StatType.Strength:
-                Strength += value;
-                break;
-            case StatType.Shakiness:
-                Shakiness += value;
-                break;
-            case StatType.Speed:
-                Speed += value;
-                break;
-            case StatType.Reaction:
-                Reaction += value;
-                break;
+            var old = stats[stat];
+            if (old == value) return;
+            stats[stat] = value;
+            OnStatChanged.Invoke(stat, value);
         }
     }
 }
