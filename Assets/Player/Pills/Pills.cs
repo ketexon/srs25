@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Pills : MonoBehaviour
 {
@@ -9,7 +10,16 @@ public class Pills : MonoBehaviour
     [SerializeField] private TMPro.TMP_Text pillTMP;
     [SerializeField] private string pillText = "Pill";
 
-    void Reset() {
+    //Trigger event when no more behaviors are left, player pills subs and removes that pill when done
+    public UnityEvent<Pills> onIsDone = new();
+
+
+    bool used = false;
+    float timeSinceUse = 0f;
+    
+
+    void Reset()
+    {
         pillBehaviors = new(GetComponents<PillBehavior>());
     }
 
@@ -21,7 +31,30 @@ public class Pills : MonoBehaviour
     public void Use(){
         pillBehaviors.ForEach(pill => {
             pill.Entity = Entity;
-            pill.Use();
+            pill.OnUse();
+            if (pill.EffectDuration == 0f){
+                pillBehaviors.Remove(pill);
+            }
         });
+    }
+
+    void Update()
+    {
+        if (!used) return;
+
+        timeSinceUse += Time.deltaTime;
+
+        pillBehaviors.ForEach(pill =>
+        {
+            if(timeSinceUse >= pill.EffectDuration)
+            {
+                pill.OnEndEffect();
+                pillBehaviors.Remove(pill);
+            } else {
+                pill.OverTimeEffect();
+            }
+        });
+
+
     }
 }

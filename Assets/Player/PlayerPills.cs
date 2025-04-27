@@ -10,12 +10,13 @@ public class PlayerPills : EntityItem
 
     int selectedIndex = 0;
 
-    public override bool CanEquip => spawnedPills.Count > 0;
+    public override bool CanEquip => availablePills.Count > 0;
 
-    List<Pills> spawnedPills = new();
+    List<Pills> availablePills = new();
+    List<Pills> activePills = new();
 
-    private Pills SelectedPills => selectedIndex >= 0 && selectedIndex < spawnedPills.Count
-        ? spawnedPills[selectedIndex]
+    Pills SelectedPills => selectedIndex >= 0 && selectedIndex < availablePills.Count
+        ? availablePills[selectedIndex]
         : null;
 
     private void Awake(){
@@ -25,7 +26,7 @@ public class PlayerPills : EntityItem
                 transform
             );
             var pills = pillGO.GetComponent<Pills>();
-            spawnedPills.Add(pills);
+            availablePills.Add(pills);
             pills.Entity = entity;
 
             pillGO.SetActive(false);
@@ -80,14 +81,17 @@ public class PlayerPills : EntityItem
 
     public override void Use(bool start = true)
     {
-        if (!start) return;
-        if (!SelectedPills) return;
-        SelectedPills.Use();
-        Destroy(SelectedPills.gameObject);
-        spawnedPills.RemoveAt(selectedIndex);
-        if(selectedIndex > spawnedPills.Count)
-        {
-            selectedIndex = 0;
+        if(SelectedPills is Pills pills) {
+            pills.Use();
+            activePills.Add(pills);
+
+            if(availablePills.Count > 1){
+                Cycle(1, wrap: true);
+            }
+            availablePills.RemoveAt(selectedIndex);
+            if(availablePills.Count == 0){
+                entity.ItemController.Cycle(1);
+            }
         }
         
         if(!ActivatePillsAtCurIndex(true)){

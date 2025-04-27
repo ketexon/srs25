@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class DebugPillBehavior : PillBehavior
 {
-    public override void Use()
+    public override void OnUse()
     {
-        base.Use();
+        base.OnUse();
         Debug.Log("DebugPilllBehavior");
     }
 }
