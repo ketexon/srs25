@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Kutie.Extensions;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -26,7 +27,7 @@ public class LevelEditor : Editor {
 
 public class Level : MonoBehaviour {
     [SerializeField] public Transform PlayerSpawn;
-	[SerializeField] public List<LevelGenerator> LevelGenerator;
+	[SerializeField] public List<LevelGenerator> LevelGenerators;
 	[SerializeField] public EntityMovement Player;
 	[SerializeField]
 	[Tooltip("Seed for the level generator. If negative, a random seed will be used.")]
@@ -42,7 +43,7 @@ public class Level : MonoBehaviour {
 		var seed = Seed < 0
 			? Random.Range(0, int.MaxValue)
 			: Seed;
-        foreach(var generator in LevelGenerator)
+        foreach(var generator in LevelGenerators)
         {
             generator.Generate(seed);
         }
@@ -50,7 +51,7 @@ public class Level : MonoBehaviour {
 
 	public void Clear()
 	{
-        foreach(var generator in LevelGenerator)
+        foreach(var generator in LevelGenerators)
         {
             generator.Clear();
         }
@@ -59,7 +60,7 @@ public class Level : MonoBehaviour {
     #if UNITY_EDITOR
     public void UpdateSerializedObject()
     {
-        foreach(var generator in LevelGenerator)
+        foreach(var generator in LevelGenerators)
         {
             var serializedObject = new SerializedObject(generator);
             serializedObject.Update();
