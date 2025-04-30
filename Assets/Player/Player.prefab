@@ -195,7 +195,10 @@ MonoBehaviour:
   entity: {fileID: 7641248480179899501}
   HandIKTargets: {fileID: 0}
   pillPrefabs:
-  - {fileID: 1197621811606360542, guid: 7a62e42bfe320554ba8cb15d7c29bfcb, type: 3}
+  - {fileID: 1815576056256955819, guid: fe251acb623f9384bb418acdaaad68e2, type: 3}
+  - {fileID: 1815576056256955819, guid: 4db8eb7fbc417784aac752c02a84c71f, type: 3}
+  - {fileID: 1815576056256955819, guid: 983ed6de07d1f6541af5b097d8253b77, type: 3}
+  - {fileID: 1815576056256955819, guid: acafdd3ffa7182a498a7e618576f9090, type: 3}
   target: {fileID: 8240156487248614237}
 --- !u!114 &645443288170112032
 MonoBehaviour:

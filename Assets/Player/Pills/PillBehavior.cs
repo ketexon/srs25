@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class PillBehavior : MonoBehaviour {
-	[SerializeField] public Entity Entity;
+	[System.NonSerialized] public Entity Entity;
 
 	public virtual void Use(){
 	}
