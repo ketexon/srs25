@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,7 +12,7 @@ public class Pills : MonoBehaviour
     [SerializeField] private string pillText = "Pill";
 
     //Trigger event when no more behaviors are left, player pills subs and removes that pill when done
-    public UnityEvent<Pills> onIsDone = new();
+    public readonly UnityEvent<Pills> onPillEffectOver = new();
 
 
     bool used = false;
@@ -29,13 +30,16 @@ public class Pills : MonoBehaviour
     }
 
     public void Use(){
-        pillBehaviors.ForEach(pill => {
-            pill.Entity = Entity;
-            pill.OnUse();
-            if (pill.EffectDuration == 0f){
-                pillBehaviors.Remove(pill);
+        used = true;
+        List<PillBehavior> newBehaviors = new(pillBehaviors);
+        pillBehaviors.ForEach(behavior => {
+            behavior.Entity = Entity;
+            behavior.OnUse();
+            if (behavior.EffectDuration == 0f){
+                newBehaviors.Remove(behavior);
             }
         });
+        pillBehaviors = newBehaviors;
     }
 
     void Update()
@@ -44,17 +48,48 @@ public class Pills : MonoBehaviour
 
         timeSinceUse += Time.deltaTime;
 
+
+        List<PillBehavior> newBehaviors = new(pillBehaviors);
         pillBehaviors.ForEach(pill =>
         {
             if(timeSinceUse >= pill.EffectDuration)
             {
                 pill.OnEndEffect();
-                pillBehaviors.Remove(pill);
+                newBehaviors.Remove(pill);
             } else {
                 pill.OverTimeEffect();
             }
         });
 
+        pillBehaviors = newBehaviors;
 
+
+        if(pillBehaviors.Count == 0)
+        {
+            onPillEffectOver.Invoke(this);
+            Destroy(gameObject);
+        }
+    }
+
+    public void ShowPill(){
+        if (pillTMP != null)
+        {
+            pillTMP.gameObject.SetActive(true);
+        }
+        if (GetComponent<MeshRenderer>() != null)
+        {
+            GetComponent<MeshRenderer>().enabled = true;
+        }
+    }
+
+    public void HidePill(){
+        if(pillTMP != null)
+        {
+            pillTMP.gameObject.SetActive(false);
+        }
+        if (GetComponent<MeshRenderer>() != null)
+        {
+            GetComponent<MeshRenderer>().enabled = false;
+        }
     }
 }

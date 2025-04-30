@@ -3,7 +3,7 @@ using UnityEngine;
 public class PillBehavior : MonoBehaviour {
 	[System.NonSerialized] public Entity Entity;
 
-	public float EffectDuration = 0f;
+	public virtual float EffectDuration {get;} = 0f;
 
 	public virtual void OnUse(){
 

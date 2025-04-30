@@ -28,19 +28,18 @@ public class PlayerPills : EntityItem
             var pills = pillGO.GetComponent<Pills>();
             availablePills.Add(pills);
             pills.Entity = entity;
-
-            pillGO.SetActive(false);
+            pills.HidePill();
         }
     }
 
     private void OnEnable()
     {
-        if (spawnedPills.Count <= 0) return;
+        if (availablePills.Count <= 0) return;
         selectedIndex = CycleDir > 0
             ? 0
-            : spawnedPills.Count - 1;
+            : availablePills.Count - 1;
         if (!SelectedPills) return;
-        SelectedPills.gameObject.SetActive(true);
+        SelectedPills.ShowPill();
     }
 
     private void Update(){
@@ -54,14 +53,14 @@ public class PlayerPills : EntityItem
 
     private void OnDisable(){
         if(SelectedPills) {
-            SelectedPills.gameObject.SetActive(false);
+            SelectedPills.HidePill();
         }
     }
 
     public override bool Cycle(int dir, bool wrap = false)
     {
         if(SelectedPills){
-            SelectedPills.gameObject.SetActive(false);
+            SelectedPills.HidePill();
         }
         selectedIndex += dir;
         return ActivatePillsAtCurIndex();
@@ -69,33 +68,35 @@ public class PlayerPills : EntityItem
 
     bool ActivatePillsAtCurIndex(bool wrap = false)
     {
-        if(spawnedPills.Count == 0) return false;
+        if(availablePills.Count == 0) return false;
         if(wrap){
-            selectedIndex = KMath.Rem(selectedIndex, spawnedPills.Count);
+            selectedIndex = KMath.Rem(selectedIndex, availablePills.Count);
         }
 
         if (!SelectedPills) return false;
-        SelectedPills.gameObject.SetActive(true);
+        SelectedPills.ShowPill();
         return true;
     }
 
     public override void Use(bool start = true)
     {
+        if(!start) return;
+
         if(SelectedPills is Pills pills) {
             pills.Use();
             activePills.Add(pills);
+            pills.onPillEffectOver.AddListener(HandlePillEffectOver);
+            availablePills.Remove(pills);
+            
+            if(!ActivatePillsAtCurIndex()){
+                entity.ItemController.Cycle(1,subItem: true, wrap: true);
+            }
+        }
+    }
 
-            if(availablePills.Count > 1){
-                Cycle(1, wrap: true);
-            }
-            availablePills.RemoveAt(selectedIndex);
-            if(availablePills.Count == 0){
-                entity.ItemController.Cycle(1);
-            }
-        }
-        
-        if(!ActivatePillsAtCurIndex(true)){
-            entity.ItemController.Cycle(1);
-        }
+    void HandlePillEffectOver(Pills pills)
+    {
+        activePills.Remove(pills);
+        pills.onPillEffectOver.RemoveListener(HandlePillEffectOver);
     }
 }
