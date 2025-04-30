@@ -75,7 +75,7 @@ public class EntityMovement : MonoBehaviour
     virtual protected void Awake()
     {
         var targetTransformGO = new GameObject($"{gameObject.name} Target Transform");
-        MovementSpeed = entityStats.startingSpeed;
+        MovementSpeed = entityStats.GetStat(EntityStats.StatType.Speed)*16f;
         TargetTransform = targetTransformGO.transform;
         Yaw = transform.rotation.eulerAngles.y;
         Pitch = Eyes.rotation.eulerAngles.x;
@@ -241,7 +241,7 @@ public class EntityMovement : MonoBehaviour
         switch (stat)
         {
             case EntityStats.StatType.Speed:
-                MovementSpeed = value;
+                MovementSpeed = value*16f;
                 break;
         }
     }

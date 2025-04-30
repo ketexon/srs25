@@ -69,7 +69,7 @@ public class Gun : EntityItem
     [System.NonSerialized] public IBulletCaster BulletCaster = new RayBulletCaster();
     float lastShotTime = float.NegativeInfinity;
 
-    [SerializeField] float overallRecoilMult= 1;
+    float overallRecoilMult= 1f;
     private float vBaseRotation = 0;
     public float vRotation {
         get => vBaseRotation + vRotSpring.CurrentValue;
@@ -261,7 +261,7 @@ public class Gun : EntityItem
         switch(type){
             case EntityStats.StatType.Strength:
                 //damage = 10*value;
-                overallRecoilMult = value;
+                overallRecoilMult = 0.31f/(value+0.1f);
                 break;
         }
     }
