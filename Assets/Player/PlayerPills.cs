@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class PlayerPills : EntityItem
 {
-    [SerializeField] List<GameObject> pillPrefabs;
-    [SerializeField] Transform target;
+    [SerializeField] private List<GameObject> pillPrefabs;
+    [SerializeField] private Transform target;
 
     int selectedIndex = 0;
 
@@ -14,11 +14,11 @@ public class PlayerPills : EntityItem
 
     List<Pills> spawnedPills = new();
 
-    Pills SelectedPills => selectedIndex >= 0 && selectedIndex < spawnedPills.Count
+    private Pills SelectedPills => selectedIndex >= 0 && selectedIndex < spawnedPills.Count
         ? spawnedPills[selectedIndex]
         : null;
 
-    void Awake(){
+    private void Awake(){
         foreach(var pillPrefab in pillPrefabs) {
             var pillGO = Instantiate(
                 pillPrefab,
@@ -32,62 +32,66 @@ public class PlayerPills : EntityItem
         }
     }
 
-    void OnEnable() {
-        if(pillPrefabs.Count > 0) {
-            selectedIndex = CycleDir > 0
-                ? 0
-                : pillPrefabs.Count - 1;
-            SelectedPills.gameObject.SetActive(true);
-        }
+    private void OnEnable()
+    {
+        if (spawnedPills.Count <= 0) return;
+        selectedIndex = CycleDir > 0
+            ? 0
+            : spawnedPills.Count - 1;
+        if (!SelectedPills) return;
+        SelectedPills.gameObject.SetActive(true);
     }
 
-    void Update(){
-        if(SelectedPills is Pills pills) {
-            pills.transform.SetPositionAndRotation(
+    private void Update(){
+        if(SelectedPills) {
+            SelectedPills.transform.SetPositionAndRotation(
                 target.position,
                 target.rotation
             );
         }
     }
 
-    void OnDisable(){
-        if(SelectedPills is Pills pills) {
-            pills.gameObject.SetActive(false);
+    private void OnDisable(){
+        if(SelectedPills) {
+            SelectedPills.gameObject.SetActive(false);
         }
     }
 
     public override bool Cycle(int dir, bool wrap = false)
     {
-        if(SelectedPills is Pills oldSelected){
-            oldSelected.gameObject.SetActive(false);
+        if(SelectedPills){
+            SelectedPills.gameObject.SetActive(false);
         }
         selectedIndex += dir;
+        return ActivatePillsAtCurIndex();
+    }
+
+    bool ActivatePillsAtCurIndex(bool wrap = false)
+    {
+        if(spawnedPills.Count == 0) return false;
         if(wrap){
-            selectedIndex = KMath.Rem(selectedIndex, pillPrefabs.Count);
+            selectedIndex = KMath.Rem(selectedIndex, spawnedPills.Count);
         }
 
-        if(SelectedPills is Pills newSelected){
-            newSelected.gameObject.SetActive(true);
-            return true;
-        }
-        else {
-            return false;
-        }
+        if (!SelectedPills) return false;
+        SelectedPills.gameObject.SetActive(true);
+        return true;
     }
 
     public override void Use(bool start = true)
     {
-        if(SelectedPills is Pills pills) {
-            pills.Use();
-            Destroy(pills.gameObject);
-
-            if(spawnedPills.Count > 1){
-                Cycle(1, wrap: true);
-            }
-            spawnedPills.RemoveAt(selectedIndex);
-            if(spawnedPills.Count == 0){
-                entity.ItemController.Cycle(1);
-            }
+        if (!start) return;
+        if (!SelectedPills) return;
+        SelectedPills.Use();
+        Destroy(SelectedPills.gameObject);
+        spawnedPills.RemoveAt(selectedIndex);
+        if(selectedIndex > spawnedPills.Count)
+        {
+            selectedIndex = 0;
+        }
+        
+        if(!ActivatePillsAtCurIndex(true)){
+            entity.ItemController.Cycle(1);
         }
     }
 }

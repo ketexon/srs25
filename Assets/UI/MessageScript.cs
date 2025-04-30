@@ -12,14 +12,14 @@ public class MessageScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        StartCoroutine(CheckIfMessageIsOffScreen());        
+        StartCoroutine(CheckIfMessageIsOffScreen());
     }
 
     IEnumerator CheckIfMessageIsOffScreen()
     {
         while (true)
         {
-            Debug.Log($"parent {parentTop} child: {messageBottom}");
+            // Debug.Log($"parent {parentTop} child: {messageBottom}");
 
             if (messageBottom > parentTop)
             {
@@ -33,7 +33,7 @@ public class MessageScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {  
+    {
 
     }
 }

@@ -95,6 +95,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5721974112483066513}
   - component: {fileID: 6806978343244172374}
+  - component: {fileID: 3080325729555821034}
   - component: {fileID: 5015012108194661265}
   m_Layer: 0
   m_Name: Entity
@@ -139,6 +140,33 @@ MonoBehaviour:
   Gun: {fileID: 2052216015964699689}
   Team: {fileID: 0}
   Movement: {fileID: 5015012108194661265}
+  ItemController: {fileID: 0}
+  Stats: {fileID: 3080325729555821034}
+--- !u!114 &3080325729555821034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3886147962188206277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479371939ba8eb343b56d0fe3b1a4a2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingDarkness: 1
+  startingNightmare: 1
+  startingStimulation: 1
+  startingMania: 1
+  startingDissociation: 1
+  startingPainTolerance: 1
+  startingStrength: 3
+  startingShakiness: 1
+  startingSpeed: 4
+  startingReaction: 5
+  OnStatChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5015012108194661265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,12 +179,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31af9ee789dcd3f47a9eb0253c0f2e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseOffset: 1.06
   MovementSpeed: 2
   minPitch: -60
   maxPitch: 80
   Eyes: {fileID: 5545661372892488183}
   Mode: 0
   rb: {fileID: 0}
+  entityStats: {fileID: 3080325729555821034}
 --- !u!1 &4896855972202622736
 GameObject:
   m_ObjectHideFlags: 0
