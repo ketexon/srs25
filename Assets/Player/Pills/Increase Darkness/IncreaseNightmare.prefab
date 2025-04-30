@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 5384923580411021434, guid: 65f54ee4ad2e8244f9865c9301a4ab32,
         type: 3}
       propertyPath: pillText
-      value: Dark+
+      value: Night+
       objectReference: {fileID: 0}
     - target: {fileID: 5384923580411021434, guid: 65f54ee4ad2e8244f9865c9301a4ab32,
         type: 3}
@@ -76,7 +76,7 @@ PrefabInstance:
     - target: {fileID: 7789690728711557044, guid: 65f54ee4ad2e8244f9865c9301a4ab32,
         type: 3}
       propertyPath: m_Name
-      value: IncreaseDarkness
+      value: IncreaseNightmare
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -105,6 +105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ec36cb943facab479562a18c3bd971d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statType: 0
+  statType: 1
   statDelta: 1
   statMult: 1
