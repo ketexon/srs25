@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 #if UNITY_EDITOR
@@ -44,10 +45,10 @@ public class EntityStatsEditor : Editor
             root.Add(field);
         }
 
-        stats.OnStatChanged.AddListener(OnStatChanged);
+        stats.StatChangedEvent.AddListener(OnStatChanged);
         cleanup = () =>
         {
-            stats.OnStatChanged.RemoveListener(OnStatChanged);
+            stats.StatChangedEvent.RemoveListener(OnStatChanged);
         };
 
         return root;
@@ -114,7 +115,7 @@ public class EntityStats : MonoBehaviour
 
     [SerializeField] private List<StartStat> startStatOverrides = new();
 
-    public UnityEvent<StatType, float> OnStatChanged = new();
+    public UnityEvent<StatType, float> StatChangedEvent = new();
 
     Dictionary<StatType, float> stats = new();
 
@@ -156,7 +157,7 @@ public class EntityStats : MonoBehaviour
             var old = stats[stat];
             if (old == value) return;
             stats[stat] = value;
-            OnStatChanged.Invoke(stat, value);
+            StatChangedEvent.Invoke(stat, value);
         }
     }
 }
