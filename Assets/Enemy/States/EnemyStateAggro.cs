@@ -73,7 +73,7 @@ public class EnemyStateAggro : EnemyAIState {
 	void Update(){
 		if(target){
 			Entity.Movement.LookAt(target.transform.position);
-			Entity.Gun.TargetRotation = Entity.Movement.Pitch;
+			Entity.Gun.vTargetRotation = Entity.Movement.Pitch;
 			Vision.transform.localRotation = Quaternion.AngleAxis(Entity.Movement.Pitch, Vector3.right);
 
 			if(recoilCooldown){

@@ -23,6 +23,11 @@ PrefabInstance:
       propertyPath: eyes
       value: 
       objectReference: {fileID: 539926200190001067}
+    - target: {fileID: 5015012108194661265, guid: b3b5d88e597f7234b93e5f410268ed07,
+        type: 3}
+      propertyPath: entityStats
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5545661372892488183, guid: b3b5d88e597f7234b93e5f410268ed07,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -94,6 +99,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 7e761e7db1541694b957641a8f682cc3,
         type: 2}
+    - target: {fileID: 6806978343244172374, guid: b3b5d88e597f7234b93e5f410268ed07,
+        type: 3}
+      propertyPath: Stats
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

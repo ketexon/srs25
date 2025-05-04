@@ -1,7 +1,12 @@
 # blender cache
 *.blend[0-9]
+*.blend[0-9].meta
+
+.idea
 
 .vscode
+.idea
+*.DotSettings
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #
@@ -75,3 +80,5 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+Assets/VolumetricTracer

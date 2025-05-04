@@ -13,7 +13,10 @@ public class FirstPersonPlayerController : PlayerController
         camera.transform.rotation = Quaternion.identity;
         gun.BulletCaster = new RayBulletCaster();
     }
-
+    private void Update()
+    {
+        gun.vRotation = movement.Pitch;
+    }
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -28,7 +31,6 @@ public class FirstPersonPlayerController : PlayerController
 
         Vector2 delta = inputValue.Get<Vector2>();
         movement.LookDelta(delta * Settings.Sensitivity);
-        gun.Rotation = movement.Pitch;
         UpdateMovementDir();
     }
 

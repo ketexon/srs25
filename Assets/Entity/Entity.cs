@@ -7,6 +7,7 @@ public class Entity : MonoBehaviour
     [SerializeField] public TeamSO Team;
     [SerializeField] public EntityMovement Movement;
     [SerializeField] public EntityItemController ItemController;
+    [SerializeField] public EntityStats Stats;
 
     void Awake()
     {
