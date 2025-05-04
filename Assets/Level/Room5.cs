@@ -42,20 +42,20 @@ public class Room5 : MonoBehaviour
         foreach (var doorSetEntry in DoorSets)
         {
             var blocked = true;
-            foreach(var openDoor in OpenDoors){
-                if(openDoor.Position == doorSetEntry.Position
-                   && openDoor.Direction == doorSetEntry.Direction
-               ){
-                    blocked = false;
-                    break;
-                }
+            foreach(var openDoor in OpenDoors)
+            {
+                if (openDoor.Position != doorSetEntry.Position
+                    || openDoor.Direction != doorSetEntry.Direction) continue;
+                blocked = false;
+                break;
             }
 
             if (!blocked)
             {
                 // disable this door if it is left or down
                 var globalDir = doorSetEntry.Direction.Rotate90(Rotation);
-                if (globalDir == DirectionMask.Left || globalDir == DirectionMask.Down)
+                Debug.Log(globalDir);
+                if (globalDir is DirectionMask.Left or DirectionMask.Down)
                 {
                     doorSetEntry.DoorSet.gameObject.SetActive(false);
                     continue;

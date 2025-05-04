@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1664146719483905623}
   - component: {fileID: 645056498663961425}
   m_Layer: 0
-  m_Name: Level5
+  m_Name: Floor1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,10 @@ MonoBehaviour:
     Weight: 1
   - Size: {x: 2, y: 1}
     Weight: 7
-  blockedRooms: []
+  blockedRooms:
+  - Alignment: 7
+    Offset: {x: 2, y: 0}
+    Size: {x: 1, y: 4}
   requiredPaths:
   - StartAlignment: 7
     StartOffset: {x: 0, y: 0}

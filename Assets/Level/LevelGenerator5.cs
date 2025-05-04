@@ -124,7 +124,7 @@ public class LevelGenerator5 : LevelGenerator
     public override void Generate(int seed)
     {
         Random.InitState(seed);
-        Debug.Log($"Generating level with seed {seed}");
+        Debug.Log($"Floor {Floor}: Generating level with seed {seed}");
 
         grid.Size = grid.Size = Vector2Int.one * (2 * officeWidth + parkLength);
         int attempts = 0;
@@ -148,6 +148,10 @@ public class LevelGenerator5 : LevelGenerator
             catch (RegenerateException)
             {
                 ++attempts;
+                if (attempts >= maxAttempts)
+                {
+                    throw;
+                }
             }
         }
     }
@@ -658,6 +662,7 @@ public class LevelGenerator5 : LevelGenerator
 
     void SpawnDoors()
     {
+        Debug.Log($"Floor {Floor}: Spawning doors ({rooms.Count})");
         foreach(var room in rooms){
             room.SpawnDoors();
         }
