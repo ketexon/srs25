@@ -155,7 +155,7 @@ public class EntityStats : MonoBehaviour
         set
         {
             var old = stats[stat];
-            if (old == value) return;
+            if (Mathf.Approximately(old, value)) return;
             stats[stat] = value;
             StatChangedEvent.Invoke(stat, value);
         }
