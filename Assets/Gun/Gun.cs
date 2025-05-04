@@ -118,6 +118,8 @@ public class Gun : EntityItem
 
     void OnEnable()
     {
+        Debug.Log(entity);
+        Debug.Log(entity.Stats);
         entity.Stats.OnStatChanged.AddListener(OnStatChanged);
     }
 
