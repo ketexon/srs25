@@ -80,16 +80,16 @@ public class EntityStats : MonoBehaviour
     
     public static Dictionary<StatType, float> DefaultStats = new()
     {
-        { StatType.Darkness, 1 },
-        { StatType.Nightmare, 1 },
-        { StatType.Stimulation, 1 },
-        { StatType.Mania, 1 },
-        { StatType.Dissociation, 1 },
-        { StatType.PainTolerance, 1 },
-        { StatType.Strength, 1 },
-        { StatType.Shakiness, 1 },
-        { StatType.Speed, 1 },
-        { StatType.Reaction, 1 }
+        { StatType.Darkness, 0.3f },
+        { StatType.Nightmare, 0.3f },
+        { StatType.Stimulation, 0.3f },
+        { StatType.Mania, 0.3f },
+        { StatType.Dissociation, 0.3f },
+        { StatType.PainTolerance, 0.3f },
+        { StatType.Strength, 0.3f },
+        { StatType.Shakiness, 0.3f },
+        { StatType.Speed, 0.3f },
+        { StatType.Reaction, 0.3f }
     };
 
     public static List<StatType> StatTypes = new()
