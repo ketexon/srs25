@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
+using System.Collections.ObjectModel;
+
 
 #if UNITY_EDITOR
 
@@ -105,6 +107,15 @@ public class EntityStats : MonoBehaviour
         StatType.Speed,
         StatType.Reaction,
     };
+    
+    public static List<StatType> PsychologicalStats = new() 
+    {
+        StatType.Darkness,
+        StatType.Nightmare,
+        StatType.Stimulation,
+        StatType.Mania,
+        StatType.Dissociation,
+    };
 
     [System.Serializable]
     struct StartStat
@@ -118,6 +129,7 @@ public class EntityStats : MonoBehaviour
     public UnityEvent<StatType, float> StatChangedEvent = new();
 
     Dictionary<StatType, float> stats = new();
+    public ReadOnlyDictionary<StatType, float> Stats => new(stats);
 
     void Awake()
     {
