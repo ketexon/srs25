@@ -12,22 +12,22 @@ using UnityEditor.UIElements;
 public class EntityStatsEditor : Editor
 {
     private System.Action cleanup = null;
-    
+
     public override VisualElement CreateInspectorGUI()
     {
         cleanup?.Invoke();
         cleanup = null;
-        
+
         var root = new VisualElement();
         InspectorElement.FillDefaultInspector(root, serializedObject, this);
 
         if (!EditorApplication.isPlaying && !EditorApplication.isPaused)
             return root;
-        
+
         var stats = (EntityStats)target;
 
         if (!stats.didAwake) return root;
-            
+
         Dictionary<EntityStats.StatType, FloatField> fields = new();
         foreach (var statType in EntityStats.StatTypes)
         {
@@ -76,19 +76,19 @@ public class EntityStats : MonoBehaviour
         Speed,
         Reaction
     }
-    
+
     public static Dictionary<StatType, float> DefaultStats = new()
     {
-        { StatType.Darkness, 1 },
-        { StatType.Nightmare, 1 },
-        { StatType.Stimulation, 1 },
-        { StatType.Mania, 1 },
-        { StatType.Dissociation, 1 },
-        { StatType.PainTolerance, 1 },
-        { StatType.Strength, 1 },
-        { StatType.Shakiness, 1 },
-        { StatType.Speed, 1 },
-        { StatType.Reaction, 1 }
+        { StatType.Darkness, 0.3f },
+        { StatType.Nightmare, 0.3f },
+        { StatType.Stimulation, 0.3f },
+        { StatType.Mania, 0.3f },
+        { StatType.Dissociation, 0.3f },
+        { StatType.PainTolerance, 0.3f },
+        { StatType.Strength, 0.3f },
+        { StatType.Shakiness, 0.3f },
+        { StatType.Speed, 0.3f },
+        { StatType.Reaction, 0.3f }
     };
 
     public static List<StatType> StatTypes = new()
@@ -109,7 +109,7 @@ public class EntityStats : MonoBehaviour
     struct StartStat
     {
         public StatType StatType;
-        [Range(1, 10)] public float Value;
+        [Range(0, 1)] public float Value;
     }
 
     [SerializeField] private List<StartStat> startStatOverrides = new();
@@ -129,7 +129,7 @@ public class EntityStats : MonoBehaviour
         {
             stats[startStat.StatType] = startStat.Value;
         }
-        
+
         Debug.Log(stats[StatType.Darkness]);
     }
 
@@ -147,16 +147,17 @@ public class EntityStats : MonoBehaviour
     {
         this[stat] += delta;
     }
-    
+
     public float this[StatType stat]
     {
         get => stats[stat];
         set
         {
             var old = stats[stat];
-            if (old == value) return;
-            stats[stat] = value;
-            OnStatChanged.Invoke(stat, value);
+            var newVal = Mathf.Clamp(value, 0f, 1f);
+            if (old == newVal) return;
+            stats[stat] = newVal;
+            OnStatChanged.Invoke(stat, newVal);
         }
     }
 }

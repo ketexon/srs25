@@ -10,13 +10,12 @@ public class PlayerPills : EntityItem
 
     int selectedIndex = 0;
 
-    public override bool CanEquip => availablePills.Count > 0;
+    public override bool CanEquip => spawnedPills.Count > 0;
 
-    List<Pills> availablePills = new();
-    List<Pills> activePills = new();
+    List<Pills> spawnedPills = new();
 
-    Pills SelectedPills => selectedIndex >= 0 && selectedIndex < availablePills.Count
-        ? availablePills[selectedIndex]
+    private Pills SelectedPills => selectedIndex >= 0 && selectedIndex < spawnedPills.Count
+        ? spawnedPills[selectedIndex]
         : null;
 
     private void Awake(){
@@ -26,20 +25,21 @@ public class PlayerPills : EntityItem
                 transform
             );
             var pills = pillGO.GetComponent<Pills>();
-            availablePills.Add(pills);
+            spawnedPills.Add(pills);
             pills.Entity = entity;
-            pills.HidePill();
+
+            pillGO.SetActive(false);
         }
     }
 
     private void OnEnable()
     {
-        if (availablePills.Count <= 0) return;
+        if (spawnedPills.Count <= 0) return;
         selectedIndex = CycleDir > 0
             ? 0
-            : availablePills.Count - 1;
+            : spawnedPills.Count - 1;
         if (!SelectedPills) return;
-        SelectedPills.ShowPill();
+        SelectedPills.gameObject.SetActive(true);
     }
 
     private void Update(){
@@ -53,14 +53,14 @@ public class PlayerPills : EntityItem
 
     private void OnDisable(){
         if(SelectedPills) {
-            SelectedPills.HidePill();
+            SelectedPills.gameObject.SetActive(false);
         }
     }
 
     public override bool Cycle(int dir, bool wrap = false)
     {
         if(SelectedPills){
-            SelectedPills.HidePill();
+            SelectedPills.gameObject.SetActive(false);
         }
         selectedIndex += dir;
         return ActivatePillsAtCurIndex();
@@ -68,35 +68,30 @@ public class PlayerPills : EntityItem
 
     bool ActivatePillsAtCurIndex(bool wrap = false)
     {
-        if(availablePills.Count == 0) return false;
+        if(spawnedPills.Count == 0) return false;
         if(wrap){
-            selectedIndex = KMath.Rem(selectedIndex, availablePills.Count);
+            selectedIndex = KMath.Rem(selectedIndex, spawnedPills.Count);
         }
 
         if (!SelectedPills) return false;
-        SelectedPills.ShowPill();
+        SelectedPills.gameObject.SetActive(true);
         return true;
     }
 
     public override void Use(bool start = true)
     {
-        if(!start) return;
-
-        if(SelectedPills is Pills pills) {
-            pills.Use();
-            activePills.Add(pills);
-            pills.onPillEffectOver.AddListener(HandlePillEffectOver);
-            availablePills.Remove(pills);
-            
-            if(!ActivatePillsAtCurIndex()){
-                entity.ItemController.Cycle(1,subItem: true, wrap: true);
-            }
+        if (!start) return;
+        if (!SelectedPills) return;
+        SelectedPills.Use();
+        Destroy(SelectedPills.gameObject);
+        spawnedPills.RemoveAt(selectedIndex);
+        if(selectedIndex > spawnedPills.Count)
+        {
+            selectedIndex = 0;
         }
-    }
-
-    void HandlePillEffectOver(Pills pills)
-    {
-        activePills.Remove(pills);
-        pills.onPillEffectOver.RemoveListener(HandlePillEffectOver);
+        
+        if(!ActivatePillsAtCurIndex(true)){
+            entity.ItemController.Cycle(1);
+        }
     }
 }

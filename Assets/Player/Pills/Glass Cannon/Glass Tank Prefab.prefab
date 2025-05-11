@@ -1,5 +1,49 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1271642789917764665
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4937081316337372799}
+  - component: {fileID: 4498869027891665573}
+  m_Layer: 0
+  m_Name: Glass Tank Status
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4937081316337372799
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271642789917764665}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 656371891375582490}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4498869027891665573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271642789917764665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24fd877e989e457408dea4714fbd1c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7947371335126087700
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18,11 +62,6 @@ PrefabInstance:
       propertyPath: pillBehaviors.Array.size
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5384923580411021434, guid: 65f54ee4ad2e8244f9865c9301a4ab32,
-        type: 3}
-      propertyPath: 'pillBehaviors.Array.data[0]'
-      value: 
-      objectReference: {fileID: 7685802897220499829}
     - target: {fileID: 7444831571262166286, guid: 65f54ee4ad2e8244f9865c9301a4ab32,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -80,28 +119,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7789690728711557044, guid: 65f54ee4ad2e8244f9865c9301a4ab32,
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7444831571262166286, guid: 65f54ee4ad2e8244f9865c9301a4ab32,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7685802897220499829}
+      addedObject: {fileID: 4937081316337372799}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65f54ee4ad2e8244f9865c9301a4ab32, type: 3}
---- !u!1 &166693029792348064 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7789690728711557044, guid: 65f54ee4ad2e8244f9865c9301a4ab32,
+--- !u!4 &656371891375582490 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7444831571262166286, guid: 65f54ee4ad2e8244f9865c9301a4ab32,
     type: 3}
   m_PrefabInstance: {fileID: 7947371335126087700}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7685802897220499829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 166693029792348064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 606a881c2a862894c8412cfd627d552b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
