@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CrystalMat
+  m_Name: PsychosisMatthew
   m_Shader: {fileID: -6465566751694194690, guid: 628ad790674690742935cf8977d14f18,
     type: 3}
   m_Parent: {fileID: 0}
@@ -44,15 +44,15 @@ Material:
     m_Ints: []
     m_Floats:
     - _Metallic: 1
-    - _Parallax_Amplitude: 50
+    - _Parallax_Amplitude: 20
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Smoothness: 1
+    - _Smoothness: 0.809
     - _Steps: 5
     - _Transparency: 1
     m_Colors:
-    - _DiamondColor: {r: 0, g: 0, b: 0, a: 0}
-    - _EmissionColor: {r: 1, g: 0, b: 0.47482157, a: 0}
+    - _DiamondColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0.24077523, g: 1, b: 0.06132078, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &7445523660616802747
