@@ -154,16 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 479371939ba8eb343b56d0fe3b1a4a2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingDarkness: 1
-  startingNightmare: 1
-  startingStimulation: 1
-  startingMania: 1
-  startingDissociation: 1
-  startingPainTolerance: 1
-  startingStrength: 3
-  startingShakiness: 1
-  startingSpeed: 4
-  startingReaction: 5
+  startStatOverrides: []
   OnStatChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -544,6 +535,11 @@ PrefabInstance:
       propertyPath: entity
       value: 
       objectReference: {fileID: 6806978343244172374}
+    - target: {fileID: 1437398756355824967, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
+        type: 3}
+      propertyPath: entityMovement
+      value: 
+      objectReference: {fileID: 5015012108194661265}
     - target: {fileID: 4785192264661219249, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
         type: 3}
       propertyPath: m_Name

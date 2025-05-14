@@ -1,9 +1,13 @@
 using System.Collections.Generic;
 using Kutie.Extensions;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 #if UNITY_EDITOR
+using Unity.AI.Navigation.Editor;
 using UnityEditor;
 
 [CustomEditor(typeof(Level))]
@@ -32,9 +36,16 @@ public class Level : MonoBehaviour {
 	[SerializeField]
 	[Tooltip("Seed for the level generator. If negative, a random seed will be used.")]
 	public int Seed;
+	[SerializeField] NavMeshSurface surface;
+
+	private void Awake()
+	{
+		Clear();
+	}
 
 	void Start(){
 		Generate();
+		BuildNavMesh();
 		Player.Teleport(PlayerSpawn.position);
 	}
 
@@ -55,6 +66,16 @@ public class Level : MonoBehaviour {
         {
             generator.Clear();
         }
+	}
+
+	void BuildNavMesh(){
+#if UNITY_EDITOR
+		NavMeshAssetManager.instance.StartBakingSurfaces(new Object[]{ surface });
+#else
+		surface.AddData();
+        surface.UpdateNavMesh(surface.navMeshData);
+        surface.BuildNavMesh();
+#endif
 	}
     
     #if UNITY_EDITOR

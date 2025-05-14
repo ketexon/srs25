@@ -142,7 +142,10 @@ public class EntityMovement : MonoBehaviour
 
     public void Teleport(Vector3 location){
 		location.y += baseOffset;
-        rb.position = location;
+        if (rb)
+        {
+            rb.position = location;
+        }
         transform.position = location;
     }
 

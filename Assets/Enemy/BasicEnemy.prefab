@@ -58,16 +58,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1013581870495251917, guid: b323db8ddfd02ea44b3eae56b5e40c52,
-        type: 3}
-      propertyPath: entityStats
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585037385362862602, guid: b323db8ddfd02ea44b3eae56b5e40c52,
-        type: 3}
-      propertyPath: Stats
-      value: 
-      objectReference: {fileID: 1605297443720475340}
     - target: {fileID: 2480839514888217651, guid: b323db8ddfd02ea44b3eae56b5e40c52,
         type: 3}
       propertyPath: 'managedReferences[2367309630658052346]'
@@ -94,11 +84,6 @@ PrefabInstance:
       propertyPath: managedReferences[2367309630658052346].GUID.m_Value1
       value: 7100461126887394650
       objectReference: {fileID: 0}
-    - target: {fileID: 2640702964025022491, guid: b323db8ddfd02ea44b3eae56b5e40c52,
-        type: 3}
-      propertyPath: defaultState
-      value: 
-      objectReference: {fileID: 3088729504848121703}
     - target: {fileID: 5253118550740448393, guid: b323db8ddfd02ea44b3eae56b5e40c52,
         type: 3}
       propertyPath: startingMania
@@ -157,32 +142,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9108054557359533721, guid: b323db8ddfd02ea44b3eae56b5e40c52,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3088729504848121703}
-    - targetCorrespondingSourceObject: {fileID: 9108054557359533721, guid: b323db8ddfd02ea44b3eae56b5e40c52,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3949804384470201858}
-    - targetCorrespondingSourceObject: {fileID: 9108054557359533721, guid: b323db8ddfd02ea44b3eae56b5e40c52,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1864209856977022780}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b323db8ddfd02ea44b3eae56b5e40c52, type: 3}
---- !u!114 &1605297443720475340 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5253118550740448393, guid: b323db8ddfd02ea44b3eae56b5e40c52,
-    type: 3}
-  m_PrefabInstance: {fileID: 6819007255085254213}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2362056251168385244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 479371939ba8eb343b56d0fe3b1a4a2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1721062800293118214 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5279216603495876419, guid: b323db8ddfd02ea44b3eae56b5e40c52,
@@ -195,50 +156,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df232b213767dc4da19829c3169d5f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &2362056251168385244 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9108054557359533721, guid: b323db8ddfd02ea44b3eae56b5e40c52,
-    type: 3}
-  m_PrefabInstance: {fileID: 6819007255085254213}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3088729504848121703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2362056251168385244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9070c1e4af7305b4885da0521a6a1864, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PatrolPoints: []
-  idleTime: 2
---- !u!114 &3949804384470201858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2362056251168385244}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fb416dea34a6784d99fd1623fc8248d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1864209856977022780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2362056251168385244}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17f58b062d590f84e928808c987a82cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bodyPartPreferences: 000000000100000002000000030000000400000005000000
-  maxRecoil: 3
-  minRecoil: 0.1

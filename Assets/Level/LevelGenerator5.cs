@@ -621,7 +621,7 @@ public class LevelGenerator5 : LevelGenerator
                         }
                         // find room with entrance and exit
                         var rooms = FindRoomsWithDoors(
-                            curRoomIndex,
+            curRoomIndex,
                             doorsRelative
                         );
                         if (rooms.Count == 0)
