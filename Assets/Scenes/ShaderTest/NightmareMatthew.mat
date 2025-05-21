@@ -56,15 +56,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Metallic: 0.8
+    - _Metallic: 1
     - _Parallax_Amplitude: 20
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Smoothness: 0.6
+    - _Smoothness: 0.006
     - _Steps: 5
     - _Transparency: 1
     m_Colors:
-    - _DiamondColor: {r: 0, g: 0, b: 0, a: 0}
+    - _DiamondColor: {r: 0.12082782, g: 0.5019608, b: 0.1137255, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

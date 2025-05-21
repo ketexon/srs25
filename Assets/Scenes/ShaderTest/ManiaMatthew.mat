@@ -29,6 +29,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 18fef71e2e3cc7f429429b809c8e0341, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_6f10212986ee44158c923ed17b161fcd_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: d97b889ecdd5f594aab404cfcc5b0be8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Texture2DAsset_30ae0140c5a0400e987eed6c9b7e218e_Out_0_Texture2D:
         m_Texture: {fileID: 2800000, guid: dc9294c1ccb80b845a7b840e6f5c6e03, type: 3}
         m_Scale: {x: 1, y: 1}
