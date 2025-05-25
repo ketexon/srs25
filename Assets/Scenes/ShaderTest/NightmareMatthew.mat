@@ -60,7 +60,7 @@ Material:
     - _Parallax_Amplitude: 20
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Smoothness: 0.006
+    - _Smoothness: 0
     - _Steps: 5
     - _Transparency: 1
     m_Colors:
