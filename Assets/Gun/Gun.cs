@@ -1,8 +1,15 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum GunType
+{
+    Automatic,
+    SemiAutomatic,
+    Shotgun
+}
 public class Gun : EntityItem
 {
+    [SerializeField] GunType g = GunType.Automatic;
     [SerializeField] new Rigidbody rigidbody;
     public EntityMovement entityMovement;
     [SerializeField] new Collider collider;
@@ -155,11 +162,16 @@ public class Gun : EntityItem
 
     void Update()
     {
-        if (Shooting)
+        if (Shooting && g == GunType.Automatic)
         {
             Shoot();
         }
-        var actualRotation = NoRecoil ? vRotation : CombinedRotation;
+        else if ((g == GunType.SemiAutomatic || g == GunType.Shotgun) && Shooting)
+        {
+            Shoot();
+            Shooting = false;
+        }
+            var actualRotation = NoRecoil ? vRotation : CombinedRotation;
         Quaternion rotationY = Quaternion.AngleAxis(
             hRotSpring.CurrentValue,
             Vector3.up
@@ -236,13 +248,33 @@ public class Gun : EntityItem
                 spawnPos = tip.transform.position;
                 spawnRot = tip.transform.rotation;
             }
-            var bulletGO = Instantiate(bulletPrefab, spawnPos, spawnRot);
-            var bullet = bulletGO.GetComponent<Bullet>();
-            bullet.Caster = BulletCaster;
-            bullet.RaycastHits = raycastHits;
-            bullet.Velocity = muzzleVelocity;
-            bullet.EnergyPenaltyMult = energyPenaltyMult;
-            bullet.Damage = damage;
+            if (g == GunType.Automatic || g == GunType.SemiAutomatic)
+            {
+                var bulletGO = Instantiate(bulletPrefab, spawnPos, spawnRot);
+                var bullet = bulletGO.GetComponent<Bullet>();
+                bullet.Caster = BulletCaster;
+                bullet.RaycastHits = raycastHits;
+                bullet.Velocity = muzzleVelocity;
+                bullet.EnergyPenaltyMult = energyPenaltyMult;
+                bullet.Damage = damage;
+            }
+            else if (g == GunType.Shotgun)
+            {
+                for (int i = 0; i < 10; ++i)
+                {
+                    var bulletGO = Instantiate(bulletPrefab, spawnPos, spawnRot);
+                    var bullet = bulletGO.GetComponent<Bullet>();
+                    bullet.Caster = BulletCaster;
+                    bullet.RaycastHits = raycastHits;
+                    bullet.Velocity = muzzleVelocity;
+                    bullet.EnergyPenaltyMult = energyPenaltyMult;
+                    bullet.Damage = damage;
+                    // spread
+                    float spreadAngleX = Random.Range(-2.5f, 2.5f);
+                    float spreadAngleY = Random.Range(-2.5f, 2.5f);
+                    bulletGO.transform.Rotate(spreadAngleX, spreadAngleY, 0);
+                }
+            }
         }
 
         float vRot = Random.Range(0, vRotVel);
