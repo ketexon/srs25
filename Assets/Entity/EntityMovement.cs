@@ -77,12 +77,12 @@ public class EntityMovement : MonoBehaviour
 
     void OnEnable()
     {
-        entityStats.OnStatChanged.AddListener(OnStatsChanged);
+        entityStats.StatChangedEvent.AddListener(OnStatsChanged);
     }
 
     void OnDisable()
     {
-        entityStats.OnStatChanged.RemoveListener(OnStatsChanged);
+        entityStats.StatChangedEvent.RemoveListener(OnStatsChanged);
     }
 
     public void LookDelta(float deltaYaw)
