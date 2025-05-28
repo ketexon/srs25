@@ -16,17 +16,25 @@ public class PlayerController : MonoBehaviour
         entity = GetComponent<Entity>();
 
         entity.HumanModel.DeathEvent.AddListener(OnDeath);
+
     }
 
     virtual protected void OnEnable()
     {
         camera.Priority.Enabled = true;
+        movement.SwitchGuns.AddListener(GunSwitch);
     }
 
     virtual protected void OnDisable()
     {
         camera.Priority.Enabled = false;
         movement.MoveDir = Vector2.zero;
+        movement.SwitchGuns.RemoveListener(GunSwitch);
+    }
+    virtual protected void GunSwitch(Gun newGun)
+    {
+        gun = newGun;
+        gun.BulletCaster = new RayBulletCaster();
     }
 
     virtual protected void OnDeath(){

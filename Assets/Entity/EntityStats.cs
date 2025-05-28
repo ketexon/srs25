@@ -85,9 +85,9 @@ public class EntityStats : MonoBehaviour
         { StatType.Mania, 1 },
         { StatType.Dissociation, 1 },
         { StatType.PainTolerance, 1 },
-        { StatType.Strength, 1 },
+        { StatType.Strength, 0.3f },
         { StatType.Shakiness, 1 },
-        { StatType.Speed, 1 },
+        { StatType.Speed, 0.3f },
         { StatType.Reaction, 1 }
     };
 

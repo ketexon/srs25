@@ -6,8 +6,8 @@ public class EntityItemController : MonoBehaviour
 {
 	[SerializeField] public Entity Entity;
 	[SerializeField] public List<EntityItem> Items = new();
-
-	[SerializeField] public int ActiveItemIndex = 0;
+    public const int GunIndex = 0;
+    [SerializeField] public int ActiveItemIndex = 0;
 	public EntityItem ActiveItem => Items[ActiveItemIndex];
 
 	virtual protected void Start()

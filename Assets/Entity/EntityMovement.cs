@@ -1,6 +1,7 @@
 ﻿using Kutie.Extensions;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 [System.Serializable]
@@ -34,6 +35,7 @@ public class EntityMovement : MonoBehaviour
     private float lastJumpTime = -1f;
     private float lastSlideTime = -1f;
 
+    public UnityEvent<Gun> SwitchGuns;
     public bool Walking => rb.linearVelocity.XZ().magnitude > 0.1f;
 
     Vector3 moveDir;
@@ -88,12 +90,12 @@ public class EntityMovement : MonoBehaviour
 
     void OnEnable()
     {
-        entityStats.OnStatChanged.AddListener(OnStatsChanged);
+        entityStats.OnStatChanged.AddListener(StatChangedEvent);
     }
 
     void OnDisable()
     {
-        entityStats.OnStatChanged.RemoveListener(OnStatsChanged);
+        entityStats.OnStatChanged.RemoveListener(StatChangedEvent);
     }
 
     public void LookDelta(float deltaYaw)
@@ -111,6 +113,34 @@ public class EntityMovement : MonoBehaviour
     {
         Vector3 delta = worldPoint - Eyes.transform.position;
         LookDir(delta.normalized);
+    }
+    void OnGunPickup()
+    {
+        Ray ray = new Ray(Eyes.position, Eyes.forward);
+        RaycastHit hit;
+        float pickupRange = 3f;
+
+        if (Physics.Raycast(ray, out hit, pickupRange))
+        {
+                Gun gun = hit.collider.GetComponentInParent<Gun>();
+                if (gun != null)
+                {
+                    Debug.Log(gun.name + " picked up by " + gameObject.name);
+                    SwitchGuns.Invoke(gun);
+                    Entity entity = GetComponent<Entity>();
+                    if (entity == null)
+                        return;
+
+                    if (entity.Gun != null)
+                    {
+                        entity.Gun.Drop();
+                        entity.Gun = null;
+                    }
+
+                    gun.PickUp(entity);
+                    entity.Gun = gun;
+                }
+        }
     }
 
     void OnJump()
@@ -236,7 +266,7 @@ public class EntityMovement : MonoBehaviour
         transform.position = location;
     }
 
-    void OnStatsChanged(EntityStats.StatType stat, float value)
+    void StatChangedEvent(EntityStats.StatType stat, float value)
     {
         switch (stat)
         {
