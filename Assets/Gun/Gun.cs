@@ -181,10 +181,12 @@ public class Gun : EntityItem
             vRotation + vRotSpring.CurrentValue,
             Vector3.right
         );
-        transform.localRotation = rotationX * rotationY;
         if (entity != null)
-        transform.localPosition = defaultPosition - transform.localRotation * (Vector3.forward * zTransSpring.CurrentValue * 0.0005f * (overallRecoilMult / 2));
-        if (animator)
+        {
+            transform.localRotation = rotationX * rotationY;
+            transform.localPosition = defaultPosition - transform.localRotation * (Vector3.forward * zTransSpring.CurrentValue * 0.0005f * (overallRecoilMult / 2));
+        }
+            if (animator)
         {
             UpdateAnimator();
         }
@@ -292,6 +294,7 @@ public class Gun : EntityItem
             //cameraRecoilOffset.x = Mathf.Clamp(cameraRecoilOffset.x, -maxHRot, maxHRot);
             //cameraRecoilOffset.y = Mathf.Clamp(cameraRecoilOffset.y, -maxVRot, maxVRot);
         }
+        Debug.Log(rigidbody.linearVelocity);
     }
 
     public void Drop()
@@ -300,9 +303,11 @@ public class Gun : EntityItem
         collider.enabled = true;
         entity.Gun = null;
         transform.SetParent(null, true);
-        rigidbody.AddForce(entity.transform.forward * 2, ForceMode.Impulse);
+        transform.rotation = Quaternion.Euler(0, 0, 90);
+        rigidbody.AddForce(entity.transform.forward*10, ForceMode.Impulse);
         entity = null;
     }
+
     public void PickUp(Entity entity)
     {
         rigidbody.isKinematic = true;

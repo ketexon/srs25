@@ -117,15 +117,15 @@ public class EntityMovement : MonoBehaviour
     void OnGunPickup()
     {
         Ray ray = new Ray(Eyes.position, Eyes.forward);
+        Debug.DrawRay(Eyes.position, Eyes.forward);
         RaycastHit hit;
-        float pickupRange = 3f;
 
-        if (Physics.Raycast(ray, out hit, pickupRange))
+        if (Physics.Raycast(ray, out hit))
         {
                 Gun gun = hit.collider.GetComponentInParent<Gun>();
                 if (gun != null)
                 {
-                    Debug.Log(gun.name + " picked up by " + gameObject.name);
+                    //Debug.Log(gun.name + " picked up by " + gameObject.name);
                     SwitchGuns.Invoke(gun);
                     Entity entity = GetComponent<Entity>();
                     if (entity == null)
@@ -161,7 +161,7 @@ public class EntityMovement : MonoBehaviour
     {
         if (!isSliding)
         {
-            Debug.Log(moveDir);
+            //Debug.Log(moveDir);
             isSliding = true;
             slideDir = new Vector3(moveDir.x, 0f, moveDir.z);
             slideVal = MovementSpeed * slideMult;
