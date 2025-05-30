@@ -18,6 +18,7 @@ public class Gun : EntityItem
     [SerializeField] float maxAngle = 80;
     [SerializeField] Transform tip;
     Vector3 defaultPosition;
+    [SerializeField] Vector3 armOffset;
     [SerializeField] public bool ShootStraight = false;
     [SerializeField] public bool NoRecoil = false;
     [SerializeField] GameObject bulletPrefab;
@@ -59,6 +60,9 @@ public class Gun : EntityItem
     [System.NonSerialized] public IBulletCaster BulletCaster = new RayBulletCaster();
     float lastShotTime = float.NegativeInfinity;
 
+    [SerializeField] GameObject arms;
+    [SerializeField] GameObject gloves;
+    [SerializeField] GameObject shirt;
     float overallRecoilMult = 1f;
     private float vBaseRotation = 0;
 
@@ -170,6 +174,18 @@ public class Gun : EntityItem
         {
             Shoot();
             Shooting = false;
+        }
+        if (entity != null)
+        {
+            arms.GetComponent<SkinnedMeshRenderer>().enabled = true;
+            gloves.GetComponent<SkinnedMeshRenderer>().enabled = true;
+            shirt.GetComponent<SkinnedMeshRenderer>().enabled = true;
+        }
+        else
+        {
+            arms.GetComponent<SkinnedMeshRenderer>().enabled = false;
+            gloves.GetComponent<SkinnedMeshRenderer>().enabled = false;
+            shirt.GetComponent<SkinnedMeshRenderer>().enabled = false;
         }
             var actualRotation = NoRecoil ? vRotation : CombinedRotation;
         Quaternion rotationY = Quaternion.AngleAxis(
@@ -324,6 +340,8 @@ public class Gun : EntityItem
         transform.SetParent(entity.transform, true);
         entityMovement = entity.GetComponent<EntityMovement>();
         entity.Gun = this;
+        defaultPosition = armOffset;
+        transform.localPosition = defaultPosition;
     }
 
     void StatChangedEvent(EntityStats.StatType type, float value)
