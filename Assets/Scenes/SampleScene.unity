@@ -5343,8 +5343,8 @@ MonoBehaviour:
     Frequency: 1
     DampingCoefficient: 1
     Responsiveness: 0
-  maxVRot: 0
-  vRotVel: 0
+  maxVRot: 1000
+  vRotVel: 500
   hTransRecoil:
     Frequency: 1
     DampingCoefficient: 1
@@ -5362,10 +5362,10 @@ MonoBehaviour:
     Frequency: 1
     DampingCoefficient: 1
     Responsiveness: 0
-  maxZTrans: 0
-  zTransVel: 0
+  maxZTrans: 100
+  zTransVel: 15
   zTransKick: 0
-  shotInterval: 1
+  shotInterval: 1.5
   muzzleVelocity: 900
   energyPenaltyMult: 300000
   damage: 30
@@ -6919,6 +6919,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1477523302 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1685692053308929213, guid: ad06c0a0a99b381458688d1ce89465fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1857956788}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1489997631
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7742,6 +7748,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 671886034925421616, guid: ad06c0a0a99b381458688d1ce89465fd,
+        type: 3}
+      propertyPath: arms
+      value: 
+      objectReference: {fileID: 1477523302}
+    - target: {fileID: 671886034925421616, guid: ad06c0a0a99b381458688d1ce89465fd,
+        type: 3}
+      propertyPath: shirt
+      value: 
+      objectReference: {fileID: 1477523302}
+    - target: {fileID: 671886034925421616, guid: ad06c0a0a99b381458688d1ce89465fd,
+        type: 3}
+      propertyPath: gloves
+      value: 
+      objectReference: {fileID: 1477523302}
     - target: {fileID: 2362056251168385244, guid: ad06c0a0a99b381458688d1ce89465fd,
         type: 3}
       propertyPath: m_Name

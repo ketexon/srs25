@@ -19,7 +19,7 @@ public class EntityMovement : MonoBehaviour
     [SerializeField] float maxPitch = 80;
     [SerializeField] public Transform Eyes;
     [SerializeField] public EntityMovementMove Mode = EntityMovementMove.Transform;
-    [SerializeField] Rigidbody rb;
+    [SerializeField] public Rigidbody rb;
     [System.NonSerialized] public Transform TargetTransform;
     [SerializeField] EntityStats entityStats;
     [System.NonSerialized] public float MovementSpeed;

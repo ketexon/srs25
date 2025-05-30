@@ -12,7 +12,7 @@ public class Tracer : MonoBehaviour
     [System.NonSerialized] public bool Hit = false;
     [System.NonSerialized] public Vector3 EndPoint;
     [System.NonSerialized] public Vector3 EndNormal;
-
+    public Vector3 playerVel;
     float distance;
     bool finished = false;
 
@@ -20,6 +20,7 @@ public class Tracer : MonoBehaviour
     {
         distance = Vector3.Distance(EndPoint, transform.position);
         distance -= length;
+        
     }
 
     void Update()
@@ -41,7 +42,8 @@ public class Tracer : MonoBehaviour
         }
 
         transform.position += transform.forward * delta;
-
+        transform.position += playerVel * dt;
+        Debug.Log(playerVel);
         if (finished)
         {
             if (Hit)

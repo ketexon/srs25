@@ -68,6 +68,7 @@ public class Bullet : MonoBehaviour
     [System.NonSerialized] public float Velocity;
     [System.NonSerialized] public float EnergyPenaltyMult;
     [System.NonSerialized] public float Damage;
+    private Vector3 vel;
 
     [System.NonSerialized] public RaycastHit[] RaycastHits;
 
@@ -125,12 +126,16 @@ public class Bullet : MonoBehaviour
 
         var tracerGO = Instantiate(tracerPrefab, startPoint, transform.rotation);
         var tracer = tracerGO.GetComponent<Tracer>();
+        tracer.playerVel = vel;
         tracer.Hit = remainingVel <= 0;
         tracer.EndPoint = endPoint;
         tracer.EndNormal = endNormal;
         Destroy(gameObject);
     }
-
+    public void GiveTracerVel(Vector3 v)
+    {
+        vel = v;
+    }
     void OnDrawGizmos() {
         Caster?.DebugDraw(this);
     }

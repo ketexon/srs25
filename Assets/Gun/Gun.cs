@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public enum GunType
 {
@@ -124,11 +125,13 @@ public class Gun : EntityItem
 
     void OnEnable()
     {
+        if (!entity) return;
         entity.Stats.OnStatChanged.AddListener(StatChangedEvent);
     }
 
     void OnDisable()
     {
+        if(!entity) return;
         Shooting = false;
         entity.Stats.OnStatChanged.RemoveListener(StatChangedEvent);
     }
@@ -235,6 +238,7 @@ public class Gun : EntityItem
     {
         if (!animator) return;
         animator.SetBool("shooting", Shooting);
+        if (!entity) return;
         animator.SetBool("walking", entity.Movement.Walking);
     }
 
@@ -268,33 +272,46 @@ public class Gun : EntityItem
             }
             if (g == GunType.Automatic || g == GunType.SemiAutomatic)
             {
-                var bulletGO = Instantiate(bulletPrefab, spawnPos, spawnRot);
-                var bullet = bulletGO.GetComponent<Bullet>();
-                bullet.Caster = BulletCaster;
-                bullet.RaycastHits = raycastHits;
-                bullet.Velocity = muzzleVelocity;
-                bullet.EnergyPenaltyMult = energyPenaltyMult;
-                bullet.Damage = damage;
+                SpawnBullet(spawnPos, spawnRot);
             }
             else if (g == GunType.Shotgun)
             {
                 for (int i = 0; i < 10; ++i)
                 {
-                    var bulletGO = Instantiate(bulletPrefab, spawnPos, spawnRot);
-                    var bullet = bulletGO.GetComponent<Bullet>();
-                    bullet.Caster = BulletCaster;
-                    bullet.RaycastHits = raycastHits;
-                    bullet.Velocity = muzzleVelocity;
-                    bullet.EnergyPenaltyMult = energyPenaltyMult;
-                    bullet.Damage = damage;
-                    // spread
                     float spreadAngleX = Random.Range(-2.5f, 2.5f);
                     float spreadAngleY = Random.Range(-2.5f, 2.5f);
-                    bulletGO.transform.Rotate(spreadAngleX, spreadAngleY, 0);
+                    Quaternion rot = spawnRot;
+                    rot.eulerAngles += new Vector3(spreadAngleX, spreadAngleY, 0);
+                    SpawnBullet(spawnPos, rot);
                 }
+
+            }
+            if(g == GunType.Shotgun || g == GunType.SemiAutomatic)
+            {
+                UpdateRecoil();
             }
         }
+        if(g==GunType.Automatic)
+        {
+            UpdateRecoil();
+        }
 
+        //Debug.Log(rigidbody.linearVelocity);
+    }
+
+    void SpawnBullet(Vector3 spawnPos, Quaternion spawnRot)
+    {
+        var bulletGO = Instantiate(bulletPrefab, spawnPos, spawnRot);
+        var bullet = bulletGO.GetComponent<Bullet>();
+        bullet.GiveTracerVel(entityMovement.rb.linearVelocity);
+        bullet.Caster = BulletCaster;
+        bullet.RaycastHits = raycastHits;
+        bullet.Velocity = muzzleVelocity;
+        bullet.EnergyPenaltyMult = energyPenaltyMult;
+        bullet.Damage = damage;
+    }
+    private void UpdateRecoil()
+    {
         float vRot = Random.Range(0, vRotVel);
         float hRot = Random.Range(-hRotVel, hRotVel);
         if (!NoRecoil)
@@ -304,15 +321,13 @@ public class Gun : EntityItem
             zTransSpring.CurrentValue += zTransKick;
             float vRotFixed = (vRotSpring.Velocity < 0) ? vRotSpring.Velocity : 0.5f * vRotSpring.Velocity;
 
-            cameraRecoilOffset.x += 0.005f * cameraHRecoilMult*hRot;
+            cameraRecoilOffset.x += 0.005f * cameraHRecoilMult * hRot;
             cameraRecoilOffset.y -= 0.025f * cameraVRecoilMult * vRotFixed;
             //clamping
             //cameraRecoilOffset.x = Mathf.Clamp(cameraRecoilOffset.x, -maxHRot, maxHRot);
             //cameraRecoilOffset.y = Mathf.Clamp(cameraRecoilOffset.y, -maxVRot, maxVRot);
         }
-        Debug.Log(rigidbody.linearVelocity);
     }
-
     public void Drop()
     {
         rigidbody.isKinematic = false;
