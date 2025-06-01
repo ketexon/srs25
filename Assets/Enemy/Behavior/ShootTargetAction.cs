@@ -4,18 +4,23 @@ using Unity.Behavior;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
 using Unity.Properties;
+using UnityEngine.Serialization;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "ShootTarget", story: "[Agent] shoots [TargetHitBox]", category: "Action", id: "7d8a4098b205d8dc682e330e68fff761")]
+[NodeDescription(name: "ShootTarget", story: "[Agent] shoots [TargetHitBox]",
+    category: "Action", id: "7d8a4098b205d8dc682e330e68fff761")]
 public partial class ShootTargetAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
     [SerializeReference] public BlackboardVariable<GameObject> TargetHitBox;
 
-    [SerializeReference] private float maxRecoil = 1f;
-    [SerializeReference] private float minRecoil = 0.2f;
-    [SerializeReference] private float recoilCooldownDuration = 0.25f;
-    
+    [SerializeReference] public BlackboardVariable<float> MaxAngle = new(5.0f);
+
+    [SerializeReference] public BlackboardVariable<float> MaxRecoil = new(1f);
+
+    [SerializeReference]
+    public BlackboardVariable<float> RecoilCooldownDuration = new(0.25f);
+
     private float recoilCooldownEndTime = float.NegativeInfinity;
 
     private Entity entity;
@@ -31,29 +36,39 @@ public partial class ShootTargetAction : Action
     {
         entity.Gun.Shooting = false;
     }
-    
-    protected override Status OnUpdate(){
+
+    protected override Status OnUpdate()
+    {
         if (TargetHitBox.Value == null)
         {
             return Status.Failure;
         }
-        
-        if(Time.time < recoilCooldownEndTime)
+
+        if (Time.time < recoilCooldownEndTime)
         {
             return Status.Running;
         }
-        
-        if(!entity.Gun.Shooting){
-            entity.Gun.Shooting = true;
-        }
-        if(entity.Gun.CurrentRecoil < maxRecoil)
+
+        var angle = Vector3.Angle(
+            entity.Gun.transform.forward,
+            TargetHitBox.Value.transform.position -
+            entity.Gun.transform.position
+        );
+
+        if (angle > MaxAngle.Value)
         {
+            entity.Gun.Shooting = false;
             return Status.Running;
         }
-        
-        entity.Gun.Shooting = false;
-        recoilCooldownEndTime = Time.time + recoilCooldownDuration;
+
+        if (entity.Gun.CurrentRecoil > MaxRecoil.Value)
+        {
+            entity.Gun.Shooting = false;
+            recoilCooldownEndTime = Time.time + RecoilCooldownDuration.Value;
+            return Status.Running;
+        }
+
+        entity.Gun.Shooting = true;
         return Status.Running;
     }
 }
-

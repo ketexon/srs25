@@ -492,16 +492,6 @@ PrefabInstance:
       propertyPath: 'PatrolPoints.Array.data[1]'
       value: 
       objectReference: {fileID: 595112997}
-    - target: {fileID: 5814443639275666312, guid: ad06c0a0a99b381458688d1ce89465fd,
-        type: 3}
-      propertyPath: maxPitch
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5814443639275666312, guid: ad06c0a0a99b381458688d1ce89465fd,
-        type: 3}
-      propertyPath: minPitch
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6503587628128877192, guid: ad06c0a0a99b381458688d1ce89465fd,
         type: 3}
       propertyPath: m_LocalPosition.x

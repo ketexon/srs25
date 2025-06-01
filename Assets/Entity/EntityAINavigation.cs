@@ -5,6 +5,12 @@ public class EntityAINavigation : MonoBehaviour {
 	[SerializeField] Entity entity;
 	[SerializeField] NavMeshAgent agent;
 
+	/**
+	 * If true, the entity will look in the direction of movement.
+	 * This will override any calls to EntityMovement.LookDir (or similar)
+	 */
+	public bool LookForward { get; set; } = true;
+
 	public bool HasReachedDestination => !agent.pathPending && agent.remainingDistance < 0.1f;
 
 	void Start(){
@@ -28,7 +34,10 @@ public class EntityAINavigation : MonoBehaviour {
 	}
 
 	void Update(){
-		entity.Movement.LookDir(agent.transform.forward);
+		if (LookForward)
+		{
+			entity.Movement.LookDir(agent.transform.forward);
+		}
 		entity.transform.position = agent.transform.position;
 	}
 }

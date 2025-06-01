@@ -1,4 +1,5 @@
-﻿using Kutie.Extensions;
+﻿using System;
+using Kutie.Extensions;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -109,7 +110,7 @@ public class EntityMovement : MonoBehaviour
             new Vector3(dir.x, 0, dir.z),
             Vector3.up
         );
-
+        
         Pitch = Vector3.SignedAngle(
             Vector3.forward,
             Quaternion.AngleAxis(-Yaw, Vector3.up) * dir,
