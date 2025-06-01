@@ -236,6 +236,7 @@ public class HumanModel : MonoBehaviour
 
     public void OnHit(BodyPart bodyPart, float damage)
     {
+        if (Health.IsDead) return;
         Health.Damage(bodyPart, damage);
         if (Health.IsDead)
         {

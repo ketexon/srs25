@@ -64,6 +64,9 @@ public class Gun : EntityItem
     [SerializeField] GameObject arms;
     [SerializeField] GameObject gloves;
     [SerializeField] GameObject shirt;
+    SkinnedMeshRenderer armsRenderer;
+    SkinnedMeshRenderer glovesRenderer;
+    SkinnedMeshRenderer shirtRenderer;
     float overallRecoilMult = 1f;
     private float vBaseRotation = 0;
 
@@ -126,6 +129,9 @@ public class Gun : EntityItem
     void OnEnable()
     {
         if (!entity) return;
+        armsRenderer = arms.GetComponent<SkinnedMeshRenderer>();
+        glovesRenderer = gloves.GetComponent<SkinnedMeshRenderer>();
+        shirtRenderer = shirt.GetComponent<SkinnedMeshRenderer>();
         entity.Stats.OnStatChanged.AddListener(StatChangedEvent);
     }
 
@@ -180,15 +186,15 @@ public class Gun : EntityItem
         }
         if (entity != null)
         {
-            arms.GetComponent<SkinnedMeshRenderer>().enabled = true;
-            gloves.GetComponent<SkinnedMeshRenderer>().enabled = true;
-            shirt.GetComponent<SkinnedMeshRenderer>().enabled = true;
+            if(armsRenderer) armsRenderer.enabled = true;
+            if(glovesRenderer)glovesRenderer.enabled = true;
+            if(shirtRenderer)shirtRenderer.enabled = true;
         }
         else
         {
-            arms.GetComponent<SkinnedMeshRenderer>().enabled = false;
-            gloves.GetComponent<SkinnedMeshRenderer>().enabled = false;
-            shirt.GetComponent<SkinnedMeshRenderer>().enabled = false;
+            if(armsRenderer) armsRenderer.enabled = false;
+            if(glovesRenderer)glovesRenderer.enabled = false;
+            if(shirtRenderer) shirtRenderer.enabled = false;
         }
             var actualRotation = NoRecoil ? vRotation : CombinedRotation;
         Quaternion rotationY = Quaternion.AngleAxis(
