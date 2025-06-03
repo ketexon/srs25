@@ -129,10 +129,10 @@ public class Gun : EntityItem
 
     void OnEnable()
     {
-        if (!entity) return;
         armsRenderer = arms.GetComponent<SkinnedMeshRenderer>();
         glovesRenderer = gloves.GetComponent<SkinnedMeshRenderer>();
         shirtRenderer = shirt.GetComponent<SkinnedMeshRenderer>();
+        if (!entity) return;
         entity.Stats.StatChangedEvent.AddListener(OnStatChanged);
     }
 

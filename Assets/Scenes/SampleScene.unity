@@ -6695,6 +6695,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vec
       objectReference: {fileID: 0}
+    - target: {fileID: 4430900607067272384, guid: a7a90eb9d4e2a164db0df28a16d004d8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6863,6 +6868,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ScottietheShotty
+      objectReference: {fileID: 0}
+    - target: {fileID: 1303541468158503413, guid: b25b700c3b0b7514885f3bef53e36bc7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3610046313319582720, guid: b25b700c3b0b7514885f3bef53e36bc7,
         type: 3}
