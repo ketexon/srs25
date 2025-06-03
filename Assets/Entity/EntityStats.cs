@@ -44,10 +44,10 @@ public class EntityStatsEditor : Editor
             root.Add(field);
         }
 
-        stats.OnStatChanged.AddListener(OnStatChanged);
+        stats.StatChangedEvent.AddListener(OnStatChanged);
         cleanup = () =>
         {
-            stats.OnStatChanged.RemoveListener(OnStatChanged);
+            stats.StatChangedEvent.RemoveListener(OnStatChanged);
         };
 
         return root;
@@ -114,7 +114,7 @@ public class EntityStats : MonoBehaviour
 
     [SerializeField] private List<StartStat> startStatOverrides = new();
 
-    public UnityEvent<StatType, float> OnStatChanged = new();
+    public UnityEvent<StatType, float> StatChangedEvent = new();
 
     Dictionary<StatType, float> stats = new();
 
@@ -130,7 +130,7 @@ public class EntityStats : MonoBehaviour
             stats[startStat.StatType] = startStat.Value;
         }
         
-        Debug.Log(stats[StatType.Darkness]);
+        //Debug.Log(stats[StatType.Darkness]);
     }
 
     public float GetStat(StatType stat)
@@ -156,7 +156,7 @@ public class EntityStats : MonoBehaviour
             var old = stats[stat];
             if (old == value) return;
             stats[stat] = value;
-            OnStatChanged.Invoke(stat, value);
+            StatChangedEvent.Invoke(stat, value);
         }
     }
 }

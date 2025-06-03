@@ -70,6 +70,7 @@ public class Gun : EntityItem
     float overallRecoilMult = 1f;
     private float vBaseRotation = 0;
 
+    bool hasArms, hasGloves, hasShirt = false;
     public float vRotation
     {
         get => vBaseRotation + vRotSpring.CurrentValue;
@@ -132,25 +133,26 @@ public class Gun : EntityItem
         armsRenderer = arms.GetComponent<SkinnedMeshRenderer>();
         glovesRenderer = gloves.GetComponent<SkinnedMeshRenderer>();
         shirtRenderer = shirt.GetComponent<SkinnedMeshRenderer>();
-        entity.Stats.OnStatChanged.AddListener(StatChangedEvent);
+        entity.Stats.StatChangedEvent.AddListener(OnStatChanged);
     }
 
     void OnDisable()
     {
         if(!entity) return;
         Shooting = false;
-        entity.Stats.OnStatChanged.RemoveListener(StatChangedEvent);
+        entity.Stats.StatChangedEvent.RemoveListener(OnStatChanged);
     }
 
     private void Awake()
     {
+        
         hRotSpring = new(0, hRotRecoil);
         vRotSpring = new(0, vRotRecoil);
         hTransSpring = new(0, vTransRecoil);
         vTransSpring = new(0, hTransRecoil);
         zTransSpring = new(0, zTransRecoil);
         defaultPosition = transform.localPosition;
-        if(entity)
+        if (entity)
         entityMovement = entity.GetComponent<EntityMovement>();
     }
 
@@ -184,17 +186,17 @@ public class Gun : EntityItem
             Shoot();
             Shooting = false;
         }
-        if (entity != null)
+        if (entity != null && LayerMask.LayerToName(entity.gameObject.layer)=="Player")
         {
-            if(armsRenderer) armsRenderer.enabled = true;
-            if(glovesRenderer)glovesRenderer.enabled = true;
-            if(shirtRenderer)shirtRenderer.enabled = true;
+            armsRenderer.enabled = true;
+            glovesRenderer.enabled = true;
+            shirtRenderer.enabled = true;
         }
         else
         {
-            if(armsRenderer) armsRenderer.enabled = false;
-            if(glovesRenderer)glovesRenderer.enabled = false;
-            if(shirtRenderer) shirtRenderer.enabled = false;
+            armsRenderer.enabled = false;
+            glovesRenderer.enabled = false;
+            shirtRenderer.enabled = false;
         }
             var actualRotation = NoRecoil ? vRotation : CombinedRotation;
         Quaternion rotationY = Quaternion.AngleAxis(
@@ -365,7 +367,7 @@ public class Gun : EntityItem
         transform.localPosition = defaultPosition;
     }
 
-    void StatChangedEvent(EntityStats.StatType type, float value)
+    void OnStatChanged(EntityStats.StatType type, float value)
     {
         switch (type)
         {

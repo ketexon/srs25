@@ -90,12 +90,12 @@ public class EntityMovement : MonoBehaviour
 
     void OnEnable()
     {
-        entityStats.OnStatChanged.AddListener(StatChangedEvent);
+        entityStats.StatChangedEvent.AddListener(OnStatChanged);
     }
 
     void OnDisable()
     {
-        entityStats.OnStatChanged.RemoveListener(StatChangedEvent);
+        entityStats.StatChangedEvent.RemoveListener(OnStatChanged);
     }
 
     public void LookDelta(float deltaYaw)
@@ -190,7 +190,7 @@ public class EntityMovement : MonoBehaviour
         {
             CheckGrounded();
         }
-        Debug.Log(isGrounded);
+        //Debug.Log(isGrounded);
         if (Mode == EntityMovementMove.Transform)
         {
             transform.position += MovementSpeed * Time.deltaTime * moveDir;
@@ -266,7 +266,7 @@ public class EntityMovement : MonoBehaviour
         transform.position = location;
     }
 
-    void StatChangedEvent(EntityStats.StatType stat, float value)
+    void OnStatChanged(EntityStats.StatType stat, float value)
     {
         switch (stat)
         {
