@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +9,8 @@ public class Elevator : Interactable
     [SerializeField] public Transform Spawn;
     [SerializeField] private int targetFloor;
     [SerializeField] public Animator Animator;
-
+    [SerializeField] private float openDelay = 0.5f;
+    
     [System.NonSerialized] public Room5 Room;
     
     public override string InteractText => "Press elevator button";
@@ -17,6 +19,8 @@ public class Elevator : Interactable
     private Entity entity;
     private Elevator targetElevator;
     private Vector3 targetPos;
+
+    private bool interacted = false;
     
     private void Start()
     {
@@ -32,19 +36,29 @@ public class Elevator : Interactable
         
         targetElevator.Animator.SetBool(OpenId, false);
         Animator.SetBool(OpenId, false);
-        
-        var spawnOffset = entity.Movement.transform.position - Spawn.position;
-        spawnOffset.y = 0;
-        targetPos = targetElevator.Spawn.position + spawnOffset;
+        interacted = true;
     }
 
     public void OnDoorsClosed()
     {
-        Debug.Log($"Teleporting to {targetElevator.Room.Position} on floor {targetFloor} ({targetPos})");
-        entity.Movement.Teleport(targetPos);
+        if (!interacted) return;
+
+        StartCoroutine(OpenCoroutine());
         
-        // open doors
-        targetElevator.Animator.SetBool(OpenId, true);
-        Animator.SetBool(OpenId, true);
+        IEnumerator OpenCoroutine()
+        {
+            yield return new WaitForSeconds(openDelay);
+            interacted = false;
+            // open doors
+            targetElevator.Animator.SetBool(OpenId, true);
+            Animator.SetBool(OpenId, true);
+        
+            var spawnOffset = entity.Movement.transform.position - Spawn.position;
+            spawnOffset.y = 0;
+            targetPos = targetElevator.Spawn.position + spawnOffset;
+        
+            Debug.Log($"Teleporting to {targetElevator.Room.Position} on floor {targetFloor} ({targetPos})");
+            entity.Movement.Teleport(targetPos);
+        }
     }
 }

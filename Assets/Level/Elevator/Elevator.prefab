@@ -194,6 +194,11 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7274897009124438862, guid: f41d7234f02d0764fa731378c4b01657,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -516098083770646512, guid: f41d7234f02d0764fa731378c4b01657,
         type: 3}
       propertyPath: m_Name
@@ -225,7 +230,9 @@ PrefabInstance:
       value: RightDoor
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8416272007918961125, guid: f41d7234f02d0764fa731378c4b01657, type: 3}
+    - {fileID: -516098083770646512, guid: f41d7234f02d0764fa731378c4b01657, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f41d7234f02d0764fa731378c4b01657,

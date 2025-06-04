@@ -4772,12 +4772,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 3ffae86a3e625284aa44ef8b994c0e6a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 105.5
+      value: 100.75
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3ffae86a3e625284aa44ef8b994c0e6a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.18
+      value: -0.26
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3ffae86a3e625284aa44ef8b994c0e6a,
         type: 3}
@@ -4828,6 +4828,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: towerapplied
+      objectReference: {fileID: 0}
+    - target: {fileID: 3586493807406110676, guid: 3ffae86a3e625284aa44ef8b994c0e6a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865064391339405807, guid: 3ffae86a3e625284aa44ef8b994c0e6a,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865064391339405807, guid: 3ffae86a3e625284aa44ef8b994c0e6a,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865064391339405807, guid: 3ffae86a3e625284aa44ef8b994c0e6a,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865064391339405807, guid: 3ffae86a3e625284aa44ef8b994c0e6a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865064391339405807, guid: 3ffae86a3e625284aa44ef8b994c0e6a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865064391339405807, guid: 3ffae86a3e625284aa44ef8b994c0e6a,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6189765426269410593, guid: 3ffae86a3e625284aa44ef8b994c0e6a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
