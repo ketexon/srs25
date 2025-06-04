@@ -1,5 +1,79 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5418856117192041358
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 351448471356849357}
+    m_Modifications:
+    - target: {fileID: 2242515457779498778, guid: 0106e6ef833caea4f803fdf1c5f7ac98,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242515457779498778, guid: 0106e6ef833caea4f803fdf1c5f7ac98,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242515457779498778, guid: 0106e6ef833caea4f803fdf1c5f7ac98,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242515457779498778, guid: 0106e6ef833caea4f803fdf1c5f7ac98,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242515457779498778, guid: 0106e6ef833caea4f803fdf1c5f7ac98,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242515457779498778, guid: 0106e6ef833caea4f803fdf1c5f7ac98,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242515457779498778, guid: 0106e6ef833caea4f803fdf1c5f7ac98,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242515457779498778, guid: 0106e6ef833caea4f803fdf1c5f7ac98,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242515457779498778, guid: 0106e6ef833caea4f803fdf1c5f7ac98,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242515457779498778, guid: 0106e6ef833caea4f803fdf1c5f7ac98,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5613853514178126496, guid: 0106e6ef833caea4f803fdf1c5f7ac98,
+        type: 3}
+      propertyPath: m_Name
+      value: Val
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0106e6ef833caea4f803fdf1c5f7ac98, type: 3}
+--- !u!4 &6065406420133338260 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2242515457779498778, guid: 0106e6ef833caea4f803fdf1c5f7ac98,
+    type: 3}
+  m_PrefabInstance: {fileID: 5418856117192041358}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5442619555826171484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -101,7 +175,11 @@ PrefabInstance:
         type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5721974112483066513, guid: b3b5d88e597f7234b93e5f410268ed07,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6065406420133338260}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3886147962188206277, guid: b3b5d88e597f7234b93e5f410268ed07,
         type: 3}
@@ -264,9 +342,19 @@ MonoBehaviour:
   m_BlackboardVariableOverridesList:
   - rid: 2367309630658052207
   - rid: 2367309630658052347
+  - rid: 1579959799344267761
   references:
     version: 2
     RefIds:
+    - rid: 1579959799344267761
+      type: {class: 'BlackboardVariable`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]',
+        ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 5433947355215860721
+          m_Value1: 14780800887732756464
+        Name: NavMeshAgent
+        m_Value: {fileID: 7057793233753909499}
     - rid: 2367309630658052207
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]',
         ns: Unity.Behavior, asm: Unity.Behavior}

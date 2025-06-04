@@ -45,15 +45,15 @@ public class EntityStatsEditor : Editor
             root.Add(field);
         }
 
-        stats.StatChangedEvent.AddListener(OnStatChanged);
+        stats.StatChangedEvent.AddListener(OnStatsChanged);
         cleanup = () =>
         {
-            stats.StatChangedEvent.RemoveListener(OnStatChanged);
+            stats.StatChangedEvent.RemoveListener(OnStatsChanged);
         };
 
         return root;
 
-        void OnStatChanged(EntityStats.StatType stat, float value)
+        void OnStatsChanged(EntityStats.StatType stat, float value)
         {
             fields[stat].value = value;
         }
@@ -131,7 +131,7 @@ public class EntityStats : MonoBehaviour
             stats[startStat.StatType] = startStat.Value;
         }
         
-        Debug.Log(stats[StatType.Darkness]);
+        //Debug.Log(stats[StatType.Darkness]);
     }
 
     public float GetStat(StatType stat)

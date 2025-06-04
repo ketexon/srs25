@@ -52,6 +52,7 @@ MonoBehaviour:
   Bounds: {fileID: 8259297580516695622}
   Entrances: []
   enemySpawns: []
+  IsStartRoom: 0
 --- !u!1 &7750404456032382901
 GameObject:
   m_ObjectHideFlags: 0
