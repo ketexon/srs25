@@ -23,6 +23,7 @@ public class EntityMovement : MonoBehaviour
     [SerializeField] public Rigidbody rb;
     [System.NonSerialized] public Transform TargetTransform;
     [SerializeField] EntityStats entityStats;
+    [SerializeField] EntityItemController entityItemController;
     [System.NonSerialized] public float MovementSpeed;
     private bool isGrounded = true;
     private bool isSliding = false;
@@ -120,6 +121,8 @@ public class EntityMovement : MonoBehaviour
     }
     void OnGunPickup()
     {
+        if(!(entityItemController.ActiveItemIndex == EntityItemController.GunIndex))
+            return;
         Ray ray = new Ray(Eyes.position, Eyes.forward);
         Debug.DrawRay(Eyes.position, Eyes.forward);
         RaycastHit hit;
@@ -197,6 +200,7 @@ public class EntityMovement : MonoBehaviour
         if (Mode == EntityMovementMove.Transform)
         {
             transform.position += MovementSpeed * Time.deltaTime * moveDir;
+            //Debug.Log(transform.position);
         }
         else
         {
