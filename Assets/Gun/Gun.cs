@@ -160,6 +160,7 @@ public class Gun : EntityItem
 
     void Update()
     {
+        if (!entity) return;
         if (Shooting)
         {
             Shoot();
