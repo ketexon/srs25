@@ -496,16 +496,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entity: {fileID: 0}
   HandIKTargets: {fileID: 0}
+  g: 0
   rigidbody: {fileID: 4955143058631603336}
+  entityMovement: {fileID: 0}
   collider: {fileID: 6568185215728590772}
   animator: {fileID: 0}
   minAngle: -60
   maxAngle: 80
   tip: {fileID: 8644343354175532980}
+  armOffset: {x: 0.11, y: 0.385, z: 0.007}
   ShootStraight: 0
   NoRecoil: 0
   bulletPrefab: {fileID: 6025871477814436832, guid: 6b75240b5b2c41b46a15513242e5412f,
     type: 3}
+  cameraVRecoilMult: 1
+  cameraHRecoilMult: 1
   hRotRecoil:
     Frequency: 1
     DampingCoefficient: 1
@@ -542,6 +547,10 @@ MonoBehaviour:
   muzzleVelocity: 900
   energyPenaltyMult: 300000
   damage: 30
+  arms: {fileID: 0}
+  gloves: {fileID: 0}
+  shirt: {fileID: 0}
+  cameraRecoilReturnSpeed: 8
 --- !u!54 &4955143058631603336
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -860,6 +869,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AssaultRifle2_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 888ee5579dde5766388595794d99336f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

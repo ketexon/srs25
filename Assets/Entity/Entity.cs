@@ -12,10 +12,15 @@ public class Entity : MonoBehaviour
     void Awake()
     {
         HumanModel.DeathEvent.AddListener(OnDeath);
+        Movement.SwitchGuns.AddListener(GunSwitch);
     }
 
     public void OnDeath()
     {
         Gun.Drop();
+    }
+    public void GunSwitch(Gun newGun)
+    {
+        ItemController.Items[EntityItemController.GunIndex] = newGun;
     }
 }
