@@ -123,7 +123,10 @@ public class Gun : EntityItem
 
     void OnDisable(){
         Shooting = false;
-        entity.Stats.StatChangedEvent.RemoveListener(OnStatChanged);
+        if (entity)
+        {
+            entity.Stats.StatChangedEvent.RemoveListener(OnStatChanged);
+        }
     }
 
     private void Awake()

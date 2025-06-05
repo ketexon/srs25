@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: LongWallMat
     second: {fileID: 2100000, guid: be1caf1838dfd254583de30899941ccc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SlidingDoorMat
+    second: {fileID: 2100000, guid: b03a258da8b31474c89225b174f44996, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

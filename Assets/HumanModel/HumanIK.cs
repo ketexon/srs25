@@ -33,7 +33,7 @@ public class HumanIK : MonoBehaviour
     }
 
     void Update(){
-        if(runInEditor){
+        if(runInEditor && !Application.isPlaying){
             animator.Update(0);
         }
     }

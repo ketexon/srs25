@@ -12,7 +12,7 @@ public class Elevators : MonoBehaviour
             elevator
         );
         
-        Debug.Log($"Registered elevator at {elevator.Room.Position} on floor {elevator.Room.LevelGenerator.Floor}");
+        // Debug.Log($"Registered elevator at {elevator.Room.Position} on floor {elevator.Room.LevelGenerator.Floor}");
     }
 
     public void Unregister(Elevator elevator)
@@ -21,15 +21,11 @@ public class Elevators : MonoBehaviour
             (elevator.Room.LevelGenerator.Floor, elevator.Room.Position)
         );
         
-        Debug.Log($"Unregistered elevator at {elevator.Room.Position} on floor {elevator.Room.LevelGenerator.Floor}");
+        // Debug.Log($"Unregistered elevator at {elevator.Room.Position} on floor {elevator.Room.LevelGenerator.Floor}");
     }
 
     public Elevator Get(int floor, Vector2Int coord)
     {
-        foreach(var (f, c) in elevators.Keys)
-        {
-            Debug.Log("ELEVATOR AT " + (f, c));
-        }
         return elevators[(floor, coord)];
     }
 }

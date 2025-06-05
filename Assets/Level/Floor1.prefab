@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1664146719483905623}
   - component: {fileID: 645056498663961425}
   m_Layer: 0
-  m_Name: Level5
+  m_Name: Floor1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,6 +65,19 @@ MonoBehaviour:
     - Position: {x: 1, y: 0}
       Direction: 1
     IsSpawnPoint: 1
+  - Alignment: 2
+    Size: {x: 1, y: 1}
+    Offset: {x: 0, y: 0}
+    Prefab: {fileID: 1172646569373742454, guid: 3ad5526e8dc78844f98da9e3810d7f27,
+      type: 3}
+    PrefabRotation: 0
+    GizmosColorOverride: {r: 0.9844359, g: 1, b: 0, a: 1}
+    Doors:
+    - Position: {x: 0, y: 0}
+      Direction: 4
+    - Position: {x: 0, y: 0}
+      Direction: 8
+    IsSpawnPoint: 0
   roomPrefabs:
   - {fileID: 70880968265515919, guid: 81da1c5cb98b9e4479029fff1f5d5e68, type: 3}
   - {fileID: 1172646569373742454, guid: 3ad5526e8dc78844f98da9e3810d7f27, type: 3}
@@ -76,7 +89,10 @@ MonoBehaviour:
     Weight: 1
   - Size: {x: 2, y: 1}
     Weight: 7
-  blockedRooms: []
+  blockedRooms:
+  - Alignment: 7
+    Offset: {x: 2, y: 0}
+    Size: {x: 1, y: 4}
   requiredPaths:
   - StartAlignment: 7
     StartOffset: {x: 0, y: 0}
