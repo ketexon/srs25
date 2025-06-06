@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using static UnityEngine.Rendering.DebugUI.Table;
 
 public enum GunType
@@ -8,8 +9,10 @@ public enum GunType
     SemiAutomatic,
     Shotgun
 }
+
 public class Gun : EntityItem
 {
+    [SerializeField] public bool DisableAnimations = false;
     [SerializeField] GunType g = GunType.Automatic;
     [SerializeField] new Rigidbody rigidbody;
     public EntityMovement entityMovement;
@@ -24,8 +27,7 @@ public class Gun : EntityItem
     [SerializeField] public bool NoRecoil = false;
     [SerializeField] GameObject bulletPrefab;
 
-    [Header("Recoil")]
-    [SerializeField] float cameraVRecoilMult = 1;
+    [Header("Recoil")] [SerializeField] float cameraVRecoilMult = 1;
     [SerializeField] float cameraHRecoilMult = 1;
     [SerializeField] Kutie.SpringParameters hRotRecoil;
     [SerializeField] float maxHRot;
@@ -51,14 +53,16 @@ public class Gun : EntityItem
     Kutie.SpringFloat vTransSpring;
     Kutie.SpringFloat zTransSpring;
 
-    [Header("Gun Stats")]
-    [SerializeField] float shotInterval = 1.0f;
+    [Header("Gun Stats")] [SerializeField] float shotInterval = 1.0f;
     [SerializeField] float muzzleVelocity = 900;
     [SerializeField] float energyPenaltyMult = 300000;
     [SerializeField] float damage = 30;
 
     [System.NonSerialized] public bool Shooting = false;
-    [System.NonSerialized] public IBulletCaster BulletCaster = new RayBulletCaster();
+
+    [System.NonSerialized]
+    public IBulletCaster BulletCaster = new RayBulletCaster();
+
     float lastShotTime = float.NegativeInfinity;
 
     [SerializeField] GameObject arms;
@@ -71,6 +75,7 @@ public class Gun : EntityItem
     private float vBaseRotation = 0;
 
     bool hasArms, hasGloves, hasShirt = false;
+
     public float vRotation
     {
         get => vBaseRotation + vRotSpring.CurrentValue;
@@ -103,6 +108,7 @@ public class Gun : EntityItem
             vRotSpring.TargetValue = value;
         }
     }
+
     public float hTargetRotation
     {
         get => hRotSpring.TargetValue;
@@ -129,23 +135,32 @@ public class Gun : EntityItem
 
     void OnEnable()
     {
-        armsRenderer = arms.GetComponent<SkinnedMeshRenderer>();
-        glovesRenderer = gloves.GetComponent<SkinnedMeshRenderer>();
-        shirtRenderer = shirt.GetComponent<SkinnedMeshRenderer>();
+        if (arms)
+        {
+            armsRenderer = arms.GetComponent<SkinnedMeshRenderer>();
+        }
+        if (gloves)
+        {
+            glovesRenderer = gloves.GetComponent<SkinnedMeshRenderer>();
+        }
+        if (shirt)
+        {
+            shirtRenderer = shirt.GetComponent<SkinnedMeshRenderer>();
+        }
+        
         if (!entity) return;
         entity.Stats.StatChangedEvent.AddListener(OnStatChanged);
     }
 
     void OnDisable()
     {
-        if(!entity) return;
+        if (!entity) return;
         Shooting = false;
         entity.Stats.StatChangedEvent.RemoveListener(OnStatChanged);
     }
 
     private void Awake()
     {
-        
         hRotSpring = new(0, hRotRecoil);
         vRotSpring = new(0, vRotRecoil);
         hTransSpring = new(0, vTransRecoil);
@@ -153,13 +168,14 @@ public class Gun : EntityItem
         zTransSpring = new(0, zTransRecoil);
         defaultPosition = transform.localPosition;
         if (entity)
-        entityMovement = entity.GetComponent<EntityMovement>();
+            entityMovement = entity.GetComponent<EntityMovement>();
     }
 
     public void PointAt(Vector3 position, bool instant = false)
     {
         var delta = position - transform.position;
-        delta -= Vector3.Dot(delta, entity.transform.right) * entity.transform.right;
+        delta -= Vector3.Dot(delta, entity.transform.right) *
+                 entity.transform.right;
         var angle = Vector3.SignedAngle(
             entity.transform.forward,
             delta.normalized,
@@ -177,32 +193,59 @@ public class Gun : EntityItem
 
     void Update()
     {
-        if (entity != null && LayerMask.LayerToName(entity.gameObject.layer)=="Player")
+        if (entity &&
+            LayerMask.LayerToName(entity.gameObject.layer) == "Player")
         {
-            armsRenderer.enabled = true;
-            glovesRenderer.enabled = true;
-            shirtRenderer.enabled = true;
+            if (armsRenderer)
+            {
+                armsRenderer.enabled = true;
+            }
+
+            if (glovesRenderer)
+            {
+                glovesRenderer.enabled = true;
+            }
+
+            if (shirtRenderer)
+            {
+                shirtRenderer.enabled = true;
+            }
         }
         else
         {
-            armsRenderer.enabled = false;
-            glovesRenderer.enabled = false;
-            shirtRenderer.enabled = false;
+            if (armsRenderer)
+            {
+                armsRenderer.enabled = false;
+            }
+
+            if (glovesRenderer)
+            {
+                glovesRenderer.enabled = false;
+            }
+
+            if (shirtRenderer)
+            {
+                shirtRenderer.enabled = false;
+            }
         }
+
         if (!entity)
         {
             //Debug.Log("no entity");
             return;
         }
+
         if (Shooting && g == GunType.Automatic)
         {
             Shoot();
         }
-        else if ((g == GunType.SemiAutomatic || g == GunType.Shotgun) && Shooting)
+        else if ((g == GunType.SemiAutomatic || g == GunType.Shotgun) &&
+                 Shooting)
         {
             Shoot();
             Shooting = false;
         }
+
         var actualRotation = NoRecoil ? vRotation : CombinedRotation;
         Quaternion rotationY = Quaternion.AngleAxis(
             hRotSpring.CurrentValue,
@@ -216,16 +259,22 @@ public class Gun : EntityItem
         if (entity != null)
         {
             transform.localRotation = rotationX * rotationY;
-            transform.localPosition = defaultPosition - transform.localRotation * (Vector3.forward * zTransSpring.CurrentValue * 0.0005f * (overallRecoilMult / 2));
+            transform.localPosition = defaultPosition -
+                                      transform.localRotation *
+                                      (Vector3.forward *
+                                       zTransSpring.CurrentValue * 0.0005f *
+                                       (overallRecoilMult / 2));
         }
-            if (animator)
+
+        if (animator)
         {
             UpdateAnimator();
         }
 
         if (!Shooting)
         {
-            cameraRecoilOffset = Vector2.Lerp(cameraRecoilOffset, Vector2.zero, Time.deltaTime * cameraRecoilReturnSpeed);
+            cameraRecoilOffset = Vector2.Lerp(cameraRecoilOffset, Vector2.zero,
+                Time.deltaTime * cameraRecoilReturnSpeed);
         }
 
         Vector2 camRecoilDelta = cameraRecoilOffset - prevCameraRecoilOffset;
@@ -250,6 +299,12 @@ public class Gun : EntityItem
     void UpdateAnimator()
     {
         if (!animator) return;
+        animator.SetBool("static", DisableAnimations);
+        if (DisableAnimations)
+        {
+            return;
+        }
+
         animator.SetBool("shooting", Shooting);
         if (!entity) return;
         animator.SetBool("walking", entity.Movement.Walking);
@@ -283,6 +338,7 @@ public class Gun : EntityItem
                 spawnPos = tip.transform.position;
                 spawnRot = tip.transform.rotation;
             }
+
             if (g == GunType.Automatic || g == GunType.SemiAutomatic)
             {
                 SpawnBullet(spawnPos, spawnRot);
@@ -294,17 +350,19 @@ public class Gun : EntityItem
                     float spreadAngleX = Random.Range(-2.5f, 2.5f);
                     float spreadAngleY = Random.Range(-2.5f, 2.5f);
                     Quaternion rot = spawnRot;
-                    rot.eulerAngles += new Vector3(spreadAngleX, spreadAngleY, 0);
+                    rot.eulerAngles +=
+                        new Vector3(spreadAngleX, spreadAngleY, 0);
                     SpawnBullet(spawnPos, rot);
                 }
-
             }
-            if(g == GunType.Shotgun || g == GunType.SemiAutomatic)
+
+            if (g == GunType.Shotgun || g == GunType.SemiAutomatic)
             {
                 UpdateRecoil();
             }
         }
-        if(g==GunType.Automatic)
+
+        if (g == GunType.Automatic)
         {
             UpdateRecoil();
         }
@@ -320,15 +378,18 @@ public class Gun : EntityItem
         {
             bullet.GiveTracerVel(entityMovement.rb.linearVelocity);
         }
-        else {
+        else
+        {
             bullet.GiveTracerVel(Vector3.zero);
         }
+
         bullet.Caster = BulletCaster;
         bullet.RaycastHits = raycastHits;
         bullet.Velocity = muzzleVelocity;
         bullet.EnergyPenaltyMult = energyPenaltyMult;
         bullet.Damage = damage;
     }
+
     private void UpdateRecoil()
     {
         float vRot = Random.Range(0, vRotVel);
@@ -338,7 +399,9 @@ public class Gun : EntityItem
             vRotSpring.Velocity -= 0.25f * vRot * overallRecoilMult;
             hRotSpring.Velocity += hRot * overallRecoilMult;
             zTransSpring.CurrentValue += zTransKick;
-            float vRotFixed = (vRotSpring.Velocity < 0) ? vRotSpring.Velocity : 0.5f * vRotSpring.Velocity;
+            float vRotFixed = (vRotSpring.Velocity < 0)
+                ? vRotSpring.Velocity
+                : 0.5f * vRotSpring.Velocity;
 
             cameraRecoilOffset.x += 0.005f * cameraHRecoilMult * hRot;
             cameraRecoilOffset.y -= 0.025f * cameraVRecoilMult * vRotFixed;
@@ -347,6 +410,7 @@ public class Gun : EntityItem
             //cameraRecoilOffset.y = Mathf.Clamp(cameraRecoilOffset.y, -maxVRot, maxVRot);
         }
     }
+
     public void Drop()
     {
         rigidbody.isKinematic = false;
@@ -356,7 +420,8 @@ public class Gun : EntityItem
             entity.Gun = null;
             transform.SetParent(null, true);
             transform.rotation = Quaternion.Euler(0, 0, 90);
-            rigidbody.AddForce(entity.transform.forward * 10, ForceMode.Impulse);
+            rigidbody.AddForce(entity.transform.forward * 10,
+                ForceMode.Impulse);
             entity = null;
         }
     }
@@ -374,6 +439,7 @@ public class Gun : EntityItem
         {
             vBaseRotation = entity.Movement.Pitch;
         }
+
         transform.SetParent(entity.transform, true);
         entityMovement = entity.GetComponent<EntityMovement>();
         entity.Gun = this;

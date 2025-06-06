@@ -389,6 +389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entity: {fileID: 0}
   HandIKTargets: {fileID: 0}
+  DisableAnimations: 0
   g: 2
   rigidbody: {fileID: 8644413125638677502}
   entityMovement: {fileID: 0}
@@ -414,8 +415,8 @@ MonoBehaviour:
     Frequency: 1
     DampingCoefficient: 1
     Responsiveness: 0
-  maxVRot: 0
-  vRotVel: 0
+  maxVRot: 1000
+  vRotVel: 500
   hTransRecoil:
     Frequency: 1
     DampingCoefficient: 1
@@ -433,8 +434,8 @@ MonoBehaviour:
     Frequency: 1
     DampingCoefficient: 1
     Responsiveness: 0
-  maxZTrans: 0
-  zTransVel: 0
+  maxZTrans: 100
+  zTransVel: 15
   zTransKick: 0
   shotInterval: 1
   muzzleVelocity: 900

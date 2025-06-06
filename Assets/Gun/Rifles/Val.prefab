@@ -92,6 +92,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1437398756355824967, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
         type: 3}
+      propertyPath: arms
+      value: 
+      objectReference: {fileID: 3409197083250972893}
+    - target: {fileID: 1437398756355824967, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
+        type: 3}
+      propertyPath: shirt
+      value: 
+      objectReference: {fileID: 2825489657337349631}
+    - target: {fileID: 1437398756355824967, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
+        type: 3}
+      propertyPath: gloves
+      value: 
+      objectReference: {fileID: 7345756011185521987}
+    - target: {fileID: 1437398756355824967, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
+        type: 3}
       propertyPath: hRotVel
       value: 3
       objectReference: {fileID: 0}
@@ -137,6 +152,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1437398756355824967, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
         type: 3}
+      propertyPath: HandIKTargets
+      value: 
+      objectReference: {fileID: 1203909540430740989}
+    - target: {fileID: 1437398756355824967, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
+        type: 3}
       propertyPath: zTransRecoil.Frequency
       value: 5
       objectReference: {fileID: 0}
@@ -165,6 +185,18 @@ PrefabInstance:
       addedObject: {fileID: 3730729096930842969}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e8cb842a06f73a4bbc509536bc2d21c, type: 3}
+--- !u!114 &1203909540430740989 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2248743570182613228, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1116893832479134993}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f35758d222865842a8b588b9a8a467f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2242515457779498778 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1197679223926073867, guid: 6e8cb842a06f73a4bbc509536bc2d21c,
@@ -270,6 +302,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7801606091069929582}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2825489657337349631 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3786690866540888687, guid: dafcd1a7f9f33b44299bbe913683be41,
+    type: 3}
+  m_PrefabInstance: {fileID: 7801606091069929582}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3409197083250972893 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4831018558786363571, guid: dafcd1a7f9f33b44299bbe913683be41,
+    type: 3}
+  m_PrefabInstance: {fileID: 7801606091069929582}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6059961954907555206 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4061560965347065320, guid: dafcd1a7f9f33b44299bbe913683be41,
@@ -304,6 +348,12 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &7345756011185521987 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 699607478443736365, guid: dafcd1a7f9f33b44299bbe913683be41,
+    type: 3}
+  m_PrefabInstance: {fileID: 7801606091069929582}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7768258672488243077 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: dafcd1a7f9f33b44299bbe913683be41,

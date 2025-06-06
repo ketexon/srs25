@@ -34,7 +34,10 @@ public partial class ShootTargetAction : Action
 
     protected override void OnEnd()
     {
-        entity.Gun.Shooting = false;
+        if (entity && entity.Gun)
+        {
+            entity.Gun.Shooting = false;
+        }
     }
 
     protected override Status OnUpdate()

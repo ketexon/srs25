@@ -27,19 +27,20 @@ public class PlayerController : MonoBehaviour
         movement.SwitchGuns.AddListener(GunSwitch);
     }
 
-    virtual protected void OnDisable()
+    protected virtual void OnDisable()
     {
         camera.Priority.Enabled = false;
         movement.MoveDir = Vector2.zero;
         movement.SwitchGuns.RemoveListener(GunSwitch);
     }
-    virtual protected void GunSwitch(Gun newGun)
+    protected virtual void GunSwitch(Gun newGun)
     {
         gun = newGun;
         gun.BulletCaster = new RayBulletCaster();
+        gun.DisableAnimations = false;
     }
 
-    virtual protected void OnDeath(){
+    protected virtual void OnDeath(){
         enabled = false;
     }
 }

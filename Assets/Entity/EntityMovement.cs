@@ -119,35 +119,31 @@ public class EntityMovement : MonoBehaviour
         Vector3 delta = worldPoint - Eyes.transform.position;
         LookDir(delta.normalized);
     }
-    void OnGunPickup()
+
+    private void OnGunPickup()
     {
-        if(!(entityItemController.ActiveItemIndex == EntityItemController.GunIndex))
+        if(entityItemController.ActiveItemIndex != EntityItemController.GunIndex)
             return;
-        Ray ray = new Ray(Eyes.position, Eyes.forward);
+        var ray = new Ray(Eyes.position, Eyes.forward);
         Debug.DrawRay(Eyes.position, Eyes.forward);
-        RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))
+        if (!Physics.Raycast(ray, out var hit)) return;
+        var gun = hit.collider.GetComponentInParent<Gun>();
+        if (gun == null) return;
+        //Debug.Log(gun.name + " picked up by " + gameObject.name);
+        SwitchGuns.Invoke(gun);
+        var entity = GetComponent<Entity>();
+        if (entity == null)
+            return;
+
+        if (entity.Gun != null)
         {
-                Gun gun = hit.collider.GetComponentInParent<Gun>();
-                if (gun != null)
-                {
-                    //Debug.Log(gun.name + " picked up by " + gameObject.name);
-                    SwitchGuns.Invoke(gun);
-                    Entity entity = GetComponent<Entity>();
-                    if (entity == null)
-                        return;
-
-                    if (entity.Gun != null)
-                    {
-                        entity.Gun.Drop();
-                        entity.Gun = null;
-                    }
-
-                    gun.PickUp(entity);
-                    entity.Gun = gun;
-                }
+            entity.Gun.Drop();
+            entity.Gun = null;
         }
+
+        gun.PickUp(entity);
+        entity.Gun = gun;
     }
 
     void OnJump()
